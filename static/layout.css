@@ -1,0 +1,27 @@
+.navbar{
+	margin-bottom: 0px;
+}
+
+.layout {
+	background-color:  #CE0A0A;
+	color: #FFFFFF;
+}
+
+header{
+	background-color: #000000;
+}
+
+footer{
+	background-color:  #CE0A0A;
+    color: #ffffff;
+    margin-bottom: 0px;
+}
+
+#nav-menu a:hover{
+	background-color:  #CE0A0A;
+	text-decoration: underline;
+}
+
+.separete-margim {
+    margin: 100px auto;
+}
