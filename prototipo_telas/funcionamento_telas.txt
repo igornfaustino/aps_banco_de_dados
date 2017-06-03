@@ -1,0 +1,5 @@
+cliente
+	selecionar cliente -> entra com os dados para a busca
+		listar clientes -> exibe lista de resultados
+			exibir cliente -> mostra dados completos de um cliente
+	cadastrar cliente -> cadastra cliente (apos retorna para a tela de cliente)

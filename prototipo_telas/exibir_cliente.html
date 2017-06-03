@@ -3,9 +3,9 @@
 <head>
 	<meta charset="utf-8">
 	<meta http-equiv="X-UA-Compatible" content="IE=edge">
-	<title>Home</title>
-	<link rel="stylesheet" href="static/bootstrap/css/bootstrap.min.css">
-	<link rel="stylesheet" href="static/layout.css">
+	<title>Layout</title>
+	<link rel="stylesheet" href="./bootstrap/css/bootstrap.min.css">
+	<link rel="stylesheet" href="./layout.css">
 	<link href="https://fonts.googleapis.com/css?family=Cutive" rel="stylesheet">
 	<meta name="viewport" content="width=device-width, initial-scale=1">
 </head>
@@ -25,7 +25,7 @@
 		    	<div class="collapse navbar-collapse" id="menu">
 					<ul class="nav navbar-nav">
 						<!-- Itens Menu -->
-	      				<li><a href="#">Pedidos</a></li>
+	      				<li><a href="./pedidos.html">Pedidos</a></li>
 	      				<li><a href="./clientes.html">Clientes</a></li>
 	      				<li><a href="./funcionarios.html">Funcionarios</a></li>
 	      				<li><a href="./restaurante.html">Restaurante</a></li>
@@ -45,37 +45,22 @@
 		</div>
 	</header>
 	<!-- Conteudo site -->
-		<div class="container text-center conteudo">
-			<h2>Boa Noite!</h2>
-			<h3>dia/mes/ano</h3>
-			<br>
+	<div class="container text-justify">
+		<h2 class="text-center">Cliente</h2>
+		<ul class="my-list">
+			<li><p><div class="estilo">ID:</div> id do cara</p></li>
 			<hr>
-			<!-- <h2>Pedidos Pendentes</h2> -->
-			<div>
-				<table class="table-bordered table-condensed table-responsive">
-					<caption class="text-center"><h2>Pedidos Pendentes</h2></caption>
-					<thead>
-						<tr>
-								<th>Nº<wbr></wbr>Pedido</th>
-							<th>Mesas</th>
-							<th>Itens/<wbr></wbr>Quantidades</th>
-							<th>status</th>
-						</tr>
-					</thead>
-					<tbody>
-					<!-- Loop -->
-						<tr>
-							<td>1</td>
-							<td>Mesa 1</td>
-							<td>Frango<br>1und, </td>
-							<td>Pendente</td>
-						</tr>
-					<!-- Fim Loop -->
-					</tbody>
-				</table>
-			</div>
+			<li><p><div class="estilo">Nome:</div> Nome do Cara <br> <a href="#">alterar</a></p></li>
+			<hr>
+			<li><p><div class="estilo">cpf:</div> cpf do cara <br> <a href="#">alterar</a></p></li>
+			<hr>
+			<li><p><div class="estilo">telefone:</div> telefone cidadão <br> <a href="#">alterar</a></p></li>
+		</ul>
+		<hr>
+		<div class="text-right">
+			<button type="" class="btn btn-default btn-sm">excluir cliente</button>
 		</div>
-
+	</div>
 
 	<!-- Fim conteudo -->
 	<footer class="myFooter">
@@ -92,7 +77,7 @@
 			<!-- fim conteudo -->
 		</div>
 	</footer>
-	<script src="static/jquery.js"></script>
-	<script src="static/bootstrap/js/bootstrap.min.js"></script>
+	<script src="./jquery.js"></script>
+	<script src="./bootstrap/js/bootstrap.min.js"></script>
 </body>
 </html>
