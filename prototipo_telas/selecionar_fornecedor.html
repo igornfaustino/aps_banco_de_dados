@@ -26,7 +26,7 @@
 		    	<div class="collapse navbar-collapse" id="menu">
 					<ul class="nav navbar-nav">
 						<!-- Itens Menu -->
-	      				<li><a href="./pedidos.html">Pedidos</a></li>
+	      				<li><a href="#">Pedidos</a></li>
 	      				<li><a href="./clientes.html">Clientes</a></li>
 	      				<li><a href="./funcionarios.html">Funcionarios</a></li>
 	      				<li><a href="./restaurante.html">Restaurante</a></li>
@@ -46,16 +46,42 @@
 		</div>
 	</header>
 	<!-- Conteudo site -->
-		<div class="container text-center conteudo">
-			<h2>Pedidos</h2>
-			<div class="container separete-margim">
-				<a href="#" class="btn btn-danger btn-block btn-lg my-btn">SELECIONAR PEDIDO</a>
-			</div>
-			<div class="container separete-margim">
-				<a href="#" class="btn btn-danger btn-block btn-lg my-btn">CADASTRAR PEDIDO</a>
-			</div>
-		</div>
 
+	<div class="container conteudo">
+		<div class=" container text-center">	
+			<h2>Selecionar Fornecedor</h2>
+		</div>	
+		<div class="container">
+			<!-- Pesquisa simples -->
+			<form action="#" method="post" accept-charset="utf-8">
+				<div class="form-group">
+					<label for="nome_cliente">Nome Fornecedor</label>
+					<div class="input-group">
+						<input type="text" name="nome" id="nome_cliente" class="form-control" placeholder="Busca fornecedor pelo nome">
+						    <span class="input-group-btn">
+						    	<button type="submit" class="btn btn-danger">Buscar!</button>
+							</span>
+					</div>
+				</div>
+			</form>
+			<hr>
+			<!-- pesquisa Complexa -->
+			<form action="#" method="post" accept-charset="utf-8">
+				<div class="form-group">
+					<label for="nome_cliente">Algo complexo</label>
+					<div class="input-group">
+						<input type="text" name="nome" id="nome_cliente" class="form-control" placeholder="Busca fornecedor por algo">
+						    <span class="input-group-btn">
+						    	<button type="submit" class="btn btn-danger">Buscar!</button>
+							</span>
+					</div>
+				</div>
+			</form>
+
+			<!-- pesquisa Complexa2 -->
+			<!-- etc -->
+		</div>
+	</div>
 
 	<!-- Fim conteudo -->
 	<footer class="myFooter">
