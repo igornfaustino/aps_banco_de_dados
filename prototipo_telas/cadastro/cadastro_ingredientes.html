@@ -4,10 +4,9 @@
 	<meta charset="utf-8">
 	<meta http-equiv="X-UA-Compatible" content="IE=edge">
 	<title>Myr</title>
-	<link rel="shortcut icon" href="lorenzo.ico" type="image/x-icon" />	
 	<link rel="shortcut icon" href="lorenzo.ico" type="image/x-icon" />
-	<link rel="stylesheet" href="./bootstrap/css/bootstrap.min.css">
-	<link rel="stylesheet" href="./layout.css">
+	<link rel="stylesheet" href="../bootstrap/css/bootstrap.min.css">
+	<link rel="stylesheet" href="../layout.css">
 	<link href="https://fonts.googleapis.com/css?family=Cutive" rel="stylesheet">
 	<meta name="viewport" content="width=device-width, initial-scale=1">
 </head>
@@ -22,15 +21,15 @@
 		        		<span class="icon-bar"></span>
 		        		<span class="icon-bar"></span>
 		      		</button>
-		      		<a class="navbar-brand" href="./index.html">Home</a>
+		      		<a class="navbar-brand" href="../index.html">Home</a>
 		    	</div>
 		    	<div class="collapse navbar-collapse" id="menu">
 					<ul class="nav navbar-nav">
 						<!-- Itens Menu -->
-	      				<li><a href="./pedidos">Pedidos</a></li>
-	      				<li><a href="./clientes.html">Clientes</a></li>
-	      				<li><a href="./funcionarios.html">Funcionarios</a></li>
-	      				<li><a href="./restaurante.html">Restaurante</a></li>
+	      				<li><a href="../pedidos.html">Pedidos</a></li>
+	      				<li><a href="../clientes.html">Clientes</a></li>
+	      				<li><a href="../funcionarios.html">Funcionarios</a></li>
+	      				<li><a href="../restaurante.html">Restaurante</a></li>
 	      			</ul>
 				</div>
 		  	</div>
@@ -40,47 +39,30 @@
 			<div class="container text-center">
 			<!-- Conteudo topo -->
 			
-			<p><img src="lorenzo.png" height="150" width="150"></p><h1>My Restaurant</h1>
+		<p><img src="../lorenzo.png" height="150" width="150"></p><h1>My Restaurant</h1>
 
 			<!-- Fim conteudo -->
 			</div>
 		</div>
 	</header>
 	<!-- Conteudo site -->
-
 	<div class="container conteudo">
-		<div class=" container text-center">	
-			<h2>Selecionar Fornecedor</h2>
-		</div>	
+			
+		<h2 class="text-center">Cadastrar Ingrediente</h2>
 		<div class="container">
-			<!-- Pesquisa simples -->
-			<form action="#" method="post" accept-charset="utf-8">
+			<form action="cadastrar_cliente_submit" method="post" accept-charset="utf-8">
 				<div class="form-group">
-					<label for="nome_cliente">Nome Fornecedor</label>
-					<div class="input-group">
-						<input type="text" name="nome" id="nome_cliente" class="form-control" placeholder="Busca fornecedor pelo nome">
-						    <span class="input-group-btn">
-						    	<button type="submit" class="btn btn-danger">Buscar!</button>
-							</span>
-					</div>
+					<label for="nome_cliente">Nome Ingrediente</label>
+					<input type="text" name="nome_chefe" id="nome_chefe" class="form-control">	
+				</div>
+				<div class="form-group">
+					<label for="qnt_total">Quantidade Total Ingrediente</label>
+					<input type="text" name="sal_chefe" id="sal_chefe" class="form-control">
+				</div>
+				<div class="text-center">
+					<button type="submit" class="btn btn-danger btn-lg my-btn">Cadastrar</button>
 				</div>
 			</form>
-			<hr>
-			<!-- pesquisa Complexa -->
-			<form action="#" method="post" accept-charset="utf-8">
-				<div class="form-group">
-					<label for="nome_cliente">Algo complexo</label>
-					<div class="input-group">
-						<input type="text" name="nome" id="nome_cliente" class="form-control" placeholder="Busca fornecedor por algo">
-						    <span class="input-group-btn">
-						    	<button type="submit" class="btn btn-danger">Buscar!</button>
-							</span>
-					</div>
-				</div>
-			</form>
-
-			<!-- pesquisa Complexa2 -->
-			<!-- etc -->
 		</div>
 	</div>
 
@@ -99,7 +81,7 @@
 			<!-- fim conteudo -->
 		</div>
 	</footer>
-	<script src="./jquery.js"></script>
-	<script src="./bootstrap/js/bootstrap.min.js"></script>
+	<script src="../jquery.js"></script>
+	<script src="../bootstrap/js/bootstrap.min.js"></script>
 </body>
 </html>
