@@ -52,8 +52,9 @@
 		<div class="container">
 			<form action="cadastrar_cliente_submit" method="post" accept-charset="utf-8">
 				<div class="form-group">
-					<label for="nome_cliente">Data Pedido</label>
-					<input type="text" name="nome" id="nome_cliente" class="form-control">	
+					<!-- Com o numero da mesa é possivel descobrir o id do cliente que fez a reserva -->
+					<label for="nome_cliente">Numero Mesa</label>
+					<input type="text" name="nroMesa" id="nroMesa" class="form-control">	
 				</div>
 				<div class="text-center">
 					<button type="submit" class="btn btn-danger btn-lg my-btn">Cadastrar</button>
