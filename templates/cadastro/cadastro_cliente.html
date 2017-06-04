@@ -1,0 +1,34 @@
+{% extends "layout/layout1.html" %}
+
+{% block title %}
+	Clientes
+{% endblock %}
+
+{% block conteudo %}
+	<!-- Conteudo site -->
+	<div class="container conteudo">
+			
+		<h2 class="text-center">Cadastrar Cliente</h2>
+		<div class="container">
+			<form action="{{ url_for('cliente_submit') }}" method="post">
+				<div class="form-group">
+					<label for="nome_cliente">Nome Cliente</label>
+					<input type="text" name="nome_cliente" id="nome_cliente" class="form-control">	
+				</div>
+				<div class="form-group">
+					<label for="tel_cliente">Telefone Cliente</label>
+					<input type="tel" name="tel_cliente" id="tel_cliente" class="form-control">	
+				</div>
+				<div class="form-group">
+					<label for="cpf_cliente">CPF Cliente</label>
+					<input type="text" name="cpf_cliente" id="cpf_cliente" class="form-control">	
+				</div>
+				<div class="text-center">
+					<button type="submit" class="btn btn-danger btn-lg my-btn">Cadastrar</button>
+				</div>
+			</form>
+		</div>
+	</div>
+
+	<!-- Fim conteudo -->
+{% endblock %}

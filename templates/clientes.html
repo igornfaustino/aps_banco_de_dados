@@ -3,7 +3,7 @@
 {% block title %}
 	Clientes
 {% endblock %}
-
+	
 {% block conteudo %}
 	<!-- Conteudo site -->
 		<div class="container text-center conteudo">
@@ -12,7 +12,7 @@
 				<a href="./selecionar_cliente.html" class="btn btn-danger btn-block btn-lg my-btn">SELECIONAR CLIENTE</a>
 			</div>
 			<div class="container separete-margim">
-				<a href="cadastro/cadastro_cliente.html" class="btn btn-danger btn-block btn-lg my-btn">CADASTRAR CLIENTE</a>
+				<a href="{{ url_for('cadastro_cliente') }}" class="btn btn-danger btn-block btn-lg my-btn">CADASTRAR CLIENTE</a>
 			</div>
 		</div>
 
