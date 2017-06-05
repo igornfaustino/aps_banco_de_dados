@@ -1,0 +1,32 @@
+Requisitos:
+	- python3
+	- pip
+	- virtualenvs
+	- flask
+	- pymsql
+
+
+Python3
+	Intalação do python3 pode ser feita atravez do site oficial: https://www.python.org/
+
+pip
+	Instalação do pip: https://pip.pypa.io/en/stable/
+
+virtualenv
+	Para instalar o virtualenv use o seguinte comando: $ pip install virtualenv
+	Isto vai permitir a criação de ambientes virtuais, o flask recomenda a instalação dentro de um para evitar futuros conflitos
+
+	Criar ambiente virtual: $ virtualenv venv
+		venv é a pasta onde sera criada o ambiente virtual.
+	ativar ambiente virtual: $ . venv/bin/activate
+	Desativar ambiente virtual: $ deactivate
+
+flask
+	com o ambiente virtual ativado utilize o comando: $ pip install flask
+
+pymsql
+	###
+
+
+para testar a aplicação utilize o comando: $ python3 app.py
+com isso um servidor local será iniciado, e para acessa-lo basta ir para o endereço 127.0.0.1:5000 ou localhost:5000

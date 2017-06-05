@@ -28,7 +28,7 @@ def pedidos():
 
 # fim Menus
 
-@app.route('/cadastro/cliente')
+@app.route('/cliente/cadastro')
 def cadastro_cliente():
 	return render_template('cadastro/cadastro_cliente.html')	
 
@@ -40,6 +40,7 @@ def cliente_submit():
 	nome = request.form['nome_cliente']
 	tel = request.form['tel_cliente']
 	cpf = request.form['cpf_cliente']
+	print (nome, tel, cpf)
 	return redirect(url_for('clientes'))
 
 if __name__ == '__main__':
