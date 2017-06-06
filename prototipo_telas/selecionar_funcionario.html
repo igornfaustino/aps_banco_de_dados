@@ -46,20 +46,42 @@
 		</div>
 	</header>
 	<!-- Conteudo site -->
-		<div class="container text-center conteudo">
-			<h2>Restaurante</h2>
-			<div class="container separete-margim">
-				<a href="./fornecedor.html" class="btn btn-danger btn-block btn-lg my-btn">FORNECEDOR</a>
-			</div>
-			<div class="container separete-margim">
-				<a href="./cardapio.html" class="btn btn-danger btn-block btn-lg my-btn">CARDAPIO</a>
-			</div>
-			<div class="container separete-margim">
-				<a href="./mesa.html" class="btn btn-danger btn-block btn-lg my-btn">MESAS</a>
-			</div>
-			
-		</div>
 
+	<div class="container conteudo">
+		<div class=" container text-center">	
+			<h2>Selecionar Funcionario</h2>
+		</div>	
+		<div class="container">
+			<!-- Pesquisa simples -->
+			<form action="#" method="post" accept-charset="utf-8">
+				<div class="form-group">
+					<label for="nome_funcionario">Nome Funcionário</label>
+					<div class="input-group">
+						<input type="text" name="nome_funcionario" id="nome_funcionario" class="form-control" placeholder="Busca funcionário pelo nome">
+						    <span class="input-group-btn">
+						    	<button type="submit" class="btn btn-danger">Buscar!</button>
+							</span>
+					</div>
+				</div>
+			</form>
+			<hr>
+			<!-- pesquisa Complexa -->
+			<form action="#" method="post" accept-charset="utf-8">
+				<div class="form-group">
+					<label for="nome_funcionario">Algo complexo</label>
+					<div class="input-group">
+						<input type="text" name="nome_funcionario" id="nome_funcionario" class="form-control" placeholder="Busca funcionário por algo">
+						    <span class="input-group-btn">
+						    	<button type="submit" class="btn btn-danger">Buscar!</button>
+							</span>
+					</div>
+				</div>
+			</form>
+
+			<!-- pesquisa Complexa2 -->
+			<!-- etc -->
+		</div>
+	</div>
 
 	<!-- Fim conteudo -->
 	<footer class="myFooter">
