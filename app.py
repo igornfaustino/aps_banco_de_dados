@@ -43,5 +43,9 @@ def cliente_submit():
 	print (nome, tel, cpf)
 	return redirect(url_for('clientes'))
 
+@app.route('/search')
+def search_cliente():
+	return render_template('selecionar_cliente.html')
+
 if __name__ == '__main__':
 	app.run(debug=True)

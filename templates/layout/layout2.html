@@ -1,0 +1,32 @@
+{% extends "layout/layout1.html" %}
+
+{% block title %}
+	Clientes
+{% endblock %}
+	
+{% block conteudo %}
+	<!-- Conteudo site -->
+		<div class="container text-center conteudo">
+			<!-- resultados busca -->
+			<div>
+				<table class="table table-bordered table-responsive">
+					<caption class="text-center"><h2>Resultados</h2></caption>
+					<thead class="text-center">
+						<tr>
+							{% block table_head %}
+							{% endblock %}
+						</tr>
+					</thead>
+					<tbody>
+					<!-- Loop -->
+							{% block table_body %}
+							{% endblock %}
+					<!-- Fim Loop -->
+					</tbody>
+				</table>
+			</div>
+		</div>
+
+
+	<!-- Fim conteudo -->
+{% endblock %}
