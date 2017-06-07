@@ -92,14 +92,23 @@ def cadastro_funcionario():
 def cadastro_cozinheiro():
 	return render_template('cadastro/cadastro_cozinheiro.html')
 
-@app.route('/cadastro/funcionario/submit/<funcao>', methods=['POST'])
+@app.route('/funcionario/cadastro/garcom')
+def cadastro_garcom():
+	return render_template('cadastro/cadastro_garcom.html')
+
+@app.route('/funcionario/cadastro/<funcao>/submit', methods=['POST'])
 def funcionario_submit(funcao):
 	nome_funcionario = None
-	tel_funcionario = None
+	sal_funcionario = None
 	cpf_funcionario = None
+	nome_funcionario = request.form['nome_funcionario']
+	sal_funcionario = request.form['sal_funcionario']
+	cpf_funcionario = request.form['cpf_funcionario']
 
-	if funcao == "cozinheiro":
-		print ("Sou um cozinheiro \n\n")
+	if funcao == 'cozinheiro':
+		cpf_chefe = None
+		cpf_chefe = request.form['cpf_chefe']
+		print("Sou um cozinheiro\n\n\n")
 	else:
 		pass
 	return redirect(url_for('funcionario'))
