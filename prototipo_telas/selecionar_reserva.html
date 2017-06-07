@@ -1,10 +1,50 @@
-{% extends "layout/layout1.html" %}
+<!DOCTYPE html>
+<html>
+<head>
+	<meta charset="utf-8">
+	<meta http-equiv="X-UA-Compatible" content="IE=edge">
+	<title>Myr</title>
+	<link rel="shortcut icon" href="./img/lorenzo.ico" type="image/x-icon" /> 
+	<link rel="stylesheet" href="./bootstrap/css/bootstrap.min.css">
+	<link rel="stylesheet" href="./css/layout.css">
+	<link href="https://fonts.googleapis.com/css?family=Cutive" rel="stylesheet">
+	<meta name="viewport" content="width=device-width, initial-scale=1">
+</head>
+<body>
+	<header>
+		<nav class="navbar navbar-inverse navbar-fixed-top" id="nav-menu">
+		  	<div class="container-fluid">
+		    	<div class="navbar-header">
+		      		<button type="button" class="navbar-toggle collapsed" data-toggle="collapse" data-target="#menu" aria-expanded="false">
+		        		<span class="sr-only">Toggle navigation</span>
+		        		<span class="icon-bar"></span>
+		        		<span class="icon-bar"></span>
+		        		<span class="icon-bar"></span>
+		      		</button>
+		      		<a class="navbar-brand" href="./index.html">Home</a>
+		    	</div>
+		    	<div class="collapse navbar-collapse" id="menu">
+					<ul class="nav navbar-nav">
+						<!-- Itens Menu -->
+	      				<li><a href="./pedidos.html">Pedidos</a></li>
+	      				<li><a href="./clientes.html">Clientes</a></li>
+	      				<li><a href="./funcionarios.html">Funcionarios</a></li>
+	      				<li><a href="./restaurante.html">Restaurante</a></li>
+	      			</ul>
+				</div>
+		  	</div>
+		</nav>
 
-{% block title %}
-	Selecionar Reserva
-{% endblock %}
+		<div class="jumbotron top-layout">
+			<div class="container text-center">
+			<!-- Conteudo topo -->
+			
+			<p><img src="./img/lorenzo.png" height="150" width="150"></p><h1>My Restaurant</h1>
 
-{% block conteudo %}
+			<!-- Fim conteudo -->
+			</div>
+		</div>
+	</header>
 	<!-- Conteudo site -->
 
 	<div class="container conteudo">
@@ -44,4 +84,21 @@
 	</div>
 
 	<!-- Fim conteudo -->
-{% endblock %}
+	<footer class="myFooter">
+			<!-- conteudo rodape -->
+		<div class="jumbotron foot-layout">
+			
+		
+			<div class="container text-center ">
+				<ul class="list-inline">
+					<li><p><a>GitHub</a></p></li>
+				</ul>
+				<p>Projetado para a disciplina de banco de dado 1 pelos alunos <a href="">Igor</a> e <a href="">João</a></p>
+			</div>
+			<!-- fim conteudo -->
+		</div>
+	</footer>
+	<script src="./jquery.js"></script>
+	<script src="./bootstrap/js/bootstrap.min.js"></script>
+</body>
+</html>

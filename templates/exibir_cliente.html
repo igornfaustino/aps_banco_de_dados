@@ -1,0 +1,27 @@
+{% extends "layout/layout1.html" %}
+
+{% block title %}
+	Exibir Cliente
+{% endblock %}
+
+{% block conteudo %}
+	<!-- Conteudo site -->
+	<div class="container text-justify">
+		<h2 class="text-center">Cliente</h2>
+		<ul class="my-list">
+			<li><p><div class="estilo">ID:</div> ID do cliente</p></li>
+			<hr>
+			<li><p><div class="estilo">Nome:</div> Nome do Cliente <br> <a href="#">alterar</a></p></li>
+			<hr>
+			<li><p><div class="estilo">cpf:</div> CPF do cliente <br> <a href="#">alterar</a></p></li>
+			<hr>
+			<li><p><div class="estilo">telefone:</div> telefone cidadão <br> <a href="#">alterar</a></p></li>
+		</ul>
+		<hr>
+		<div class="text-right">
+			<button type="" class="btn btn-default btn-sm">excluir cliente</button>
+		</div>
+	</div>
+
+	<!-- Fim conteudo -->
+{% endblock %}

@@ -1,7 +1,7 @@
 {% extends "layout/layout1.html" %}
 
 {% block title %}
-	Pedidos
+	Cadastrar Funcionarios
 {% endblock %}
 
 {% block conteudo %}
@@ -9,10 +9,10 @@
 		<div class="container text-center conteudo">
 			<h2 class="text-center">Cadastrar Funcionarios</h2>
 			<div class="container separete-margim">
-				<a href="{{ url_for('cadastro_garcom') }}" class="btn btn-danger btn-block btn-lg my-btn">CADASTRAR GARÇOM</a>
+				<a href="./cadastro/cadastro_garcom.html" class="btn btn-danger btn-block btn-lg my-btn">CADASTRAR GARÇOM</a>
 			</div>
 			<div class="container separete-margim">
-				<a href="{{ url_for('cadastro_cozinheiro') }}" class="btn btn-danger btn-block btn-lg my-btn">CADASTRAR COZINHEIRO</a>
+				<a href="./cadastro/cadastro_chefe.html" class="btn btn-danger btn-block btn-lg my-btn">CADASTRAR COZINHEIRO</a>
 			</div>
 		</div>
 

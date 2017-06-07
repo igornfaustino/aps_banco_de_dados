@@ -1,7 +1,7 @@
 {% extends "layout/layout1.html" %}
 
 {% block title %}
-	Selecionar Cliente
+	Selecionar Fornecedor
 {% endblock %}
 
 {% block conteudo %}
@@ -9,15 +9,15 @@
 
 	<div class="container conteudo">
 		<div class=" container text-center">	
-			<h2>Selecionar Clientes</h2>
+			<h2>Selecionar Fornecedor</h2>
 		</div>	
 		<div class="container">
 			<!-- Pesquisa simples -->
 			<form action="#" method="post" accept-charset="utf-8">
 				<div class="form-group">
-					<label for="nome_cliente">Nome Clientes</label>
+					<label for="nome_fornecedor">Nome Fornecedor</label>
 					<div class="input-group">
-						<input type="text" name="nome" id="nome_cliente" class="form-control" placeholder="Busca cliente pelo nome">
+						<input type="text" name="nome_fornecedor" id="nome_fornecedor" class="form-control" placeholder="Busca fornecedor pelo nome">
 						    <span class="input-group-btn">
 						    	<button type="submit" class="btn btn-danger">Buscar!</button>
 							</span>
@@ -28,9 +28,9 @@
 			<!-- pesquisa Complexa -->
 			<form action="#" method="post" accept-charset="utf-8">
 				<div class="form-group">
-					<label for="nome_cliente">Algo complexo</label>
+					<label for="nome_fornecedor">Algo complexo</label>
 					<div class="input-group">
-						<input type="text" name="nome_cliente" id="nome_cliente" class="form-control" placeholder="Busca cliente por algo">
+						<input type="text" name="nome_fornecedor" id="nome_fornecedor" class="form-control" placeholder="Busca fornecedor por algo">
 						    <span class="input-group-btn">
 						    	<button type="submit" class="btn btn-danger">Buscar!</button>
 							</span>
@@ -44,4 +44,4 @@
 	</div>
 
 	<!-- Fim conteudo -->
-{% endblock %}
+	{% endblock %}

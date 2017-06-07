@@ -1,23 +1,31 @@
 {% extends "layout/layout1.html" %}
 
 {% block title %}
-	Selecionar Cliente
+	Selecionar Ingredientes
 {% endblock %}
 
 {% block conteudo %}
+			<!-- Conteudo topo -->
+			
+			<p><img src="./img/lorenzo.png" height="150" width="150"></p><h1>My Restaurant</h1>
+
+			<!-- Fim conteudo -->
+			</div>
+		</div>
+	</header>
 	<!-- Conteudo site -->
 
 	<div class="container conteudo">
 		<div class=" container text-center">	
-			<h2>Selecionar Clientes</h2>
+			<h2>Selecionar Ingredientes</h2>
 		</div>	
 		<div class="container">
 			<!-- Pesquisa simples -->
 			<form action="#" method="post" accept-charset="utf-8">
 				<div class="form-group">
-					<label for="nome_cliente">Nome Clientes</label>
+					<label for="nome_ingrediente">Nome Ingrediente</label>
 					<div class="input-group">
-						<input type="text" name="nome" id="nome_cliente" class="form-control" placeholder="Busca cliente pelo nome">
+						<input type="text" name="nome_ingrediente" id="nome_ingrediente" class="form-control" placeholder="Busca ingrediente pelo nome">
 						    <span class="input-group-btn">
 						    	<button type="submit" class="btn btn-danger">Buscar!</button>
 							</span>
@@ -28,9 +36,9 @@
 			<!-- pesquisa Complexa -->
 			<form action="#" method="post" accept-charset="utf-8">
 				<div class="form-group">
-					<label for="nome_cliente">Algo complexo</label>
+					<label for="nome_ingrediente">Algo complexo</label>
 					<div class="input-group">
-						<input type="text" name="nome_cliente" id="nome_cliente" class="form-control" placeholder="Busca cliente por algo">
+						<input type="text" name="nome_ingrediente" id="nome_ingrediente" class="form-control" placeholder="Busca ingrediente por algo">
 						    <span class="input-group-btn">
 						    	<button type="submit" class="btn btn-danger">Buscar!</button>
 							</span>

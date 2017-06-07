@@ -1,0 +1,26 @@
+{% extends "layout/layout1.html" %}
+
+{% block title %}
+	Cardapio
+{% endblock %}
+
+{% block conteudo %}
+	<!-- Conteudo site -->
+		<div class="container text-center conteudo">
+			<h2>Cardapio</h2>
+			<div class="container separete-margim">
+				<a href="./selecionar_prato.html" class="btn btn-danger btn-block btn-lg my-btn">SELECIONAR PRATO</a>
+			</div>
+			<div class="container separete-margim">
+				<a href="cadastro/cadastro_prato.html" class="btn btn-danger btn-block btn-lg my-btn">CADASTRAR PRATO</a>
+			</div>
+			<div class="container separete-margim">
+				<a href="./selecionar_ingrediente.html" class="btn btn-danger btn-block btn-lg my-btn">SELECIONAR INGREDIENTE</a>
+			</div>
+			<div class="container separete-margim">
+				<a href="cadastro/cadastro_ingredientes.html" class="btn btn-danger btn-block btn-lg my-btn">CADASTRAR INGREDIENTE</a>
+			</div>
+		</div>
+	<!-- Fim conteudo -->
+{% endblock %}
+	

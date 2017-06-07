@@ -1,39 +1,42 @@
 {% extends "layout/layout1.html" %}
 
 {% block title %}
-	Home
+	Boa Noite!
 {% endblock %}
 
 {% block conteudo %}
 	<!-- Conteudo site -->
-	<div class="container text-center conteudo">
-		<h2>Boa Noite!</h2>
-		<h3>dia/mes/ano</h3>
-		<br>
-		<hr>
-		<!-- <h2>Pedidos Pendentes</h2> -->
-		<div>
-			<table class="table table-bordered table-responsive">
-				<caption class="text-center"><h2>Pedidos Pendentes</h2></caption>
-				<thead>
-					<tr>
-						<th class="text-center">Nº<wbr></wbr>Pedido</th>
-						<th class="text-center">Mesas</th>
-						<th class="text-center">Itens/<wbr></wbr>Quantidades</th>
-						<th class="text-center">status</th>
-					</tr>
-				</thead>
-				<tbody>
-				<!-- Loop -->
-					<tr>
-						<td><a href="#">1</a></td>
-						<td><a href="#">Mesa 1</a></td>
-						<td><a href="#">Frango<wbr>1und</a></td>
-						<td><a href="#">Pendente</a></td>
-					</tr>
-				<!-- Fim Loop -->
-				</tbody>
-			</table>
+		<div class="container text-center conteudo">
+			<h2>Boa Noite!</h2>
+			<h3>dia/mes/ano</h3>
+			<br>
+			<hr>
+			<!-- <h2>Pedidos Pendentes</h2> -->
+			<div>
+				<table class="table table-bordered table-responsive">
+					<caption class="text-center"><h2>Pedidos Pendentes</h2></caption>
+					<thead>
+						<tr>
+							<th class="text-center">Nº<wbr></wbr>Pedido</th>
+							<th class="text-center">Mesas</th>
+							<th class="text-center">Itens/<wbr></wbr>Quantidades</th>
+							<th class="text-center">status</th>
+						</tr>
+					</thead>
+					<tbody>
+					<!-- Loop -->
+						<tr>
+							<td><a href="#">1</a></td>
+							<td><a href="#">Mesa 1</a></td>
+							<td><a href="#">Frango<wbr>1und</a></td>
+							<td><a href="#">Pendente</a></td>
+						</tr>
+					<!-- Fim Loop -->
+					</tbody>
+				</table>
+			</div>
 		</div>
-	</div>
+
+
+	<!-- Fim conteudo -->
 {% endblock %}

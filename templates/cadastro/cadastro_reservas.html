@@ -1,27 +1,27 @@
 {% extends "layout/layout1.html" %}
 
 {% block title %}
-	Cadastrar Cliente
+	Cadastrar Reservas
 {% endblock %}
 
 {% block conteudo %}
 	<!-- Conteudo site -->
 	<div class="container conteudo">
 			
-		<h2 class="text-center">Cadastrar Cliente</h2>
+		<h2 class="text-center">Cadastrar Reservas</h2>
 		<div class="container">
 			<form action="cadastrar_cliente_submit" method="post" accept-charset="utf-8">
 				<div class="form-group">
-					<label for="nome_cliente">Nome Cliente</label>
-					<input type="text" name="nome_cliente" id="nome_cliente" class="form-control">	
+					<label for="data_reserva">Data Reserva</label>
+					<input type="text" name="data_reserva" id="data_reserva" class="form-control">	
 				</div>
 				<div class="form-group">
-					<label for="tel_cliente">Telefone Cliente</label>
-					<input type="tel" name="tel_cliente" id="tel_cliente" class="form-control">	
+					<label for="hora_reserva">Hora Reserva</label>
+					<input type="text" name="hora_reserva" id="hora_reserva" class="form-control">	
 				</div>
 				<div class="form-group">
-					<label for="cpf_cliente">CPF Cliente</label>
-					<input type="text" name="cpf_cliente" id="cpf_cliente" class="form-control">	
+					<label for="numero_pessoas_reserva">Numero de Pessoas Reserva</label>
+					<input type="text" name="numero_pessoas_reserva" id="numero_pessoas_reserva" class="form-control">	
 				</div>
 				<div class="text-center">
 					<button type="submit" class="btn btn-danger btn-lg my-btn">Cadastrar</button>
