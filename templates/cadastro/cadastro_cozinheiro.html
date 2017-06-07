@@ -1,0 +1,38 @@
+{% extends "layout/layout1.html" %}
+
+{% block title %}
+	Cadastrar cozinheiro
+{% endblock %}
+
+{% block conteudo %}
+	<!-- Conteudo site -->
+	<div class="container conteudo">
+			
+		<h2 class="text-center">Cadastrar Funcionario</h2>
+		<div class="container">
+			<form action="{{ url_for('funcionario_submit', funcao='cozinheiro') }}" method="post" accept-charset="utf-8">
+				<div class="form-group">
+					<label for="nome_cozinheiro">Nome Funcionario</label>
+					<input type="text" name="nome_cozinheiro" id="nome_cozinheiro" class="form-control">	
+				</div>
+				<div class="form-group">
+					<label for="sal_cozinheiro">Salario Funcionario</label>
+					<input type="text" name="sal_cozinheiro" id="sal_cozinheiro" class="form-control">	
+				</div>
+				<div class="form-group">
+					<label for="cpf_cozinheiro">CPF</label>
+					<input type="text" name="cpf_cozinheiro" id="cpf_cozinheiro" class="form-control">	
+				</div>
+				<div class="form-group">
+					<label for="cpf_cozinheiro">CPF do superior</label>
+					<input type="text" name="cpf_cozinheiro" id="cpf_cozinheiro" class="form-control">	
+				</div>
+				<div class="text-center">
+					<button type="submit" class="btn btn-danger btn-lg my-btn">Cadastrar</button>
+				</div>
+			</form>
+		</div>
+	</div>
+
+	<!-- Fim conteudo -->
+{% endblock %}

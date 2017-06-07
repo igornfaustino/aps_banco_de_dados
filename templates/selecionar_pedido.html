@@ -1,22 +1,24 @@
 {% extends "layout/layout1.html" %}
 
 {% block title %}
-	Selecionar Cliente
+	Pedidos
 {% endblock %}
 
 {% block conteudo %}
 	<!-- Conteudo site -->
+
 	<div class="container conteudo">
 		<div class=" container text-center">	
-			<h2>Selecionar Clientes</h2>
+			<h2>Selecionar Pedido</h2>
 		</div>	
 		<div class="container">
 			<!-- Pesquisa simples -->
 			<form action="{{ url_for('results_cliente_nome') }}" accept-charset="utf-8">
 				<div class="form-group">
-					<label for="nome_cliente">Nome Clientes</label>
+					<label for="data_pedido">Data Pedido</label>
 					<div class="input-group">
-						<input type="text" name="nome" id="nome_cliente" class="form-control" placeholder="Busca cliente pelo nome">
+						<input type="date" name="data_pedido" id="data_pedido
+						" class="form-control" placeholder="Busca Pedido pela data">
 						    <span class="input-group-btn">
 						    	<button type="submit" class="btn btn-danger">Buscar!</button>
 							</span>
@@ -27,9 +29,9 @@
 			<!-- pesquisa Complexa -->
 			<form action="#" method="post" accept-charset="utf-8">
 				<div class="form-group">
-					<label for="nome_cliente">Algo complexo</label>
+					<label for="data_pedido">Algo complexo</label>
 					<div class="input-group">
-						<input type="text" name="nome" id="nome_cliente" class="form-control" placeholder="Busca cliente por algo">
+						<input type="text" name="data_pedido" id="data_pedido" class="form-control" placeholder="Busca pedido por algo">
 						    <span class="input-group-btn">
 						    	<button type="submit" class="btn btn-danger">Buscar!</button>
 							</span>
@@ -41,4 +43,6 @@
 			<!-- etc -->
 		</div>
 	</div>
+
+	<!-- Fim conteudo -->
 {% endblock %}
