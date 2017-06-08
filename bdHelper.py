@@ -26,7 +26,22 @@ class bdHelper():
 		try:
 			query = "insert into pedidos"
 
+
 	
+	def cadastro_garcom(self, nome, sal, cpf):
+		connection = self.connect()
+		try:
+			query = "insert into funcionario(cpf, salario, situacao, nome) values (%s, %s, %s, %s)"
+			query1 = "insert into garcom(cpf) values (%s)"
+			with connection.cursor as cursor:
+				cursor.execute(query)
+				cursor.execute(query1)
+				connection.commit()
+		except Exception as e:
+			print(e)
+		finally:
+			connection.close()
+
 
 if __name__ == '__main__':
 	teste = bdHelper()
