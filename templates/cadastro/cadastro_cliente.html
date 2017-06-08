@@ -10,7 +10,7 @@
 			
 		<h2 class="text-center">Cadastrar Cliente</h2>
 		<div class="container">
-			<form action="cadastrar_cliente_submit" method="post" accept-charset="utf-8">
+			<form action="{{ url_for('cliente_submit') }}" method="post" accept-charset="utf-8">
 				<div class="form-group">
 					<label for="nome_cliente">Nome Cliente</label>
 					<input type="text" name="nome_cliente" id="nome_cliente" class="form-control">	
