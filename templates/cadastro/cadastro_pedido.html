@@ -10,7 +10,7 @@
 			
 		<h2 class="text-center">Cadastrar Pedido</h2>
 		<div class="container">
-			<form action="cadastrar_cliente_submit" method="post" accept-charset="utf-8">
+			<form action="{{url_for('pedido_submit')}}" method="post" accept-charset="utf-8">
 				<div class="form-group">
 					<!-- Com o numero da mesa é possivel descobrir o id do cliente que fez a reserva -->
 					<label for="nro_Mesa">Numero Mesa</label>
