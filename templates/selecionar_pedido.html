@@ -13,11 +13,11 @@
 		</div>	
 		<div class="container">
 			<!-- Pesquisa simples -->
-			<form action="{{url_for('results_pedido_nome')}}" method="post" accept-charset="utf-8">
+			<form action="{{url_for('results_pedido_nome')}}" accept-charset="utf-8">
 				<div class="form-group">
 					<label for="data_pedido">Data Pedido</label>
 					<div class="input-group">
-						<input type="text" name="data_pedido" id="data_pedido
+						<input type="date" name="data_pedido" id="data_pedido
 						" class="form-control" placeholder="Busca Pedido pela data">
 						    <span class="input-group-btn">
 						    	<button type="submit" class="btn btn-danger">Buscar!</button>
