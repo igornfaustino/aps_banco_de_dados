@@ -24,9 +24,15 @@ class bdHelper():
 	def cadastro_pedido(self, nroMesa):
 		connection = self.connect()
 		try:
-			query = "insert into pedidos"
+			query = "insert into pedidos(inPed, situacao, idCli, cpfGar, dataPed) values(%s, %s, %s, %s, NULL);"
 
-	
+			with connection.cursor() as cursor:
+				cursor.execute(query, (idPed, situacao, idCli, cpfGar, dataPed))
+				connection.commit()
+		except Exception as e:
+			print(e)
+		finally:
+			connection.close()
 
 if __name__ == '__main__':
 	teste = bdHelper()
