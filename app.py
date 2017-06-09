@@ -1,6 +1,6 @@
 from flask import Flask
 from flask import render_template, url_for, request, redirect
-
+import bdHelper
 
 app = Flask(__name__)
 
@@ -42,7 +42,7 @@ def cliente_submit():
 	nome = request.form['nome_cliente']
 	tel = request.form['tel_cliente']
 	cpf = request.form['cpf_cliente']
-	print (nome, tel, cpf)
+	bdHelper.cadastro_cliente(nome, tel, cpf)
 	return redirect(url_for('cliente'))
 
 @app.route('/cliente/search')
@@ -67,7 +67,7 @@ def cadastro_pedido():
 def pedido_submit():
 	nroMesa = None
 	nroMesa = request.form['nroMesa']
-	print (nroMesa)
+	bdHelper.cadastro_pedido(nroMesa)
 	return redirect(url_for('pedido'))
 
 @app.route('/pedido/search')
@@ -108,9 +108,9 @@ def funcionario_submit(funcao):
 	if funcao == 'cozinheiro':
 		cpf_chefe = None
 		cpf_chefe = request.form['cpf_chefe']
-		print("Sou um cozinheiro\n\n\n")
+		cadastro_cozinheiro(nome_funcionario, sal_funcionario, cpf_funcionario, cpf_chefe)
 	else:
-		pass
+		bdHelper.cadastro_garcom(nome_funcionario, sal_funcionario, cpf_funcionario)
 	return redirect(url_for('funcionario'))
 
 @app.route('/funcionario/search')
