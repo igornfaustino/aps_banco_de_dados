@@ -9,13 +9,15 @@
 	<div class="container text-justify">
 		<h2 class="text-center">Cliente</h2>
 		<ul class="my-list">
-			<li><p><div class="estilo">ID:</div> ID do cliente</p></li>
-			<hr>
-			<li><p><div class="estilo">Nome:</div> Nome do Cliente <br> <a href="#">alterar</a></p></li>
-			<hr>
-			<li><p><div class="estilo">cpf:</div> CPF do cliente <br> <a href="#">alterar</a></p></li>
-			<hr>
-			<li><p><div class="estilo">telefone:</div> telefone cidadão <br> <a href="#">alterar</a></p></li>
+			{% for row in results %}
+				<li><p><div class="estilo">ID:</div>{{ row[0] }}</p></li>
+				<hr>
+				<li><p><div class="estilo">Nome:</div>{{ row[1] }}<br> <a href="#">alterar</a></p></li>
+				<hr>
+				<li><p><div class="estilo">cpf:</div>{{ row[3] }}<br> <a href="#">alterar</a></p></li>
+				<hr>
+				<li><p><div class="estilo">telefone:</div>{{ row[2] }}<br> <a href="#">alterar</a></p></li>
+			{% endfor %}
 		</ul>
 		<hr>
 		<div class="text-right">

@@ -1,30 +1,54 @@
 import pymysql
 
 class bdHelper():
-	"""docstring for bdHelper"""
-	def __init__(self):
-		pass
+	# """docstring for bdHelper"""
+	# def __init__(self):
+	# 	pass
 
 	def connect(self, database="restaurante_bd"):
 		return pymysql.connect(host="localhost", user="root", passwd="root", db=database)
 
-	def cadastro_cliente(self, idCli=None, nome=None, telefone=None, cpf=None):
+	# crud cliente
+
+	def cadastro_cliente(self, nome=None, telefone=None, cpf=None):
 		connection = self.connect()
 		try:
-			query = "insert into clientes(idCli, nome, telefone, cpf) values(%s, %s, %s, %s);"
+			query = "insert into clientes(nome, telefone, cpf) values(%s, %s, %s);"
 			
 			with connection.cursor() as cursor:
-				cursor.execute(query, (idCli, nome, telefone, cpf))
+				cursor.execute(query, (nome, telefone, cpf))
 				connection.commit()
 		except Exception as e:
 			print(e)
 		finally:
 			connection.close()
 
-	def cadastro_pedido(self, nroMesa):
+	def search_cliente(self, idCli=None, nome=None):
 		connection = self.connect()
 		try:
-			query = "insert into pedidos"
+			with connection.cursor() as cursor:
+				if(idCli):
+					query = "select * from clientes where idCli = %s"
+					cursor.execute(query, idCli)
+				elif(nome):
+					query = "select * from clientes where nome like %s"
+					cursor.execute(query, ("%" + nome + "%"))
+				return cursor.fetchall()
+		except Exception as e:
+			print(e)
+		finally:
+			connection.close()
+
+	# def cadastro_pedido(self, nroMesa):
+	# 	connection = self.connect()
+	# 	try:
+	# 		query = "insert into pedidos(inPed, situacao, idCli, cpfGar, dataPed) values(%s, %s, %s, %s, NULL);"
+	# 		with connection.cursor() as cursor:
+	# 			cursor.execute(query, ("Pedido Pendente", idCli, "NULL", "curdate()"))
+	# 	except Exception as e:
+	# 		print(e)
+	# 	finally:
+	# 		connection.close()
 
 
 	

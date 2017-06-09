@@ -1,8 +1,9 @@
 from flask import Flask
 from flask import render_template, url_for, request, redirect
-import bdHelper
+from bdHelper import bdHelper
 
 app = Flask(__name__)
+sql = bdHelper()
 
 @app.route('/')
 def index():
@@ -42,7 +43,7 @@ def cliente_submit():
 	nome = request.form['nome_cliente']
 	tel = request.form['tel_cliente']
 	cpf = request.form['cpf_cliente']
-	bdHelper.cadastro_cliente(nome, tel, cpf)
+	sql.cadastro_cliente(nome, tel, cpf)
 	return redirect(url_for('cliente'))
 
 @app.route('/cliente/search')
@@ -51,11 +52,19 @@ def search_cliente():
 
 @app.route('/cliente/results')
 def results_cliente_nome():
-	return render_template('listar_resultados.html')
+	nome = request.args.get('nome')
+	results = sql.search_cliente(nome=nome)
+	return render_template('listar_resultados.html', results=results)
 
 @app.route('/cliente/results')
 def results_cliente_algo():
 	pass
+
+@app.route('/cliente/<nome>')
+def exibir_clientes(nome):
+	id = request.args.get('id')
+	results = sql.search_cliente(idCli=id)
+	return render_template('exibir_cliente.html', results=results)
 
 #crud pedidos
 
@@ -67,7 +76,7 @@ def cadastro_pedido():
 def pedido_submit():
 	nroMesa = None
 	nroMesa = request.form['nroMesa']
-	bdHelper.cadastro_pedido(nroMesa)
+	sql.cadastro_pedido(nroMesa)
 	return redirect(url_for('pedido'))
 
 @app.route('/pedido/search')
