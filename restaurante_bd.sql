@@ -20,18 +20,12 @@ create table clientes(
 create table reservas(
 	idReser integer auto_increment,
     idCli integer not null,
+    nroMesa integer not null,
     datas date,
     hora time,
     nroPessoas integer,
     constraint pk_reservas primary key (idReser),
-    constraint fk_reservas foreign key (idCli) references clientes(idCli)
-);
-
-create table reservas_mesas(
-	idReser integer,
-    nroMesa integer,
-    constraint pk_reMesa primary key (idReser, nroMesa),
-    constraint fk_reMesa_reser foreign key (idReser) references reservas (idReser),
+    constraint fk_reservas foreign key (idCli) references clientes(idCli),
     constraint fk_reMesa_mesa foreign key (nroMesa) references mesas (nroMesa)
 );
 
@@ -86,7 +80,6 @@ create table pedidos_pratos(
 create table ingredientes(
 	id integer auto_increment,
     nome varchar(50),
-    qtdTotal int,
     constraint pk_ingredientes primary key (id)
 );
 
@@ -118,15 +111,14 @@ create table ingredientes_fornecedores(
 
 insert into mesas(nroMesa, nroPessoas) values (1, 4), (2, 4), (3, 8), (4, 8), (5, 6);
 insert into clientes(nome, telefone, cpf) value ('Astolfo da Silva', '99999-9999', '121312312'), ('John Smith', '07700 900461', '3454523'), ('Mat Smith', '07700 900461', '45898989'), ('Peter Capaldi', '07700 900461', '78797979');
-insert into reservas(idCli, datas, hora, nroPessoas) values (1, '2017-10-12', '20:00:00', 2), (2, '1998-10-15', '17:00:00', 2), (2, '3012-10-15', '17:00:00', 3);
-insert into reservas_mesas(idReser, nroMesa) values (1, 2), (2, 3), (3, 2);
+insert into reservas(idCli, datas, hora, nroPessoas, nroMesa) values (1, '2017-10-12', '20:00:00', 2, 2), (2, '1998-10-15', '17:00:00', 2, 3), (2, '3012-10-15', '17:00:00', 3, 3);
 insert into funcionarios(cpf, salario, situacao, nome) values (1, 3000, 'Ativo', 'Master chefe'), (2, NULL, 'Aposentado', 'Mario Verde'), (3, 1000, 'Ativo', 'Mario Mario'), (4, NULL, 'Estagiario', 'Luigi Mario');
 insert into garcons(cpf) values (1), (2);
 insert into cozinheiros (cpf, cpfChefe) values (3, NULL), (4, 3);
 insert into pedidos (situacao, idCli, cpfGar, dataPed) values ('pendente', 2, 1, CURDATE()), ('pago', 2, 2, CURDATE());
 insert into pratos (nome) values ('Macarrao instantaneo'), ('Pizza congelada'), ('Milk Shake');
 insert into pedidos_pratos (idPratos, idPed, qtd) values (1, 1, 3), (2, 2, 1), (2, 1, 7);
-insert into ingredientes (nome, qtdTotal) values ('Cebola', 7), ('Chocolate', 3);
+insert into ingredientes (nome) values ('Cebola'), ('Chocolate');
 insert into pratos_ingrediente (idIng, idPratos, qtd) values (2, 3, 2);
 insert into fornecedores (nome, telefone) values ('Bob da Silva', '99999-9999'), ('Carlos da Silva', '99999-9900'), ('Bob Smith', '99999-0000');
 insert into ingredientes_fornecedores (idForn, idIng) values (1, 2), (2, 2), (3, 2), (1, 1);

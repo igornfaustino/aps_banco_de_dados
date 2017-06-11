@@ -28,12 +28,60 @@ class bdHelper():
 		try:
 			with connection.cursor() as cursor:
 				if(idCli):
-					query = "select * from clientes where idCli = %s"
+					query = "select * from clientes where idCli = %s;"
 					cursor.execute(query, idCli)
 				elif(nome):
-					query = "select * from clientes where nome like %s"
+					query = "select * from clientes where nome like %s;"
 					cursor.execute(query, ("%" + nome + "%"))
 				return cursor.fetchall()
+		except Exception as e:
+			print(e)
+		finally:
+			connection.close()
+
+	def rm_cliente(self, idCli=None):
+		connection = self.connect()
+		try:
+			query = "delete from clientes where idCli = %s;"
+			with connection.cursor() as cursor:
+				cursor.execute(query, idCli)
+				connection.commit()
+		except Exception as e:
+			print(e)
+		finally:
+			connection.close()
+
+	def alter_cliente_nome(self, idCli=None, nome = None):
+		connection = self.connect()
+		try:
+			query = "update clientes set nome = %s where idCli = %s;"
+			with connection.cursor() as cursor:
+				cursor.execute(query, (nome, idCli))
+				connection.commit()
+		except Exception as e:
+			print(e)
+		finally:
+			connection.close()
+
+	def alter_cliente_tel(self, idCli=None, tel = None):
+		connection = self.connect()
+		try:
+			query = "update clientes set nome = %s where idCli = %s;"
+			with connection.cursor() as cursor:
+				cursor.execute(query, (tel, idCli))
+				connection.commit()
+		except Exception as e:
+			print(e)
+		finally:
+			connection.close()
+
+	def alter_cliente_cpf(self, idCli=None, cpf = None):
+		connection = self.connect()
+		try:
+			query = "update clientes set nome = %s where idCli = %s;"
+			with connection.cursor() as cursor:
+				cursor.execute(query, (cpf, idCli))
+				connection.commit()
 		except Exception as e:
 			print(e)
 		finally:
@@ -83,5 +131,5 @@ class bdHelper():
 
 if __name__ == '__main__':
 	teste = bdHelper()
-	teste.cadastro_cliente("7", "David Tennant", "183", "12334")
+	# teste.cadastro_cliente("7", "David Tennant", "183", "12334")
 	# print(data)
