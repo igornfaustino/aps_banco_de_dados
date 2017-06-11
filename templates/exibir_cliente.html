@@ -6,24 +6,26 @@
 
 {% block conteudo %}
 	<!-- Conteudo site -->
+	{% for row in results %}
 	<div class="container text-justify">
 		<h2 class="text-center">Cliente</h2>
 		<ul class="my-list">
-			{% for row in results %}
 				<li><p><div class="estilo">ID:</div>{{ row[0] }}</p></li>
 				<hr>
-				<li><p><div class="estilo">Nome:</div>{{ row[1] }}<br> <a href="#">alterar</a></p></li>
+				<li><p><div class="estilo">Nome:</div>{{ row[1] }}  <a href="{{ url_for('cliente_nome', id=row[0]) }}" class="btn btn-default">alterar</a></p></li>
 				<hr>
-				<li><p><div class="estilo">cpf:</div>{{ row[3] }}<br> <a href="#">alterar</a></p></li>
+				<li><p><div class="estilo">cpf:</div>{{ row[3] }}  <a href="#" class="btn btn-default">alterar</a></p></li>
 				<hr>
-				<li><p><div class="estilo">telefone:</div>{{ row[2] }}<br> <a href="#">alterar</a></p></li>
-			{% endfor %}
+				<li><p><div class="estilo">telefone:</div>{{ row[2] }}  <a href="#" class="btn btn-default">alterar</a></p></li>
 		</ul>
 		<hr>
 		<div class="text-right">
-			<button type="" class="btn btn-default btn-sm">excluir cliente</button>
+		<form method="post">
+			<button type="submit" formmethod="post" formaction="{{ url_for('rm_cliente', nome=row[1], idCli=row[0]) }}" class="btn btn-default btn-sm">excluir cliente</button>
+		</form>
 		</div>
 	</div>
+	{% endfor %}
 
 	<!-- Fim conteudo -->
 {% endblock %}

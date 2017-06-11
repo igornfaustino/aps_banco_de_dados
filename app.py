@@ -31,6 +31,8 @@ def pedido():
 
 # crud clientes
 
+####### Cadastrar #######
+
 @app.route('/cliente/cadastro')
 def cadastro_cliente():
 	return render_template('cadastro/cadastro_cliente.html')	
@@ -45,6 +47,9 @@ def cliente_submit():
 	cpf = request.form['cpf_cliente']
 	sql.cadastro_cliente(nome, tel, cpf)
 	return redirect(url_for('cliente'))
+
+########################
+####### Exibir #########
 
 @app.route('/cliente/search')
 def search_cliente():
@@ -65,6 +70,47 @@ def exibir_clientes(nome):
 	id = request.args.get('id')
 	results = sql.search_cliente(idCli=id)
 	return render_template('exibir_cliente.html', results=results)
+
+########################
+####### Alterar ########
+
+@app.route('/cliente/alterar/<id>/')
+def cliente_nome(id):
+	return render_template('alterar.html', name="Nome", action=url_for('cliente_nome_submit', id=id), type="text", label="Novo Nome")
+
+@app.route('/cliente/alterar/<id>/submit', methods=['POST'])
+def cliente_nome_submit(id):
+	novo = request.form['alt']
+	sql.alter_cliente_nome(idCli=id, nome=novo)
+	return redirect(url_for('cliente'))
+
+@app.route('/cliente/alterar/<id>/')
+def cliente_tel(id):
+	return render_template('alterar.html', name="Tel", action=url_for('cliente_nome_submit', id=id), type="tel", label="Novo Telefone")
+
+@app.route('/cliente/alterar/<id>/submit', methods=['POST'])
+def cliente_tel_submit(id):
+	novo = request.form['alt']
+	sql.alter_cliente_tel(idCli=id, tel=novo)
+	return redirect(url_for('cliente'))
+
+@app.route('/cliente/alterar/<id>/')
+def cliente_cpf(id):
+	return render_template('alterar.html', name="CPF", action=url_for('cliente_nome_submit', id=id), type="text", label="Novo CPF")
+
+@app.route('/cliente/alterar/<id>/submit', methods=['POST'])
+def cliente_cpf_submit(id):
+	novo = request.form['alt']
+	sql.alter_cliente_nome(idCli=id, cpf=novo)
+	return redirect(url_for('cliente'))
+
+########################
+######## Remover #######
+
+@app.route('/cliente/<nome>/<idCli>/remove', methods=["POST"])
+def rm_cliente(nome, idCli):
+	sql.rm_cliente(idCli=idCli)
+	return redirect(url_for('cliente'))
 
 #crud pedidos
 
@@ -90,6 +136,8 @@ def results_pedido_nome():
 @app.route('/pedido/results')
 def results_pedido_algo():
 	pass
+
+
 
 #crud funcionarios
 

@@ -1,0 +1,20 @@
+{% extends "layout/layout1.html" %}
+
+{% block title %}
+	alterar
+{% endblock %}
+
+{% block conteudo %}
+	<div class="container">
+		<h3 class="text-center">Alterar {{ name }}</h3>
+		<form action="{{ action }}" method="post" accept-charset="utf-8">
+			<div class="form-group">
+				<label for="alt">{{ label }}:</label>
+				<input type={{ type }} name="alt" id="alt" class="form-control">
+			</div>
+			<div class="text-center">
+				<button type="submit" class="btn btn-danger btn-lg my-btn">Alterar</button>
+			</div>
+		</form>
+	</div>
+{% endblock %}
