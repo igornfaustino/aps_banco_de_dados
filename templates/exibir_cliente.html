@@ -14,9 +14,9 @@
 				<hr>
 				<li><p><div class="estilo">Nome:</div>{{ row[1] }}  <a href="{{ url_for('cliente_nome', id=row[0]) }}" class="btn btn-default">alterar</a></p></li>
 				<hr>
-				<li><p><div class="estilo">cpf:</div>{{ row[3] }}  <a href="#" class="btn btn-default">alterar</a></p></li>
+				<li><p><div class="estilo">cpf:</div>{{ row[3] }}  <a href="{{ url_for('cliente_cpf', id=row[0]) }}" class="btn btn-default">alterar</a></p></li>
 				<hr>
-				<li><p><div class="estilo">telefone:</div>{{ row[2] }}  <a href="#" class="btn btn-default">alterar</a></p></li>
+				<li><p><div class="estilo">telefone:</div>{{ row[2] }}  <a href="{{ url_for('cliente_tel', id=row[0]) }}" class="btn btn-default">alterar</a></p></li>
 		</ul>
 		<hr>
 		<div class="text-right">

@@ -78,34 +78,34 @@ def exibir_clientes(nome):
 ########################
 ####### Alterar ########
 
-@app.route('/cliente/alterar/<id>/')
+@app.route('/cliente/alterar/<id>/nome')
 def cliente_nome(id):
 	return render_template('alterar.html', name="Nome", action=url_for('cliente_nome_submit', id=id), type="text", label="Novo Nome")
 
-@app.route('/cliente/alterar/<id>/submit', methods=['POST'])
+@app.route('/cliente/alterar/<id>/nome/submit', methods=['POST'])
 def cliente_nome_submit(id):
 	novo = request.form['alt']
 	sql.alter_cliente_nome(idCli=id, nome=novo)
 	return redirect(url_for('cliente'))
 
-@app.route('/cliente/alterar/<id>/')
+@app.route('/cliente/alterar/<id>/telefone')
 def cliente_tel(id):
-	return render_template('alterar.html', name="Tel", action=url_for('cliente_nome_submit', id=id), type="tel", label="Novo Telefone")
+	return render_template('alterar.html', name="Tel", action=url_for('cliente_tel_submit', id=id), type="tel", label="Novo Telefone")
 
-@app.route('/cliente/alterar/<id>/submit', methods=['POST'])
+@app.route('/cliente/alterar/<id>/telefonesubmit', methods=['POST'])
 def cliente_tel_submit(id):
 	novo = request.form['alt']
 	sql.alter_cliente_tel(idCli=id, tel=novo)
 	return redirect(url_for('cliente'))
 
-@app.route('/cliente/alterar/<id>/')
+@app.route('/cliente/alterar/<id>/cpf')
 def cliente_cpf(id):
-	return render_template('alterar.html', name="CPF", action=url_for('cliente_nome_submit', id=id), type="text", label="Novo CPF")
+	return render_template('alterar.html', name="CPF", action=url_for('cliente_cpf_submit', id=id), type="text", label="Novo CPF")
 
-@app.route('/cliente/alterar/<id>/submit', methods=['POST'])
+@app.route('/cliente/alterar/<id>/cpfsubmit', methods=['POST'])
 def cliente_cpf_submit(id):
 	novo = request.form['alt']
-	sql.alter_cliente_nome(idCli=id, cpf=novo)
+	sql.alter_cliente_cpf(idCli=id, cpf=novo)
 	return redirect(url_for('cliente'))
 
 ########################
