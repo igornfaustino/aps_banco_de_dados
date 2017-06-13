@@ -246,6 +246,102 @@ def rm_prato(nome, id):
 	sql.rm_prato(id=id)
 	return redirect(url_for('cardapio'))
 
+# crud mesa
+
+####### Cadastrar #######
+
+@app.route('/mesa/cadastro')
+def cadastro_mesa():
+	return render_template('mesa/cadastro_mesa.html')	
+
+@app.route('/cadastro/mesa/submit', methods=['POST'])
+def cliente_mesa():
+	numero_da_mesa = None
+	numero_de_pessoas = None
+	numero_da_mesa = request.form['numero_da_mesa']
+	numero_de_pessoas = request.form['numero_de_pessoas']
+	sql.cadastro_cliente(numero_da_mesa, numero_de_pessoas)
+	return redirect(url_for('mesa'))
+
+########################
+####### Exibir #########
+
+@app.route('/mesa/search')
+def search_mesa():
+	return render_template('selecionar_mesa.html')
+
+@app.route('/mesa/results')
+def results_mesa_numero_da_mesa():
+	nome = request.args.get('numero_da_mesa')
+	results = sql.search_mesa(numero_da_mesa=numero_da_mesa)
+	return render_template('listar_resultados_mesa.html', results=results)
+
+@app.route('/mesa/results')
+def results_mesa_algo():
+	pass
+
+@app.route('/mesa/<numero_da_mesa>')
+def exibir_mesa(numero_da_mesa):
+	numero_de_pessoas = request.args.get('numero_de_pessoas')
+	results = sql.search_cliente(numero_de_pessoas=numero_de_pessoas)
+	return render_template('exibir_mesa.html', results=results)
+
+########################
+####### Alterar ########
+
+@app.route('/mesa/alterar/<id>/')
+def numero_da_mesa(numero_da_mesa):
+	return render_template('alterar.html', name="Numero da mesa", action=url_for('numero_da_mesa_submit', id=id), type="num", label="Novo Numero da Mesa")
+
+@app.route('/mesa/alterar/<id>/submit', methods=['POST'])
+def numero_da_mesa_submit(numero_da_mesa):
+	novo = request.form['alt']
+	sql.alter_numero_da_mesa(numero_da_mesa=numero_da_mesa, numero_novo=novo)
+	return redirect(url_for('mesa'))
+
+@app.route('/mesa/alterar/<id>/')
+def numero_de_pessoas(numero_da_mesa):
+	return render_template('alterar.html', name="Numero de Pessoas", action=url_for('numero_de_pessoas_submit', id=id), type="num", label="Novo Numero de Pessoas")
+
+@app.route('/mesa/alterar/<id>/submit', methods=['POST'])
+def numero_de_pessoas_submit(numero_da_mesa):
+	novo = request.form['alt']
+	sql.alter_numero_de_pessoas(numero_da_mesa=numero_da_mesa, numero_de_pessoas=novo)
+	return redirect(url_for('mesa'))
+
+########################
+######## Remover #######
+
+@app.route('mesa/<nroMesa>/remove', methods=["POST"])
+def rm_mesa(numero_da_mesa):
+	sql.rm_mesa(numero_da_mesa=numero_da_mesa)
+	return redirect(url_for('mesa'))
+
+#crud pedidos
+
+@app.route('/pedido/cadastro')
+def cadastro_pedido():
+	return render_template('cadastro/cadastro_pedido.html')
+
+@app.route('/cadastro/pedido/submit', methods=['POST'])
+def pedido_submit():
+	nroMesa = None
+	nroMesa = request.form['nroMesa']
+	sql.cadastro_pedido(nroMesa)
+	return redirect(url_for('pedido'))
+
+@app.route('/pedido/search')
+def search_pedido():
+	return render_template('selecionar_pedido.html')
+
+@app.route('/pedido/results')
+def results_pedido_nome():
+	return render_template('listar_resultados.html')
+
+@app.route('/pedido/results')
+def results_pedido_algo():
+	pass
+
 
 if __name__ == '__main__':
 	app.run(debug=True)

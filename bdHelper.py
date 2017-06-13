@@ -103,7 +103,7 @@ class bdHelper():
 	def cadastro_mesa(self, numero_de_pessoas=None, numero_da_mesa=None):
 		connection = self.connect()
 		try:
-			query = "insert into clientes(numero_de_pessoas, numero_da_mesa) values(%s, %s);"
+			query = "insert into clientes(nroPessoas, nroMesa) values(%s, %s);"
 			
 			with connection.cursor() as cursor:
 				cursor.execute(query, (numero_de_pessoas, numero_da_mesa))
@@ -118,10 +118,10 @@ class bdHelper():
 		try:
 			with connection.cursor() as cursor:
 				if(numero_de_pessoas):
-					query = "select * from mesa where numero_de_pessoas = %s;"
-					cursor.execute(query, numero_de_pessoas)
+					query = "select * from mesa where nroPessoas = %s;"
+					cursor.execute(query,(numero_de_pessoas, numero_da_mesa))
 				elif(numero_da_mesa):
-					query = "select * from mesa where numero_da_mesa like %s;"
+					query = "select * from mesa where nroMesa like %s;"
 					cursor.execute(query, ("%" + numero_da_mesa + "%"))
 				return cursor.fetchall()
 		except Exception as e:
@@ -132,7 +132,7 @@ class bdHelper():
 	def rm_mesa(self, numero_da_mesa=None):
 		connection = self.connect()
 		try:
-			query = "delete from mesa where numero_da_mesa = %s;"
+			query = "delete from mesa where nroMesa = %s;"
 			with connection.cursor() as cursor:
 				cursor.execute(query, numero_da_mesa)
 				connection.commit()
@@ -144,9 +144,21 @@ class bdHelper():
 	def alter_numero_de_pessoas(self, numero_da_mesa=None, numero_de_pessoas = None):
 		connection = self.connect()
 		try:
-			query = "update mesa set numero_de_pessoas = %s where numero_de_pessoas = %s;"
+			query = "update mesa set nroPessoas = %s where nroMesa = %s;"
 			with connection.cursor() as cursor:
-				cursor.execute(query, (numero_de_pessoas, idCli))
+				cursor.execute(query, (numero_de_pessoas, numero_da_mesa))
+				connection.commit()
+		except Exception as e:
+			print(e)
+		finally:
+			connection.close()
+
+	def alter_numero_da_mesa(self, numero_da_mesa=None, novo_numero = None):
+		connection = self.connect()
+		try:
+			query = "update mesa set nroMesa = %s where nroMesa = %s;"
+			with connection.cursor() as cursor:
+				cursor.execute(query, (novo_numero, numero_da_mesa))
 				connection.commit()
 		except Exception as e:
 			print(e)
