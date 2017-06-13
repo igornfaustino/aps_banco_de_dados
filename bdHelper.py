@@ -98,6 +98,63 @@ class bdHelper():
 	# 	finally:
 	# 		connection.close()
 
+	# crud mesa
+
+	def cadastro_mesa(self, numero_de_pessoas=None, numero_da_mesa=None):
+		connection = self.connect()
+		try:
+			query = "insert into clientes(numero_de_pessoas, numero_da_mesa) values(%s, %s);"
+			
+			with connection.cursor() as cursor:
+				cursor.execute(query, (numero_de_pessoas, numero_da_mesa))
+				connection.commit()
+		except Exception as e:
+			print(e)
+		finally:
+			connection.close()
+
+	def search_mesa(self, numero_de_pessoas=None, numero_da_mesa=None):
+		connection = self.connect()
+		try:
+			with connection.cursor() as cursor:
+				if(numero_de_pessoas):
+					query = "select * from mesa where numero_de_pessoas = %s;"
+					cursor.execute(query, numero_de_pessoas)
+				elif(numero_da_mesa):
+					query = "select * from mesa where numero_da_mesa like %s;"
+					cursor.execute(query, ("%" + numero_da_mesa + "%"))
+				return cursor.fetchall()
+		except Exception as e:
+			print(e)
+		finally:
+			connection.close()
+
+	def rm_mesa(self, numero_da_mesa=None):
+		connection = self.connect()
+		try:
+			query = "delete from mesa where numero_da_mesa = %s;"
+			with connection.cursor() as cursor:
+				cursor.execute(query, numero_da_mesa)
+				connection.commit()
+		except Exception as e:
+			print(e)
+		finally:
+			connection.close()
+
+	def alter_numero_de_pessoas(self, numero_da_mesa=None, numero_de_pessoas = None):
+		connection = self.connect()
+		try:
+			query = "update mesa set numero_de_pessoas = %s where numero_de_pessoas = %s;"
+			with connection.cursor() as cursor:
+				cursor.execute(query, (numero_de_pessoas, idCli))
+				connection.commit()
+		except Exception as e:
+			print(e)
+		finally:
+			connection.close()
+
+	
+
 
 	
 	def cadastro_garcom(self, nome, sal, cpf):
