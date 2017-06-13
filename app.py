@@ -27,6 +27,10 @@ def restaurante():
 def cardapio():
 	return render_template('cardapio.html')
 
+@app.route('/restaurante/mesa/')
+def mesa():
+	return render_template('mesa.html')
+
 @app.route('/pedido')
 def pedido():
 	return render_template('pedidos.html')
@@ -252,10 +256,10 @@ def rm_prato(nome, id):
 
 @app.route('/mesa/cadastro')
 def cadastro_mesa():
-	return render_template('mesa/cadastro_mesa.html')	
+	return render_template('cadastro/cadastro_mesa.html')	
 
 @app.route('/cadastro/mesa/submit', methods=['POST'])
-def cliente_mesa():
+def mesa_submit():
 	numero_da_mesa = None
 	numero_de_pessoas = None
 	numero_da_mesa = request.form['numero_da_mesa']
@@ -312,35 +316,35 @@ def numero_de_pessoas_submit(numero_da_mesa):
 ########################
 ######## Remover #######
 
-@app.route('mesa/<nroMesa>/remove', methods=["POST"])
-def rm_mesa(numero_da_mesa):
+@app.route('/mesa/<nroMesa>/remove', methods=["POST"])
+def rm_mesa(nroMesa):
 	sql.rm_mesa(numero_da_mesa=numero_da_mesa)
 	return redirect(url_for('mesa'))
 
 #crud pedidos
 
-@app.route('/pedido/cadastro')
-def cadastro_pedido():
-	return render_template('cadastro/cadastro_pedido.html')
+# #@app.route('/pedido/cadastro')
+# #def cadastro_pedido():
+# 	#return render_template('cadastro/cadastro_pedido.html')
 
-@app.route('/cadastro/pedido/submit', methods=['POST'])
-def pedido_submit():
-	nroMesa = None
-	nroMesa = request.form['nroMesa']
-	sql.cadastro_pedido(nroMesa)
-	return redirect(url_for('pedido'))
+# @app.route('/cadastro/pedido/submit', methods=['POST'])
+# def pedido_submit():
+# 	nroMesa = None
+# 	nroMesa = request.form['nroMesa']
+# 	sql.cadastro_pedido(nroMesa)
+# 	return redirect(url_for('pedido'))
 
-@app.route('/pedido/search')
-def search_pedido():
-	return render_template('selecionar_pedido.html')
+# @app.route('/pedido/search')
+# def search_pedido():
+# 	return render_template('selecionar_pedido.html')
 
-@app.route('/pedido/results')
-def results_pedido_nome():
-	return render_template('listar_resultados.html')
+# @app.route('/pedido/results')
+# def results_pedido_nome():
+# 	return render_template('listar_resultados.html')
 
-@app.route('/pedido/results')
-def results_pedido_algo():
-	pass
+# @app.route('/pedido/results')
+# def results_pedido_algo():
+# 	pass
 
 
 if __name__ == '__main__':

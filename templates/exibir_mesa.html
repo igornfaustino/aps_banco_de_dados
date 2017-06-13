@@ -10,15 +10,15 @@
 	<div class="container text-justify">
 		<h2 class="text-center">Mesa</h2>
 		<ul class="my-list">
-				<li><p><div class="estilo">Numero de Pessoas:</div>{{ row[0] }}  <a href="{{ url_for('numero_de_pessoas', id=row[0]) }}" class="btn btn-default">alterar</a></p></li>
+				<li><p><div class="estilo">Numero da Mesa:</div>{{ row[0] }}  <a href="{{ url_for('numero_da_mesa', id=row[0]) }}" class="btn btn-default">alterar</a></p></li>
 				<hr>
-				<li><p><div class="estilo">Numero da Mesa:</div>{{ row[1] }}  <a href="{{ url_for('numero_da_mesa', id=row[1]) }}" class="btn btn-default">alterar</a></p></li>
+				<li><p><div class="estilo">Numero de Pessoas:</div>{{ row[1] }}  <a href="{{ url_for('numero_de_pessoas', id=row[1]) }}" class="btn btn-default">alterar</a></p></li>
 				<hr>
 		</ul>
 		<hr>
 		<div class="text-right">
 		<form method="post">
-			<button type="submit" formmethod="post" formaction="{{ url_for('rm_cliente', numero_da_mesa=row[1]}}" class="btn btn-default btn-sm">excluir cliente</button>
+			<button type="submit" formmethod="post" formaction="{{ url_for('rm_mesa', numero_da_mesa=row[0]}}" class="btn btn-default btn-sm">excluir mesa</button>
 		</form>
 		</div>
 	</div>
