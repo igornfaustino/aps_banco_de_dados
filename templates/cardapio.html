@@ -9,10 +9,10 @@
 		<div class="container text-center conteudo">
 			<h2>Cardapio</h2>
 			<div class="container separete-margim">
-				<a href="./selecionar_prato.html" class="btn btn-danger btn-block btn-lg my-btn">SELECIONAR PRATO</a>
+				<a href="{{ url_for('search_prato') }}" class="btn btn-danger btn-block btn-lg my-btn">SELECIONAR PRATO</a>
 			</div>
 			<div class="container separete-margim">
-				<a href="cadastro/cadastro_prato.html" class="btn btn-danger btn-block btn-lg my-btn">CADASTRAR PRATO</a>
+				<a href="{{ url_for('cadastro_prato') }}" class="btn btn-danger btn-block btn-lg my-btn">CADASTRAR PRATO</a>
 			</div>
 			<div class="container separete-margim">
 				<a href="./selecionar_ingrediente.html" class="btn btn-danger btn-block btn-lg my-btn">SELECIONAR INGREDIENTE</a>

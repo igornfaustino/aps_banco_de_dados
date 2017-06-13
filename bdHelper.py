@@ -66,7 +66,7 @@ class bdHelper():
 	def alter_cliente_tel(self, idCli=None, tel = None):
 		connection = self.connect()
 		try:
-			query = "update clientes set nome = %s where idCli = %s;"
+			query = "update clientes set telefone = %s where idCli = %s;"
 			with connection.cursor() as cursor:
 				cursor.execute(query, (tel, idCli))
 				connection.commit()
@@ -78,7 +78,7 @@ class bdHelper():
 	def alter_cliente_cpf(self, idCli=None, cpf = None):
 		connection = self.connect()
 		try:
-			query = "update clientes set nome = %s where idCli = %s;"
+			query = "update clientes set cpf = %s where idCli = %s;"
 			with connection.cursor() as cursor:
 				cursor.execute(query, (cpf, idCli))
 				connection.commit()
@@ -128,6 +128,61 @@ class bdHelper():
 		finally:
 			connection.close()
 
+
+	# crud pratos
+
+	def cadastro_prato(self, nome=None):
+		connection = self.connect()
+		try:
+			query = "insert into pratos(nome) values(%s);"
+			
+			with connection.cursor() as cursor:
+				cursor.execute(query, nome)
+				connection.commit()
+		except Exception as e:
+			print(e)
+		finally:
+			connection.close()
+
+	def search_prato(self, id=None, nome=None):
+		connection = self.connect()
+		try:
+			with connection.cursor() as cursor:
+				if(id):
+					query = "select * from pratos where id = %s;"
+					cursor.execute(query, id)
+				elif(nome):
+					query = "select * from pratos where nome like %s;"
+					cursor.execute(query, ("%" + nome + "%"))
+				return cursor.fetchall()
+		except Exception as e:
+			print(e)
+		finally:
+			connection.close()
+
+	def rm_prato(self, id=None):
+		connection = self.connect()
+		try:
+			query = "delete from pratos where id = %s;"
+			with connection.cursor() as cursor:
+				cursor.execute(query, id)
+				connection.commit()
+		except Exception as e:
+			print(e)
+		finally:
+			connection.close()
+
+	def alter_prato_nome(self, id=None, nome = None):
+		connection = self.connect()
+		try:
+			query = "update pratos set nome = %s where id = %s;"
+			with connection.cursor() as cursor:
+				cursor.execute(query, (nome, id))
+				connection.commit()
+		except Exception as e:
+			print(e)
+		finally:
+			connection.close()
 
 if __name__ == '__main__':
 	teste = bdHelper()

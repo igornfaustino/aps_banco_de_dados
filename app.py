@@ -23,6 +23,10 @@ def funcionario():
 def restaurante():
 	return render_template('restaurante.html')
 
+@app.route('/restaurante/cardapio/')
+def cardapio():
+	return render_template('cardapio.html')
+
 @app.route('/pedido')
 def pedido():
 	return render_template('pedidos.html')
@@ -59,7 +63,7 @@ def search_cliente():
 def results_cliente_nome():
 	nome = request.args.get('nome')
 	results = sql.search_cliente(nome=nome)
-	return render_template('listar_resultados.html', results=results)
+	return render_template('listar_resultados_cliente.html', results=results)
 
 @app.route('/cliente/results')
 def results_cliente_algo():
@@ -181,6 +185,66 @@ def results_funcionario_nome():
 @app.route('/funcionario/results')
 def results_funcionario_algo():
 	pass
+
+
+# crud pratos	
+
+####### Cadastrar #######
+
+@app.route('/restaurante/cardapio/prato/cadastro')
+def cadastro_prato():
+	return render_template('cadastro/cadastro_prato.html')	
+
+@app.route('/restaurante/cardapio/prato/cadastro/submit', methods=['POST'])
+def prato_submit():
+	nome = None
+	nome = request.form['nome_prato']
+	sql.cadastro_prato(nome)
+	return redirect(url_for('cardapio'))
+
+########################
+####### Exibir #########
+
+@app.route('/restaurante/prato/search')
+def search_prato():
+	return render_template('selecionar_prato.html')
+
+@app.route('/prato/results')
+def results_prato_nome():
+	nome = request.args.get('nome_prato')
+	results = sql.search_prato(nome=nome)
+	return render_template('listar_resultados_prato.html', results=results)
+
+@app.route('/prato/results')
+def results_prato_algo():
+	pass
+
+@app.route('/prato/<nome>')
+def exibir_prato(nome):
+	id = request.args.get('id')
+	results = sql.search_prato(id=id)
+	return render_template('exibir_prato.html', results=results)
+
+########################
+####### Alterar ########
+
+@app.route('/prato/alterar/<id>/')
+def prato_nome(id):
+	return render_template('alterar.html', name="Nome", action=url_for('prato_nome_submit', id=id), type="text", label="Novo Nome")
+
+@app.route('/prato/alterar/<id>/submit', methods=['POST'])
+def prato_nome_submit(id):
+	novo = request.form['alt']
+	sql.alter_prato_nome(id=id, nome=novo)
+	return redirect(url_for('cardapio'))
+
+########################
+######## Remover #######
+
+@app.route('/prato/<nome>/<id>/remove', methods=["POST"])
+def rm_prato(nome, id):
+	sql.rm_prato(id=id)
+	return redirect(url_for('cardapio'))
 
 
 if __name__ == '__main__':
