@@ -10,7 +10,7 @@
 			
 		<h2 class="text-center">Cadastrar Mesa</h2>
 		<div class="container">
-			<form action="cadastrar_cliente_submit" method="post" accept-charset="utf-8">
+			<form action="{{ url_for('cliente_submit') }}" method="post" accept-charset="utf-8">
 				<div class="form-group">
 					<label for="numero_de_pessoas">Numero de Pessoas Mesa</label>
 					<input type="text" name="numero_de_pessoas" id="numero_de_pessoas" class="form-control">	
