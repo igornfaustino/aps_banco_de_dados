@@ -14,7 +14,7 @@ pip
 
 virtualenv
 	Para instalar o virtualenv use o seguinte comando: $ pip install virtualenv
-	Isto vai permitir a criação de ambientes virtuais, o flask recomenda a instalação dentro de um para evitar futuros conflitos
+	Isto vai permitir a criação de ambientes virtuais, o flask recomenda a instalação dentro de um ambiente virtual para evitar futuros conflitos.
 
 	Criar ambiente virtual: $ virtualenv venv
 		venv é a pasta onde sera criada o ambiente virtual.
@@ -24,8 +24,8 @@ virtualenv
 flask
 	com o ambiente virtual ativado utilize o comando: $ pip install flask
 
-pymsql
-	###
+pymysql
+	Para instalar o pymysql use o seguinte comando: $ pip install pymysql
 
 
 para testar a aplicação utilize o comando: $ python3 app.py
