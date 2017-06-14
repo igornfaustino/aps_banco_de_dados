@@ -13,7 +13,9 @@ def index():
 
 @app.route('/cliente')
 def cliente():
-	return render_template('clientes.html')
+	cadastro = request.args.get('cadastro')
+	rm = request.args.get('rm')
+	return render_template('clientes.html', cadastro=cadastro, rm=rm)
 
 @app.route('/funcionario')
 def funcionario():
@@ -25,11 +27,15 @@ def restaurante():
 
 @app.route('/restaurante/cardapio/')
 def cardapio():
-	return render_template('cardapio.html')
+	cadastro = request.args.get('cadastro')
+	rm = request.args.get('rm')
+	return render_template('cardapio.html', cadastro=cadastro, rm=rm)
 
 @app.route('/restaurante/mesa/')
 def mesa():
-	return render_template('mesa.html')
+	cadastro = request.args.get('cadastro')
+	rm = request.args.get('rm')
+	return render_template('mesa.html', cadastro=cadastro, rm=rm)
 
 @app.route('/pedido')
 def pedido():
@@ -53,8 +59,9 @@ def cliente_submit():
 	nome = request.form['nome_cliente']
 	tel = request.form['tel_cliente']
 	cpf = request.form['cpf_cliente']
-	sql.cadastro_cliente(nome, tel, cpf)
-	return redirect(url_for('cliente'))
+	cadastro = sql.cadastro_cliente(nome, tel, cpf)
+	print (cadastro)
+	return redirect(url_for('cliente', cadastro=cadastro))
 
 ########################
 ####### Exibir #########
@@ -66,59 +73,69 @@ def search_cliente():
 @app.route('/cliente/results')
 def results_cliente_nome():
 	nome = request.args.get('nome')
-	results = sql.search_cliente(nome=nome)
+	if not nome:
+		results = sql.getall_clientes()
+	else:
+		results = sql.search_cliente(nome=nome)
 	return render_template('listar_resultados_cliente.html', results=results)
 
 @app.route('/cliente/results')
 def results_cliente_algo():
 	pass
 
-@app.route('/cliente/<nome>')
-def exibir_clientes(nome):
+@app.route('/cliente/')
+def exibir_clientes():
 	id = request.args.get('id')
+	alt = request.args.get('alt')
 	results = sql.search_cliente(idCli=id)
-	return render_template('exibir_cliente.html', results=results)
+	return render_template('exibir_cliente.html', results=results, alt=alt)
 
 ########################
 ####### Alterar ########
 
-@app.route('/cliente/alterar/<id>/nome')
-def cliente_nome(id):
+@app.route('/cliente/alterar/nome')
+def cliente_nome():
+	id = request.args.get('id')
 	return render_template('alterar.html', name="Nome", action=url_for('cliente_nome_submit', id=id), type="text", label="Novo Nome")
 
-@app.route('/cliente/alterar/<id>/nome/submit', methods=['POST'])
-def cliente_nome_submit(id):
+@app.route('/cliente/alterar/nome/submit', methods=['POST'])
+def cliente_nome_submit():
+	id = request.args.get('id')
 	novo = request.form['alt']
-	sql.alter_cliente_nome(idCli=id, nome=novo)
-	return redirect(url_for('cliente'))
+	alt = sql.alter_cliente_nome(idCli=id, nome=novo)
+	return redirect(url_for('exibir_clientes', id=id, alt=alt))
 
-@app.route('/cliente/alterar/<id>/telefone')
-def cliente_tel(id):
+@app.route('/cliente/alterar/telefone')
+def cliente_tel():
+	id = request.args.get('id')
 	return render_template('alterar.html', name="Tel", action=url_for('cliente_tel_submit', id=id), type="tel", label="Novo Telefone")
 
-@app.route('/cliente/alterar/<id>/telefonesubmit', methods=['POST'])
-def cliente_tel_submit(id):
+@app.route('/cliente/alterar/telefonesubmit', methods=['POST'])
+def cliente_tel_submit():
+	id = request.args.get('id')
 	novo = request.form['alt']
-	sql.alter_cliente_tel(idCli=id, tel=novo)
-	return redirect(url_for('cliente'))
+	alt = sql.alter_cliente_tel(idCli=id, tel=novo)
+	return redirect(url_for('exibir_clientes', id=id, alt=alt))
 
-@app.route('/cliente/alterar/<id>/cpf')
-def cliente_cpf(id):
+@app.route('/cliente/alterar/cpf')
+def cliente_cpf():
+	id = request.args.get('id')
 	return render_template('alterar.html', name="CPF", action=url_for('cliente_cpf_submit', id=id), type="text", label="Novo CPF")
 
-@app.route('/cliente/alterar/<id>/cpfsubmit', methods=['POST'])
-def cliente_cpf_submit(id):
+@app.route('/cliente/alterar/cpfsubmit', methods=['POST'])
+def cliente_cpf_submit():
+	id = request.args.get('id')
 	novo = request.form['alt']
-	sql.alter_cliente_cpf(idCli=id, cpf=novo)
-	return redirect(url_for('cliente'))
-
+	alt = sql.alter_cliente_cpf(idCli=id, cpf=novo)
+	return redirect(url_for('exibir_clientes', id=id, alt=alt))
 ########################
 ######## Remover #######
 
-@app.route('/cliente/<nome>/<idCli>/remove', methods=["POST"])
-def rm_cliente(nome, idCli):
-	sql.rm_cliente(idCli=idCli)
-	return redirect(url_for('cliente'))
+@app.route('/cliente/remover', methods=["POST"])
+def rm_cliente():
+	id = request.args.get('id')
+	rm = sql.rm_cliente(idCli=id)
+	return redirect(url_for('cliente', rm=rm))
 
 #crud pedidos
 
@@ -203,8 +220,8 @@ def cadastro_prato():
 def prato_submit():
 	nome = None
 	nome = request.form['nome_prato']
-	sql.cadastro_prato(nome)
-	return redirect(url_for('cardapio'))
+	cadastro = sql.cadastro_prato(nome)
+	return redirect(url_for('cardapio', cadastro=cadastro))
 
 ########################
 ####### Exibir #########
@@ -216,39 +233,46 @@ def search_prato():
 @app.route('/prato/results')
 def results_prato_nome():
 	nome = request.args.get('nome_prato')
-	results = sql.search_prato(nome=nome)
+	if not nome:
+		results = sql.getall_pratos()
+	else:
+		results = sql.search_prato(nome=nome)
 	return render_template('listar_resultados_prato.html', results=results)
 
 @app.route('/prato/results')
 def results_prato_algo():
 	pass
 
-@app.route('/prato/<nome>')
-def exibir_prato(nome):
+@app.route('/prato')
+def exibir_prato():
 	id = request.args.get('id')
+	alt = request.args.get('alt')
 	results = sql.search_prato(id=id)
-	return render_template('exibir_prato.html', results=results)
+	return render_template('exibir_prato.html', results=results, alt=alt)
 
 ########################
 ####### Alterar ########
 
-@app.route('/prato/alterar/<id>/')
-def prato_nome(id):
+@app.route('/prato/alterar/')
+def prato_nome():
+	id = request.args.get('id')
 	return render_template('alterar.html', name="Nome", action=url_for('prato_nome_submit', id=id), type="text", label="Novo Nome")
 
-@app.route('/prato/alterar/<id>/submit', methods=['POST'])
-def prato_nome_submit(id):
+@app.route('/prato/alterar/submit', methods=['POST'])
+def prato_nome_submit():
+	id = request.args.get('id')
 	novo = request.form['alt']
-	sql.alter_prato_nome(id=id, nome=novo)
-	return redirect(url_for('cardapio'))
+	alt = sql.alter_prato_nome(id=id, nome=novo)
+	return redirect(url_for('exibir_prato', alt=alt, id=id))
 
 ########################
 ######## Remover #######
 
-@app.route('/prato/<nome>/<id>/remove', methods=["POST"])
-def rm_prato(nome, id):
-	sql.rm_prato(id=id)
-	return redirect(url_for('cardapio'))
+@app.route('/prato/remove', methods=["POST"])
+def rm_prato():
+	id = request.args.get('id')
+	rm = sql.rm_prato(id=id)
+	return redirect(url_for('cardapio', rm=rm))
 
 # crud mesa
 
@@ -264,62 +288,68 @@ def mesa_submit():
 	numero_de_pessoas = None
 	numero_da_mesa = request.form['numero_da_mesa']
 	numero_de_pessoas = request.form['numero_de_pessoas']
-	sql.cadastro_cliente(numero_da_mesa, numero_de_pessoas)
-	return redirect(url_for('mesa'))
+	cadastro = sql.cadastro_mesa(numero_de_pessoas=numero_de_pessoas, numero_da_mesa=numero_da_mesa)
+	return redirect(url_for('mesa', cadastro=cadastro))
 
 ########################
 ####### Exibir #########
 
-@app.route('/mesa/search')
+@app.route('/restaurante/mesa/search')
 def search_mesa():
 	return render_template('selecionar_mesa.html')
 
-@app.route('/mesa/results')
-def results_mesa_numero_da_mesa():
-	nome = request.args.get('numero_da_mesa')
+@app.route('/restaurante/mesa/results')
+def results_numero_da_mesa():
+	numero = request.args.get('numero_da_mesa')
+	if not numero:
+		results = sql.getall_mesas()
+		return render_template('listar_resultados_mesa.html', results=results)
+	# else:
+	# 	results = sql.search_mesa(numero_da_mesa=numero)
+	return redirect(url_for('exibir_mesa', numero_da_mesa=numero))
+
+
+@app.route('/mesa/')
+def exibir_mesa():
+	numero_da_mesa = request.args.get('numero_da_mesa')
 	results = sql.search_mesa(numero_da_mesa=numero_da_mesa)
-	return render_template('listar_resultados_mesa.html', results=results)
-
-@app.route('/mesa/results')
-def results_mesa_algo():
-	pass
-
-@app.route('/mesa/<numero_da_mesa>')
-def exibir_mesa(numero_da_mesa):
-	numero_de_pessoas = request.args.get('numero_de_pessoas')
-	results = sql.search_cliente(numero_de_pessoas=numero_de_pessoas)
-	return render_template('exibir_mesa.html', results=results)
+	alt = request.args.get('alt')
+	return render_template('exibir_mesa.html', results=results, alt=alt)
 
 ########################
 ####### Alterar ########
 
-@app.route('/mesa/alterar/<id>/')
-def numero_da_mesa(numero_da_mesa):
+@app.route('/mesa/alterar/')
+def numero_da_mesa():
+	id = request.args.get('id')
 	return render_template('alterar.html', name="Numero da mesa", action=url_for('numero_da_mesa_submit', id=id), type="num", label="Novo Numero da Mesa")
 
-@app.route('/mesa/alterar/<id>/submit', methods=['POST'])
-def numero_da_mesa_submit(numero_da_mesa):
+@app.route('/mesa/alterar/submit', methods=['POST'])
+def numero_da_mesa_submit():
+	id = request.args.get('id')	
 	novo = request.form['alt']
-	sql.alter_numero_da_mesa(numero_da_mesa=numero_da_mesa, numero_novo=novo)
-	return redirect(url_for('mesa'))
+	alt = sql.alter_numero_da_mesa(numero_da_mesa=id, novo_numero=novo)
+	return redirect(url_for('exibir_mesa', numero_da_mesa=novo, alt=alt))
 
-@app.route('/mesa/alterar/<id>/')
-def numero_de_pessoas(numero_da_mesa):
+@app.route('/mesa/alterar/')
+def numero_de_pessoas():
+	id = request.args.get('id')
 	return render_template('alterar.html', name="Numero de Pessoas", action=url_for('numero_de_pessoas_submit', id=id), type="num", label="Novo Numero de Pessoas")
 
-@app.route('/mesa/alterar/<id>/submit', methods=['POST'])
-def numero_de_pessoas_submit(numero_da_mesa):
+@app.route('/mesa/alterar/submit', methods=['POST'])
+def numero_de_pessoas_submit():
+	id = request.args.get('id')
 	novo = request.form['alt']
-	sql.alter_numero_de_pessoas(numero_da_mesa=numero_da_mesa, numero_de_pessoas=novo)
-	return redirect(url_for('mesa'))
+	alt = sql.alter_numero_de_pessoas(numero_da_mesa=id, numero_de_pessoas=novo)
+	return redirect(url_for('exibir_mesa', numero_da_mesa=id, alt=alt))
 
 ########################
 ######## Remover #######
 
 @app.route('/mesa/<nroMesa>/remove', methods=["POST"])
 def rm_mesa(nroMesa):
-	sql.rm_mesa(numero_da_mesa=numero_da_mesa)
-	return redirect(url_for('mesa'))
+	rm = sql.rm_mesa(numero_da_mesa=nroMesa)
+	return redirect(url_for('mesa', rm=rm))
 
 #crud pedidos
 

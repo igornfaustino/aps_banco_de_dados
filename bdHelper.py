@@ -18,8 +18,10 @@ class bdHelper():
 			with connection.cursor() as cursor:
 				cursor.execute(query, (nome, telefone, cpf))
 				connection.commit()
+				return True
 		except Exception as e:
 			print(e)
+			return False
 		finally:
 			connection.close()
 
@@ -39,6 +41,18 @@ class bdHelper():
 		finally:
 			connection.close()
 
+	def getall_clientes(self):
+		connection = self.connect()
+		try:
+			with connection.cursor() as cursor:
+				query = "select * from clientes"
+				cursor.execute(query)
+				return cursor.fetchall()
+		except Exception as e:
+			print(e)
+		finally:
+			connection.close()
+
 	def rm_cliente(self, idCli=None):
 		connection = self.connect()
 		try:
@@ -46,8 +60,9 @@ class bdHelper():
 			with connection.cursor() as cursor:
 				cursor.execute(query, idCli)
 				connection.commit()
+				return True
 		except Exception as e:
-			print(e)
+			return False
 		finally:
 			connection.close()
 
@@ -58,8 +73,10 @@ class bdHelper():
 			with connection.cursor() as cursor:
 				cursor.execute(query, (nome, idCli))
 				connection.commit()
+				return True
 		except Exception as e:
 			print(e)
+			return False
 		finally:
 			connection.close()
 
@@ -70,8 +87,10 @@ class bdHelper():
 			with connection.cursor() as cursor:
 				cursor.execute(query, (tel, idCli))
 				connection.commit()
+				return True
 		except Exception as e:
 			print(e)
+			return False
 		finally:
 			connection.close()
 
@@ -82,8 +101,10 @@ class bdHelper():
 			with connection.cursor() as cursor:
 				cursor.execute(query, (cpf, idCli))
 				connection.commit()
+				return True
 		except Exception as e:
 			print(e)
+			return False
 		finally:
 			connection.close()
 
@@ -103,26 +124,36 @@ class bdHelper():
 	def cadastro_mesa(self, numero_de_pessoas=None, numero_da_mesa=None):
 		connection = self.connect()
 		try:
-			query = "insert into clientes(nroPessoas, nroMesa) values(%s, %s);"
+			query = "insert into mesas(nroPessoas, nroMesa) values(%s, %s);"
 			
 			with connection.cursor() as cursor:
-				cursor.execute(query, (numero_de_pessoas, numero_da_mesa))
+				cursor.execute(query, (int(numero_de_pessoas), int(numero_da_mesa)))
 				connection.commit()
+				return True
+		except Exception as e:
+			print(e)
+			return False
+		finally:
+			connection.close()
+
+	def search_mesa(self, numero_da_mesa=None):
+		connection = self.connect()
+		try:
+			with connection.cursor() as cursor:
+				query = "select * from mesas where nroMesa = %s;"
+				cursor.execute(query, int(numero_da_mesa))
+				return cursor.fetchall()
 		except Exception as e:
 			print(e)
 		finally:
 			connection.close()
 
-	def search_mesa(self, numero_de_pessoas=None, numero_da_mesa=None):
+	def getall_mesas(self, numero_da_mesa=None):
 		connection = self.connect()
 		try:
 			with connection.cursor() as cursor:
-				if(numero_de_pessoas):
-					query = "select * from mesa where nroPessoas = %s;"
-					cursor.execute(query,(numero_de_pessoas, numero_da_mesa))
-				elif(numero_da_mesa):
-					query = "select * from mesa where nroMesa like %s;"
-					cursor.execute(query, ("%" + numero_da_mesa + "%"))
+				query = "select * from mesas;"
+				cursor.execute(query)
 				return cursor.fetchall()
 		except Exception as e:
 			print(e)
@@ -132,36 +163,42 @@ class bdHelper():
 	def rm_mesa(self, numero_da_mesa=None):
 		connection = self.connect()
 		try:
-			query = "delete from mesa where nroMesa = %s;"
+			query = "delete from mesas where nroMesa = %s;"
 			with connection.cursor() as cursor:
 				cursor.execute(query, numero_da_mesa)
 				connection.commit()
+				return True
 		except Exception as e:
 			print(e)
+			return False
 		finally:
 			connection.close()
 
 	def alter_numero_de_pessoas(self, numero_da_mesa=None, numero_de_pessoas = None):
 		connection = self.connect()
 		try:
-			query = "update mesa set nroPessoas = %s where nroMesa = %s;"
+			query = "update mesas set nroPessoas = %s where nroMesa = %s;"
 			with connection.cursor() as cursor:
-				cursor.execute(query, (numero_de_pessoas, numero_da_mesa))
+				cursor.execute(query, (int(numero_de_pessoas), int(numero_da_mesa)))
 				connection.commit()
+				return True
 		except Exception as e:
 			print(e)
+			return False
 		finally:
 			connection.close()
 
 	def alter_numero_da_mesa(self, numero_da_mesa=None, novo_numero = None):
 		connection = self.connect()
 		try:
-			query = "update mesa set nroMesa = %s where nroMesa = %s;"
+			query = "update mesas set nroMesa = %s where nroMesa = %s;"
 			with connection.cursor() as cursor:
-				cursor.execute(query, (novo_numero, numero_da_mesa))
+				cursor.execute(query, (int(novo_numero), int(numero_da_mesa)))
 				connection.commit()
+				return True
 		except Exception as e:
 			print(e)
+			return False
 		finally:
 			connection.close()
 
@@ -208,8 +245,10 @@ class bdHelper():
 			with connection.cursor() as cursor:
 				cursor.execute(query, nome)
 				connection.commit()
+				return True
 		except Exception as e:
 			print(e)
+			return False
 		finally:
 			connection.close()
 
@@ -229,6 +268,19 @@ class bdHelper():
 		finally:
 			connection.close()
 
+	def getall_pratos(self):
+		connection = self.connect()
+		try:
+			with connection.cursor() as cursor:
+				query = "select * from pratos;"
+				cursor.execute(query)
+				return cursor.fetchall()
+		except Exception as e:
+			print(e)
+		finally:
+			connection.close()
+
+
 	def rm_prato(self, id=None):
 		connection = self.connect()
 		try:
@@ -236,8 +288,10 @@ class bdHelper():
 			with connection.cursor() as cursor:
 				cursor.execute(query, id)
 				connection.commit()
+				return True
 		except Exception as e:
 			print(e)
+			return False
 		finally:
 			connection.close()
 
@@ -248,8 +302,10 @@ class bdHelper():
 			with connection.cursor() as cursor:
 				cursor.execute(query, (nome, id))
 				connection.commit()
+				return True
 		except Exception as e:
 			print(e)
+			return False
 		finally:
 			connection.close()
 

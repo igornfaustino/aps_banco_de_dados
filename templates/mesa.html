@@ -7,6 +7,18 @@
 {% block conteudo %}
 	<!-- Conteudo site -->
 		<div class="container text-center conteudo">
+			{% if cadastro == 'True' %}
+				<div class="alert alert-success" role="alert"><p>Cadastro realizado com sucesso!</p></div>
+			{% endif %}
+			{% if cadastro == 'False' %}
+				<div class="alert alert-danger" role="alert"><p>Falha ao cadastrar cliente!</p></div>
+			{% endif %}
+			{% if rm == 'True' %}
+				<div class="alert alert-success" role="alert"><p>Cliente excluido com sucesso!</p></div>
+			{% endif %}
+			{% if rm == 'False' %}
+				<div class="alert alert-danger" role="alert"><p>Falha ao excluir cliente!</p></div>
+			{% endif %}
 			<h2>Mesa</h2>
 			<div class="container separete-margim">
 				<a href="{{ url_for('search_mesa') }}" class="btn btn-danger btn-block btn-lg my-btn">SELECIONAR MESA</a>

@@ -7,18 +7,26 @@
 {% block conteudo %}
 	<!-- Conteudo site -->
 	{% for row in results %}
-	<div class="container text-justify">
-		<h2 class="text-center">Pratos</h2>
-		<ul class="my-list">
-			<li><p><div class="estilo">ID:</div>{{ row[0] }}</p></li>
+	<div class="container text-center">
+		{% if alt == 'True' %}
+			<div class="alert alert-success" role="alert"><p>Alterações realizado com sucesso!</p></div>
+			{% endif %}
+			{% if alt == 'False' %}
+				<div class="alert alert-danger" role="alert"><p>Falha ao alterar dado!</p></div>
+			{% endif %}
+		<div class="text-justify">
+			<h2 class="text-center">Pratos</h2>
+			<ul class="my-list">
+				<li><p><div class="estilo">ID:</div>{{ row[0] }}</p></li>
+				<hr>
+				<li><p><div class="estilo">Nome:</div>{{ row[1] }}  <a href="{{ url_for('prato_nome', id=row[0]) }}" class="btn btn-default">alterar</a></p></li>
+			</ul>
 			<hr>
-			<li><p><div class="estilo">Nome:</div>{{ row[1] }}  <a href="{{ url_for('prato_nome', id=row[0]) }}" class="btn btn-default">alterar</a></p></li>
-		</ul>
-		<hr>
-		<div class="text-right">
-		<form method="post">
-			<button type="submit" formmethod="post" formaction="{{ url_for('rm_prato', nome=row[1], id=row[0]) }}" class="btn btn-default btn-sm">excluir Prato</button>
-		</form>
+			<div class="text-right">
+			<form method="post">
+				<button type="submit" formmethod="post" formaction="{{ url_for('rm_prato', nome=row[1], id=row[0]) }}" class="btn btn-default btn-sm">excluir Prato</button>
+			</form>
+			</div>
 		</div>
 	</div>
 	{% endfor %}
