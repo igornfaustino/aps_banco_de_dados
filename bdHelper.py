@@ -7,7 +7,7 @@ class bdHelper():
 	# 	pass
 
 	def connect(self, database="restaurante_bd"):
-		return pymysql.connect(host="localhost", user=bdconfig.user, passwd=bdconfig.passwd, db=database)
+		return pymysql.connect(host="localhost", user=bdconfig.user, passwd=bdconfig.passwrd, db=database)
 
 	# crud cliente
 
