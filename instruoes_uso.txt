@@ -7,7 +7,7 @@ Requisitos:
 
 
 Python3
-	Intalação do python3 pode ser feita atravez do site oficial: https://www.python.org/
+	Instalação do python3 pode ser feita atravez do site oficial: https://www.python.org/
 
 pip
 	Instalação do pip: https://pip.pypa.io/en/stable/
@@ -17,23 +17,23 @@ virtualenv
 	Isto vai permitir a criação de ambientes virtuais, o flask recomenda a instalação dentro de um ambiente virtual para evitar futuros conflitos.
 
 	Criar ambiente virtual: $ virtualenv venv
-		venv é a pasta onde sera criada o ambiente virtual.
+		venv é a pasta onde será criada o ambiente virtual.
 	ativar ambiente virtual: $ . venv/bin/activate
 	Desativar ambiente virtual: $ deactivate
 
 flask
-	com o ambiente virtual ativado utilize o comando: $ pip3 install flask
+	Com o ambiente virtual ativado utilize o comando: $ pip3 install flask
 
 pymysql
 	Para instalar o pymysql use o seguinte comando: $ pip3 install pymysql
 
 
-para testar a aplicação utilize o comando: $ python3 app.py
+Para testar a aplicação utilize o comando: $ python3 app.py
 com isso um servidor local será iniciado, e para acessa-lo basta ir para o endereço 127.0.0.1:5000 ou localhost:5000
 
-Os primeiros 3 cruds sao os cruds de clientes, mesas e pratos.
+Os primeiros 3 cruds são os cruds de clientes, mesas e pratos.
 Para acessar a funcionalidade de cliente basta acessar a aba clientes no menu.
 Os outros dois cruds estão dentro da aba restaurante.
-O crud de pratos e a opcao cadastro.
+O crud de pratos e a opção cadastro.
 
-Dentro de cada opcao existe duas opcoes, a opção de cadastro e a opção de selecionar, ao clicar em selecionar, apenas a primeira busca funciona por enquanto a segunda será destinada as pesquisas complexas, ao selecionar um dos elementos cadastrados a tela de exibição permite o alteramento das informações e a exclusão do individuo
+Dentro de cada opção existe duas opções, a opção cadastro e selecionar, ao clicar em selecionar, apenas a primeira busca funciona por enquanto, a segunda busca será destinada as pesquisas complexas, ao selecionar um dos elementos cadastrados a tela de exibição permite o alteração das informações e a exclusão do individuo.
