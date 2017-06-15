@@ -1,4 +1,5 @@
 import pymysql
+import bdconfig
 
 class bdHelper():
 	# """docstring for bdHelper"""
@@ -6,7 +7,7 @@ class bdHelper():
 	# 	pass
 
 	def connect(self, database="restaurante_bd"):
-		return pymysql.connect(host="localhost", user="root", passwd="root", db=database)
+		return pymysql.connect(host="localhost", user=bdconfig.user, passwd=bdconfig.passwd, db=database)
 
 	# crud cliente
 

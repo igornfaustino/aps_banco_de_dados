@@ -31,6 +31,8 @@ pymysql
 Para testar a aplicação utilize o comando: $ python3 app.py
 com isso um servidor local será iniciado, e para acessa-lo basta ir para o endereço 127.0.0.1:5000 ou localhost:5000
 
+Para configurar o banco de dados, é necessario executar o script "restaurante_bd.sql" e editar o arquivo "bdconfig.py" com o seu nome de usuário e senha do serviço de banco de dados local.
+
 Os primeiros 3 cruds são os cruds de clientes, mesas e pratos.
 Para acessar a funcionalidade de cliente basta acessar a aba clientes no menu.
 Os outros dois cruds estão dentro da aba restaurante.
