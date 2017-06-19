@@ -10,10 +10,16 @@
 	<div class="container text-center">
 		{% if alt == 'True' %}
 			<div class="alert alert-success" role="alert"><p>Alterações realizadas com sucesso!</p></div>
-			{% endif %}
-			{% if alt == 'False' %}
-				<div class="alert alert-danger" role="alert"><p>Falha ao alterar dado!</p></div>
-			{% endif %}
+		{% endif %}
+		{% if alt == 'False' %}
+			<div class="alert alert-danger" role="alert"><p>Falha ao alterar dado!</p></div>
+		{% endif %}
+		{% if reserva == 'True' %}
+			<div class="alert alert-success" role="alert"><p>Reserva cadastrada com sucesso!</p></div>
+		{% endif %}
+		{% if reserva == 'False' %}
+			<div class="alert alert-danger" role="alert"><p>Falha ao cadastrar reserva!</p></div>
+		{% endif %}
 		<div class="text-justify">
 			<h2 class="text-center">Cliente</h2>
 			<ul class="my-list">
@@ -25,6 +31,10 @@
 					<hr>
 					<li><p><div class="estilo">telefone:</div>{{ row[2] }}  <a href="{{ url_for('cliente_tel', id=row[0]) }}" class="btn btn-default">alterar</a></p></li>
 			</ul>
+			<hr>
+			<div class="text-center">
+				<a href="{{ url_for('cadastro_reserva', id=row[0]) }}" class="btn btn-danger btn-lg">Fazer Reserva!</a>
+			</div>
 			<hr>
 			<div class="text-right">
 			<form method="post">

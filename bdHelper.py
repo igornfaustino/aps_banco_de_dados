@@ -109,16 +109,16 @@ class bdHelper():
 		finally:
 			connection.close()
 
-	# def cadastro_pedido(self, nroMesa):
-	# 	connection = self.connect()
-	# 	try:
-	# 		query = "insert into pedidos(inPed, situacao, idCli, cpfGar, dataPed) values(%s, %s, %s, %s, NULL);"
-	# 		with connection.cursor() as cursor:
-	# 			cursor.execute(query, ("Pedido Pendente", idCli, "NULL", "curdate()"))
-	# 	except Exception as e:
-	# 		print(e)
-	# 	finally:
-	# 		connection.close()
+	def cadastro_pedido(self, idCli):
+		connection = self.connect()
+		try:
+			query = "insert into pedidos(inPed, situacao, idCli, cpfGar, dataPed) values(%s, %s, %s, %s, NULL);"
+			with connection.cursor() as cursor:
+				cursor.execute(query, ("Pedido Pendente", idCli, "NULL", "curdate()"))
+		except Exception as e:
+			print(e)
+		finally:
+			connection.close()
 
 	# crud mesa
 
@@ -307,6 +307,116 @@ class bdHelper():
 		except Exception as e:
 			print(e)
 			return False
+		finally:
+			connection.close()
+
+	# crud pratos
+
+	def cadastro_reserva(self, idCli=None, nroMesa=None, datas=None
+		, hora=None, nroPessoas=None):
+		connection = self.connect()
+		try:
+			query = "insert into reservas(idCli, nroMesa, datas, hora, nroPessoas) values(%s, %s, %s, %s, %s);"
+			
+			with connection.cursor() as cursor:
+				cursor.execute(query, (idCli, nroMesa, datas, hora, nroPessoas))
+				connection.commit()
+				return True
+		except Exception as e:
+			print(e)
+			return False
+		finally:
+			connection.close()
+
+	# def search_preserva(self, id=None, nome=None):
+	# 	connection = self.connect()
+	# 	try:
+	# 		with connection.cursor() as cursor:
+	# 			if(id):
+	# 				query = "select * from pratos where id = %s;"
+	# 				cursor.execute(query, id)
+	# 			elif(nome):
+	# 				query = "select * from pratos where nome like %s;"
+	# 				cursor.execute(query, ("%" + nome + "%"))
+	# 			return cursor.fetchall()
+	# 	except Exception as e:
+	# 		print(e)
+	# 	finally:
+	# 		connection.close()
+
+	# def getall_reservas(self):
+	# 	connection = self.connect()
+	# 	try:
+	# 		with connection.cursor() as cursor:
+	# 			query = "select * from pratos;"
+	# 			cursor.execute(query)
+	# 			return cursor.fetchall()
+	# 	except Exception as e:
+	# 		print(e)
+	# 	finally:
+	# 		connection.close()
+
+
+	# def rm_prato(self, id=None):
+	# 	connection = self.connect()
+	# 	try:
+	# 		query = "delete from pratos where id = %s;"
+	# 		with connection.cursor() as cursor:
+	# 			cursor.execute(query, id)
+	# 			connection.commit()
+	# 			return True
+	# 	except Exception as e:
+	# 		print(e)
+	# 		return False
+	# 	finally:
+	# 		connection.close()
+
+	# def alter_prato_nome(self, id=None, nome = None):
+	# 	connection = self.connect()
+	# 	try:
+	# 		query = "update pratos set nome = %s where id = %s;"
+	# 		with connection.cursor() as cursor:
+	# 			cursor.execute(query, (nome, id))
+	# 			connection.commit()
+	# 			return True
+	# 	except Exception as e:
+	# 		print(e)
+	# 		return False
+	# 	finally:
+	# 		connection.close()
+
+	# pesquisar cliente sentado em uma mesa
+	def cliente_mesa(self, nroMesa=None):
+		connection = self.connect()
+		try:
+			with connection.cursor() as cursor:
+				query = """	select R.idCli
+							from reservas R
+							where R.nroMesa = %s and R.datas = curdate();
+						"""
+				cursor.execute(query, nroMesa)
+				return cursor.fetchall()
+		except Exception as e:
+			print(e)
+		finally:
+			connection.close()
+
+	# Pesquisar mesas livres para determinada data
+	def mesa_livre(self, date='curdate()', nroPessoas='0'):
+		connection = self.connect()
+		try:
+			with connection.cursor() as cursor:
+				query = """	select M.*
+							from mesas M
+							where M.nroPessoas >= %s and M.nroMesa not in (	select R.nroMesa
+														from reservas R
+														where datas = %s
+													);
+						"""
+				cursor.execute(query, (int(nroPessoas), date))
+				return cursor.fetchall()
+		except Exception as e:
+			print(e)
 		finally:
 			connection.close()
 

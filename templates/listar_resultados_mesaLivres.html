@@ -1,0 +1,19 @@
+{% extends "layout/layout2.html" %}
+
+{% block title %}
+	Resultados
+{% endblock %}
+
+{% block table_head %}
+	<th class="text-center">Id</th>
+	<th class="text-center">nroPessoas</th>
+{% endblock %}
+
+{% block table_body %}
+	{% for row in results %}
+		<tr>
+			<td><a href="{{ url_for('reserva_submit', numero_da_mesa=row[0], numero_de_pessoas=row[1], hora_reserva=hora, data_reserva=data, id=id) }}">{{ row[0] }}</a></td>
+			<td><a href="{{ url_for('reserva_submit', numero_da_mesa=row[0], numero_de_pessoas=row[1], hora_reserva=hora, data_reserva=data, id=id) }}">{{ row[1] }}</a></td>
+		</tr>
+	{% endfor %}
+{% endblock %}
