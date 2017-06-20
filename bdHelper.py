@@ -109,12 +109,33 @@ class bdHelper():
 		finally:
 			connection.close()
 
-	def cadastro_pedido(self, idCli):
+	# crud pedido
+
+	def cadastro_pedido(self, idCli, cpfGar):
 		connection = self.connect()
 		try:
-			query = "insert into pedidos(inPed, situacao, idCli, cpfGar, dataPed) values(%s, %s, %s, %s, NULL);"
+			query = "insert into pedidos(situacao, idCli, cpfGar, dataPed) values(%s, %s, %s, CURDATE());"
 			with connection.cursor() as cursor:
-				cursor.execute(query, ("Pedido Pendente", idCli, "NULL", "curdate()"))
+				cursor.execute(query, ("Pedido Pendente", idCli, cpfGar))
+				connection.commit()
+				return True
+		except Exception as e:
+			print(e)
+			return False
+		finally:
+			connection.close()
+
+	def search_pedido(self, idCli=None, check=False):
+		connection = self.connect()
+		try:
+			with connection.cursor() as cursor:
+				query1 = "select * from pedidos where idCli = %s;"
+				query2 = "select * from pedidos where idCli = %s and situacao <> 'Finalizado';"
+				if check:
+					cursor.execute(query1, idCli)
+				else:
+					cursor.execute(query2, idCli)
+				return cursor.fetchall()
 		except Exception as e:
 			print(e)
 		finally:
@@ -310,7 +331,7 @@ class bdHelper():
 		finally:
 			connection.close()
 
-	# crud pratos
+	# crud reserva
 
 	def cadastro_reserva(self, idCli=None, nroMesa=None, datas=None
 		, hora=None, nroPessoas=None):

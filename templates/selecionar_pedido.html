@@ -13,15 +13,20 @@
 		</div>	
 		<div class="container">
 			<!-- Pesquisa simples -->
-			<form action="{{url_for('results_pedido_nome')}}" accept-charset="utf-8">
+			<form action="{{url_for('results_pedido_mesa')}}" accept-charset="utf-8">
 				<div class="form-group">
-					<label for="data_pedido">Data Pedido</label>
+					<label for="data_pedido">Numero Mesa</label>
 					<div class="input-group">
-						<input type="date" name="data_pedido" id="data_pedido
+						<input type="number" name="nro_mesa" id="nro_mesa
 						" class="form-control" placeholder="Busca Pedido pela data">
 						    <span class="input-group-btn">
 						    	<button type="submit" class="btn btn-danger">Buscar!</button>
 							</span>
+					</div>
+					<div class="checkbox">
+						<label>
+							<input type="checkbox" name="check" value="True">Buscar pedidos finalizados!
+						</label>
 					</div>
 				</div>
 			</form>

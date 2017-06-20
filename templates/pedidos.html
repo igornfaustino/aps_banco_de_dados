@@ -7,6 +7,9 @@
 {% block conteudo %}
 	<!-- Conteudo site -->
 		<div class="container text-center conteudo">
+			{% if empty == 'True' %}
+				<div class="alert alert-danger" role="alert"><p>Mesa vazia!</p></div>
+			{% endif %}
 			<h2>Pedidos</h2>
 			<div class="container separete-margim">
 				<a href="{{url_for('search_pedido')}}" class="btn btn-danger btn-block btn-lg my-btn">SELECIONAR PEDIDO</a>

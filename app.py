@@ -39,7 +39,8 @@ def mesa():
 
 @app.route('/pedido')
 def pedido():
-	return render_template('pedidos.html')
+	empty = request.args.get('empty')
+	return render_template('pedidos.html', empty=empty)
 
 # fim Menus
 
@@ -60,7 +61,6 @@ def cliente_submit():
 	tel = request.form['tel_cliente']
 	cpf = request.form['cpf_cliente']
 	cadastro = sql.cadastro_cliente(nome, tel, cpf)
-	print (cadastro)
 	return redirect(url_for('cliente', cadastro=cadastro))
 
 ########################
@@ -148,17 +148,27 @@ def cadastro_pedido():
 def pedido_submit():
 	nroMesa = None
 	nroMesa = request.form['nroMesa']
+	cpfGar = request.form['cpf_garcom']
 	idCli = sql.cliente_mesa(nroMesa)
-	sql.cadastro_pedido(idCli)
-	return redirect(url_for('pedido'))
+	cadastro = sql.cadastro_pedido(idCli=idCli, cpfGar=cpfGar)
+	return redirect(url_for('pedido', cadastro=cadastro))
 
 @app.route('/pedido/search')
 def search_pedido():
 	return render_template('selecionar_pedido.html')
 
 @app.route('/pedido/results')
-def results_pedido_nome():
-	return render_template('listar_resultados.html')
+def results_pedido_mesa():
+	check = None
+	nroMesa = request.args.get('nro_mesa')
+	if (request.args.get('check')):
+		check = True
+	id = sql.cliente_mesa(nroMesa)
+	if id:
+		results = sql.search_pedido(idCli=id, check=check)
+		return render_template('listar_resultados.html', results=results)
+	else:
+		return redirect(url_for('pedido', empty=True))
 
 @app.route('/pedido/results')
 def results_pedido_algo():
@@ -355,9 +365,9 @@ def rm_mesa(nroMesa):
 
 #crud pedidos
 
-# #@app.route('/pedido/cadastro')
-# #def cadastro_pedido():
-# 	#return render_template('cadastro/cadastro_pedido.html')
+# @app.route('/pedido/cadastro')
+# def cadastro_pedido():
+# 	return render_template('cadastro/cadastro_pedido.html')
 
 # @app.route('/cadastro/pedido/submit', methods=['POST'])
 # def pedido_submit():
