@@ -1,0 +1,35 @@
+{% extends "layout/layout1.html" %}
+
+{% block title %}
+	Exibir Reserva
+{% endblock %}
+
+{% block conteudo %}
+	<!-- Conteudo site -->
+	{% for row in results %}
+	<div class="container text-center">
+		{% if alt == 'True' %}
+			<div class="alert alert-success" role="alert"><p>Alterações realizadas com sucesso!</p></div>
+			{% endif %}
+			{% if alt == 'False' %}
+				<div class="alert alert-danger" role="alert"><p>Falha ao alterar dado!</p></div>
+			{% endif %}
+		<div class="text-justify">
+			<h2 class="text-center">Reserva</h2>
+			<ul class="my-list">
+				<li><p><div class="estilo">ID:</div>{{ row[0] }}</p></li>
+				<hr>
+				<li><p><div class="estilo">Data:</div>{{ row[1] }}  <a href="{{ url_for('data_reserva', id=row[0]) }}" class="btn btn-default">alterar</a></p></li>
+			</ul>
+			<hr>
+			<div class="text-right">
+			<form method="post">
+				<button type="submit" formmethod="post" formaction="{{ url_for('rm_reserva', nome=row[1], id=row[0]) }}" class="btn btn-default btn-sm">excluir Reserva</button>
+			</form>
+			</div>
+		</div>
+	</div>
+	{% endfor %}
+
+	<!-- Fim conteudo -->
+{% endblock %}

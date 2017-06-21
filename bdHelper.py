@@ -312,6 +312,8 @@ class bdHelper():
 
 	# crud pratos
 
+	# crud reserva
+
 	def cadastro_reserva(self, idCli=None, nroMesa=None, datas=None
 		, hora=None, nroPessoas=None):
 		connection = self.connect()
@@ -328,33 +330,33 @@ class bdHelper():
 		finally:
 			connection.close()
 
-	# def search_preserva(self, id=None, nome=None):
-	# 	connection = self.connect()
-	# 	try:
-	# 		with connection.cursor() as cursor:
-	# 			if(id):
-	# 				query = "select * from pratos where id = %s;"
-	# 				cursor.execute(query, id)
-	# 			elif(nome):
-	# 				query = "select * from pratos where nome like %s;"
-	# 				cursor.execute(query, ("%" + nome + "%"))
-	# 			return cursor.fetchall()
-	# 	except Exception as e:
-	# 		print(e)
-	# 	finally:
-	# 		connection.close()
+	 def search_reserva(self, id=None, datas=None):
+	 	connection = self.connect()
+	 	try:
+	 		with connection.cursor() as cursor:
+	 			if(id):
+	 				query = "select * from reservas where id = %s;"
+	 				cursor.execute(query, id)
+	 			elif(nome):
+	 				query = "select * from reservas where datas like %s;"
+	 				cursor.execute(query, ("%" + datas + "%"))
+	 			return cursor.fetchall()
+	 	except Exception as e:
+	 		print(e)
+	 	finally:
+	 		connection.close()
 
-	# def getall_reservas(self):
-	# 	connection = self.connect()
-	# 	try:
-	# 		with connection.cursor() as cursor:
-	# 			query = "select * from pratos;"
-	# 			cursor.execute(query)
-	# 			return cursor.fetchall()
-	# 	except Exception as e:
-	# 		print(e)
-	# 	finally:
-	# 		connection.close()
+	 def getall_reservas(self):
+	 	connection = self.connect()
+	 	try:
+	 		with connection.cursor() as cursor:
+	 			query = "select * from pratos;"
+	 			cursor.execute(query)
+	 			return cursor.fetchall()
+	 	except Exception as e:
+			print(e)
+	 	finally:
+	 		connection.close()
 
 
 	# def rm_prato(self, id=None):

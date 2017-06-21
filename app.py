@@ -197,17 +197,40 @@ def funcionario_submit(funcao):
 		bdHelper.cadastro_garcom(nome_funcionario, sal_funcionario, cpf_funcionario)
 	return redirect(url_for('funcionario'))
 
+########################
+####### Exibir #########	
+
 @app.route('/funcionario/search')
 def search_funcionario():
 	return render_template('selecionar_funcionario.html')
 
 @app.route('/funcionario/results')
 def results_funcionario_nome():
-	return render_template('listar_resultados.html')
+	nome = request.args.get('nome_funcionario')
+	if not nome:
+		results = sql.getall_pratos()
+	else:
+		results = sql.search_funcionario(nome=nome)
+	return render_template('listar_resultados_funcionario.html', results=results)
 
 @app.route('/funcionario/results')
 def results_funcionario_algo():
 	pass
+
+########################
+####### Alterar ########
+
+@app.route('/cliente/alterar/nome')
+def nome_funcionario():
+	id = request.args.get('id')
+	return render_template('alterar.html', name="Nome", action=url_for('_submit', id=id), type="text", label="Novo Nome")
+
+@app.route('/cliente/alterar/nome/submit', methods=['POST'])
+def nome_funcionario_submit():
+	id = request.args.get('id')
+	novo = request.form['alt']
+	alt = sql.alter_cliente_nome(idCli=id, nome=novo)
+	return redirect(url_for('exibir_clientes', id=id, alt=alt))
 
 
 # crud pratos	
@@ -416,65 +439,78 @@ def mesa_reserva(id):
 		return redirect(url_for('exibir_clientes', id=id, empty=True))
 	return render_template('listar_resultados_mesaLivres.html', results=results, nroPessoas=nroPessoas, hora=hora, data=data, id=id)
 
-# ########################
-# ####### Exibir #########
+ ########################
+ ####### Exibir #########
 
-# @app.route('/restaurante/mesa/search')
-# def search_mesa():
-# 	return render_template('selecionar_mesa.html')
+@app.route('/restaurante/reserva/search')
+def search_reserva():
+	return render_template('selecionar_reserva.html')
 
-# @app.route('/restaurante/mesa/results')
-# def results_numero_da_mesa():
-# 	numero = request.args.get('numero_da_mesa')
-# 	if not numero:
-# 		results = sql.getall_mesas()
-# 		return render_template('listar_resultados_mesa.html', results=results)
-# 	# else:
-# 	# 	results = sql.search_mesa(numero_da_mesa=numero)
-# 	return redirect(url_for('exibir_mesa', numero_da_mesa=numero))
+@app.route('/restaurante/reserva/results')
+def results_data_reserva():
+	data = request.args.get('data_reserva')
+	if not data:
+	results = sql.getall_datas()
+		return render_template('listar_resultados_reserva.html', results=results)
+ 	 else:
+ 	 	results = sql.search_reserva(data_reserva=data)
+ 	return redirect(url_for('exibir_reserva', data_reserva=data))
 
 
-# @app.route('/mesa/')
-# def exibir_mesa():
-# 	numero_da_mesa = request.args.get('numero_da_mesa')
-# 	results = sql.search_mesa(numero_da_mesa=numero_da_mesa)
-# 	alt = request.args.get('alt')
-# 	return render_template('exibir_mesa.html', results=results, alt=alt)
+ @app.route('/reserva/')
+ def exibir_reserva():
+ 	data = request.args.get('data_reserva')
+ 	results = sql.search_reserva(data_reserva=data)
+ 	alt = request.args.get('alt')
+ 	return render_template('exibir_reserva.html', results=results, alt=alt)
 
-# ########################
-# ####### Alterar ########
+ ########################
+ ####### Alterar ########
 
-# @app.route('/mesa/alterar/')
-# def numero_da_mesa():
-# 	id = request.args.get('id')
-# 	return render_template('alterar.html', name="Numero da mesa", action=url_for('numero_da_mesa_submit', id=id), type="num", label="Novo Numero da Mesa")
+ @app.route('/reserva/alterar/')
+ def data_reserva():
+ 	id = request.args.get('id')
+ 	return render_template('alterar.html', name="Data da Reserva", action=url_for('data_reserva_submit', id=id), type="date", label="Nova Data da Reserva")
 
-# @app.route('/mesa/alterar/submit', methods=['POST'])
-# def numero_da_mesa_submit():
-# 	id = request.args.get('id')	
-# 	novo = request.form['alt']
-# 	alt = sql.alter_numero_da_mesa(numero_da_mesa=id, novo_numero=novo)
-# 	return redirect(url_for('exibir_mesa', numero_da_mesa=novo, alt=alt))
+ @app.route('/reserva/alterar/submit', methods=['POST'])
+ def data_reserva_submit():
+ 	id = request.args.get('id')	
+ 	novo = request.form['alt']
+ 	alt = sql.alter_data_reserva(id=id, data_reserva=novo)
+ 	return redirect(url_for('exibir_reserva', data_reserva=novo, alt=alt))
 
-# @app.route('/mesa/alterar/')
-# def numero_de_pessoas():
-# 	id = request.args.get('id')
-# 	return render_template('alterar.html', name="Numero de Pessoas", action=url_for('numero_de_pessoas_submit', id=id), type="num", label="Novo Numero de Pessoas")
+ @app.route('/reserva/alterar/')
+ def hora_reserva():
+ 	id = request.args.get('id')
+ 	return render_template('alterar.html', name="Hora da Reserva", action=url_for('hora_reserva_submit', id=id), type="time", label="Nova Hora da Reserva")
 
-# @app.route('/mesa/alterar/submit', methods=['POST'])
-# def numero_de_pessoas_submit():
-# 	id = request.args.get('id')
-# 	novo = request.form['alt']
-# 	alt = sql.alter_numero_de_pessoas(numero_da_mesa=id, numero_de_pessoas=novo)
-# 	return redirect(url_for('exibir_mesa', numero_da_mesa=id, alt=alt))
+ @app.route('/reserva/alterar/submit', methods=['POST'])
+ def hora_reserva_submit():
+ 	id = request.args.get('id')
+ 	novo = request.form['alt']
+ 	alt = sql.alter_hora_reserva(id=id, hora_reserva=novo)
+ 	return redirect(url_for('exibir_reserva', hora_reserva=novo, alt=alt))
 
-# ########################
-# ######## Remover #######
+ @app.route('/reserva/alterar/')
+ def numero_de_pessoas_reserva():
+ 	id = request.args.get('id')
+ 	return render_template('alterar.html', name="Numero de Pessoas da Reserva", action=url_for('numero_de_pessoas_reserva_submit', id=id), type="num", label="Nova Hora da Reserva")
 
-# @app.route('/mesa/<nroMesa>/remove', methods=["POST"])
-# def rm_mesa(nroMesa):
-# 	rm = sql.rm_mesa(numero_da_mesa=nroMesa)
-# 	return redirect(url_for('mesa', rm=rm))
+ @app.route('/reserva/alterar/submit', methods=['POST'])
+ def numero_de_pessoas_reserva_submit():
+ 	id = request.args.get('id')
+ 	novo = request.form['alt']
+ 	alt = sql.alter_hora_reserva(id=id, numero_de_pessoas=novo)
+ 	return redirect(url_for('exibir_reserva', numero_de_pessoas=novo, alt=alt)) 	
+
+ ########################
+ ######## Remover #######
+
+@app.route('/reserva/remover', methods=["POST"])
+def rm_reserva():
+	id = request.args.get('id')
+	rm = sql.rm_cliente(idReser=id)
+	return redirect(url_for('reserva', rm=rm))
 
 if __name__ == '__main__':
 	app.run(debug=True)

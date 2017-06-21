@@ -1,0 +1,15 @@
+{% extends "layout/layout1.html" %}
+
+{% block title %}
+	Pedidos
+{% endblock %}
+
+{% block conteudo %}
+	<!-- Conteudo site -->
+		<div class="container text-center conteudo">
+			<h2>Pedidos</h2>
+			<div class="container separete-margim">
+				<a href="{{url_for('selecionar_reserva')}}" class="btn btn-danger btn-block btn-lg my-btn">SELECIONAR PEDIDO</a>
+			</div>
+	<!-- Fim conteudo -->
+{% endblock %}
