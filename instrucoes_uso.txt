@@ -40,4 +40,22 @@ O crud de pratos e a opção cadastro.
 
 Dentro de cada opção existe duas opções, a opção cadastro e selecionar, ao clicar em selecionar, apenas a primeira busca funciona por enquanto, a segunda busca será destinada as pesquisas complexas, ao selecionar um dos elementos cadastrados a tela de exibição permite o alteração das informações e a exclusão do individuo.
 
+Os Cruds 1 para N são crud de reserva, pedido e cozinheiro.
+
+Para acessar a funcionalidade Pedidos bastar acessar a aba de Pedidos no menu.
+O crud reserva estará dentro da aba restaurante, enquanto que o crud cozinheiro, na aba de funcionários.
+
+Para o crud cozinheiro dentro de funcionarios, clique em cadastrar funcionario, depois em cadastrar cozinheiro, onde será realizado o devido cadastro, dos campos do cadastro, existe um comboBox onde tem os chefes, escolha o chefe que o funcionario.
+
+No botão de selecionar funcionário, para selecionario o cozinheiro marque a caixa de seleção cozinheiro e coloque o nome do cozinheiro.
+
+Para o crud pedido existem dois botões um de cadastrar e selecionar, no cadastrar, é passado o número da mesa e onde tem o cliente e o cliente tem a reserva, então só será cadastrado pedidos aos clientes que fizeram reserva, existe o campo CPF do garçom porque ainda não foi implementado o login do mesmo para identificar os pedidos que ele faz.
+
+Em selecionar pedidos pode ser buscado o pedido pelo número da mesa, existe uma caixa de seleção que pode pedidos finalizados.
+
+Para o crud reserva, para cadastrar a reserva deve selecionar em cliente na aba de clientes, e clicar em realizar reserva, só então pode realizar o cadastro da reserva, para selecionar a reserva clique no botão reserva e depois em selecionar reserva, será possivel buscar pela data da reserva.
+
+Ambos os cruds não tem implementada a função de pesquisar por algo complexo, que será implementada no futuro. 
+
+
 https://github.com/igorFaustino/aps_banco_de_dados
