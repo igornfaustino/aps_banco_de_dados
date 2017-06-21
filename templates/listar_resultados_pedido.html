@@ -1,0 +1,19 @@
+{% extends "layout/layout2.html" %}
+
+{% block title %}
+	Resultados
+{% endblock %}
+
+{% block table_head %}
+	<th class="text-center">Data</th>
+	<th class="text-center">Situação</th>
+{% endblock %}
+
+{% block table_body %}
+	{% for row in results %}
+		<tr>
+			<td><a href="{{ url_for('exibir_pedido', id=row[0]) }}">{{ row[4] }}</a></td>
+			<td><a href="{{ url_for('exibir_pedido', id=row[0]) }}">{{ row[1] }}</a></td>
+		</tr>
+	{% endfor %}
+{% endblock %}

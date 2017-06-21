@@ -7,6 +7,33 @@
 {% block conteudo %}
 	<!-- Conteudo site -->
 		<div class="container text-center conteudo">
+			{% if empty == 'True' %}
+				<div class="alert alert-danger" role="alert"><p>Mesa vazia!</p></div>
+			{% endif %}
+			{% if cadastro == 'True' %}
+				<div class="alert alert-success" role="alert"><p>Pedido cadastrado com sucesso!</p></div>
+			{% endif %}
+			{% if cadastro == 'False' %}
+				<div class="alert alert-danger" role="alert"><p>Falha ao realizar cadastro!</p></div>
+			{% endif %}
+			{% if fim == 'True' %}
+				<div class="alert alert-success" role="alert"><p>Pedido Finalizado!</p></div>
+			{% endif %}
+			{% if fim == 'False' %}
+				<div class="alert alert-danger" role="alert"><p>Falha ao finalizar pedido!</p></div>
+			{% endif %}
+			{% if can == 'True' %}
+				<div class="alert alert-success" role="alert"><p>Pedido cancelado!</p></div>
+			{% endif %}
+			{% if can == 'False' %}
+				<div class="alert alert-danger" role="alert"><p>Falha ao cancelar!</p></div>
+			{% endif %}
+			{% if rm == 'True' %}
+				<div class="alert alert-success" role="alert"><p>Pedido removido com sucesso!</p></div>
+			{% endif %}
+			{% if rm == 'False' %}
+				<div class="alert alert-danger" role="alert"><p>Falha ao remover!</p></div>
+			{% endif %}
 			<h2>Pedidos</h2>
 			<div class="container separete-margim">
 				<a href="{{url_for('search_pedido')}}" class="btn btn-danger btn-block btn-lg my-btn">SELECIONAR PEDIDO</a>

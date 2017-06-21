@@ -39,7 +39,12 @@ def mesa():
 
 @app.route('/pedido')
 def pedido():
-	return render_template('pedidos.html')
+	empty = request.args.get('empty')
+	cadastro = request.args.get('cadastro')
+	fim = request.args.get('fim')
+	can = request.args.get('can')
+	rm = request.args.get('rm')
+	return render_template('pedidos.html', empty=empty, cadastro=cadastro, fim=fim, can=can, rm=rm)
 
 # fim Menus
 
@@ -60,7 +65,6 @@ def cliente_submit():
 	tel = request.form['tel_cliente']
 	cpf = request.form['cpf_cliente']
 	cadastro = sql.cadastro_cliente(nome, tel, cpf)
-	print (cadastro)
 	return redirect(url_for('cliente', cadastro=cadastro))
 
 ########################
@@ -140,6 +144,8 @@ def rm_cliente():
 
 #crud pedidos
 
+######## CADASTRAR
+
 @app.route('/pedido/cadastro')
 def cadastro_pedido():
 	return render_template('cadastro/cadastro_pedido.html')
@@ -148,23 +154,62 @@ def cadastro_pedido():
 def pedido_submit():
 	nroMesa = None
 	nroMesa = request.form['nroMesa']
+	cpfGar = request.form['cpf_garcom']
 	idCli = sql.cliente_mesa(nroMesa)
-	sql.cadastro_pedido(idCli)
-	return redirect(url_for('pedido'))
+	cadastro = sql.cadastro_pedido(idCli=idCli, cpfGar=cpfGar)
+	return redirect(url_for('pedido', cadastro=cadastro))
 
 @app.route('/pedido/search')
 def search_pedido():
 	return render_template('selecionar_pedido.html')
 
+######## EXIBIR
+
 @app.route('/pedido/results')
-def results_pedido_nome():
-	return render_template('listar_resultados.html')
+def results_pedido_mesa():
+	check = None
+	nroMesa = request.args.get('nro_mesa')
+	if (request.args.get('check')):
+		check = True
+	id = sql.cliente_mesa(nroMesa)
+	if id:
+		results = sql.search_pedido(idCli=id, check=check)
+		return render_template('listar_resultados_pedido.html', results=results)
+	else:
+		return redirect(url_for('pedido', empty=True))
 
 @app.route('/pedido/results')
 def results_pedido_algo():
 	pass
 
+@app.route('/pedido/exibir')
+def exibir_pedido():
+	id = request.args.get('id')
+	alt = request.args.get('alt')
+	results = sql.search_pedido(idPed=id)
+	return render_template('exibir_pedido.html', results=results, alt=alt)
 
+############# ALTERAR ###################
+
+@app.route('/pedido/finalizado')
+def finalizar_pedido():
+	id = request.args.get('id')
+	fim = sql.fim_pedido(id)
+	return redirect(url_for('pedido', fim=fim))
+
+@app.route('/pedido/finalizado')
+def cancelar_pedido():
+	id = request.args.get('id')
+	can = sql.canc_pedido(id)
+	return redirect(url_for('pedido', can=can))
+
+############# REMOVER ###################
+
+@app.route('/pedido/remove', methods=["POST"])
+def rm_pedido():
+	id = request.args.get('id')
+	rm = sql.rm_pedido(id=id)
+	return redirect(url_for('pedido', rm=rm))
 
 #crud funcionarios
 
@@ -378,9 +423,9 @@ def rm_mesa(nroMesa):
 
 #crud pedidos
 
-# #@app.route('/pedido/cadastro')
-# #def cadastro_pedido():
-# 	#return render_template('cadastro/cadastro_pedido.html')
+# @app.route('/pedido/cadastro')
+# def cadastro_pedido():
+# 	return render_template('cadastro/cadastro_pedido.html')
 
 # @app.route('/cadastro/pedido/submit', methods=['POST'])
 # def pedido_submit():

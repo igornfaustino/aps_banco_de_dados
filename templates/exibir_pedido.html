@@ -1,0 +1,39 @@
+{% extends "layout/layout1.html" %}
+
+{% block title %}
+	Exibir Prato
+{% endblock %}
+
+{% block conteudo %}
+	<!-- Conteudo site -->
+	{% for row in results %}
+	<div class="container text-center">
+		{% if alt == 'True' %}
+			<div class="alert alert-success" role="alert"><p>Alterações realizadas com sucesso!</p></div>
+			{% endif %}
+			{% if alt == 'False' %}
+				<div class="alert alert-danger" role="alert"><p>Falha ao alterar dado!</p></div>
+			{% endif %}
+		<div class="text-justify">
+			<h2 class="text-center">Pedidos</h2>
+			<ul class="my-list">
+				<li><p><div class="estilo">ID:</div>{{ row[0] }}</p></li>
+				<hr>
+				<li><p><div class="estilo">situação:</div>{{ row[1] }}</p></li>
+				<hr>
+				<li><p><div class="estilo">Data:</div>{{ row[4] }}</p></li>
+			</ul>
+			<hr>
+			<a href="{{ url_for('finalizar_pedido', id=row[0]) }}" class="btn btn-lg btn-block btn-danger separete-margim">Finalizar Pedido</a>
+			<a href="{{ url_for('cancelar_pedido', id=row[0]) }}" class="btn btn-lg btn-block btn-danger separete-margim">Cancelar Pedido</a>
+			<div class="text-right">
+			<form method="post">
+				<button type="submit" formmethod="post" formaction="{{ url_for('rm_pedido', nome=row[1], id=row[0]) }}" class="btn btn-default btn-sm">excluir pedido</button>
+			</form>
+			</div>
+		</div>
+	</div>
+	{% endfor %}
+
+	<!-- Fim conteudo -->
+{% endblock %}
