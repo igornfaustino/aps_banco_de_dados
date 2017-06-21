@@ -8,12 +8,15 @@ Selecionar Funcionario
 	<!-- Conteudo site -->
 
 	<div class="container conteudo">
-		<div class=" container text-center">	
+		<div class=" container text-center">
+			{% if empty == 'True' %}
+				<div class="alert alert-danger" role="alert"><p>Campo vazio!</p></div>
+			{% endif %}	
 			<h2>Selecionar Funcionario</h2>
 		</div>	
 		<div class="container">
 			<!-- Pesquisa simples -->
-			<form action="#" method="post" accept-charset="utf-8">
+			<form action="{{ url_for('results_funcionario_nome' )}}" accept-charset="utf-8">
 				<div class="form-group">
 					<label for="nome_funcionario">Nome Funcionário</label>
 					<div class="input-group">
@@ -23,6 +26,12 @@ Selecionar Funcionario
 							</span>
 					</div>
 				</div>
+			    <label class="radio-inline">
+			      <input type="radio" checked="checked" name="options" id="option1" value="garcom">Garçom
+			    </label>
+			    <label class="radio-inline">
+			      <input type="radio" name="options" id="option2" value="cozinheiro">Cozinheiro
+			    </label>
 			</form>
 			<hr>
 			<!-- pesquisa Complexa -->

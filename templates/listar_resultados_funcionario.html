@@ -1,0 +1,19 @@
+{% extends "layout/layout2.html" %}
+
+{% block title %}
+	Resultados
+{% endblock %}
+
+{% block table_head %}
+	<th class="text-center">CPF</th>
+	<th class="text-center">Nome</th>
+{% endblock %}
+
+{% block table_body %}
+	{% for row in results %}
+		<tr>
+			<td><a href="{{ url_for('exibir_funcionario', cpf=row[0], funcao=funcao) }}">{{ row[0] }}</a></td>
+			<td><a href="{{ url_for('exibir_funcionario', cpf=row[0], funcao=funcao) }}">{{ row[3] }}</a></td>
+		</tr>
+	{% endfor %}
+{% endblock %}

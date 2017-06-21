@@ -19,7 +19,9 @@ def cliente():
 
 @app.route('/funcionario')
 def funcionario():
-	return render_template('funcionarios.html')
+	cadastro = request.args.get('cadastro')
+	rm = request.args.get('rm')
+	return render_template('funcionarios.html', cadastro=cadastro, rm=rm)
 
 @app.route('/restaurante')
 def restaurante():
@@ -225,7 +227,8 @@ def cadastro_funcionario():
 
 @app.route('/funcionario/cadastro/cozinheiro')
 def cadastro_cozinheiro():
-	return render_template('cadastro/cadastro_cozinheiro.html')
+	results = sql.search_cozinheiro_all()
+	return render_template('cadastro/cadastro_cozinheiro.html', results=results)
 
 @app.route('/funcionario/cadastro/garcom')
 def cadastro_garcom():
@@ -239,50 +242,119 @@ def funcionario_submit(funcao):
 	nome_funcionario = request.form['nome_funcionario']
 	sal_funcionario = request.form['sal_funcionario']
 	cpf_funcionario = request.form['cpf_funcionario']
-
+	if (sal_funcionario == ''):
+		sal_funcionario = 0
 	if funcao == 'cozinheiro':
 		cpf_chefe = None
-		cpf_chefe = request.form['cpf_chefe']
-		cadastro_cozinheiro(nome_funcionario, sal_funcionario, cpf_funcionario, cpf_chefe)
+		cpf_chefe = request.form['cpfChefe']
+		print(cpf_chefe, "\n\n")
+		cadastro = sql.cadastro_cozinheiro(nome=nome_funcionario, salario=sal_funcionario, cpf=cpf_funcionario, chefe=cpf_chefe)
 	else:
-		bdHelper.cadastro_garcom(nome_funcionario, sal_funcionario, cpf_funcionario)
-	return redirect(url_for('funcionario'))
+		cadastro = sql.cadastro_garcom(nome=nome_funcionario, salario=sal_funcionario, cpf=cpf_funcionario)
+	return redirect(url_for('funcionario', cadastro=cadastro))
 
 ########################
 ####### Exibir #########	
 
 @app.route('/funcionario/search')
 def search_funcionario():
-	return render_template('selecionar_funcionario.html')
+	empty = request.args.get('empty')
+	return render_template('selecionar_funcionario.html', empty=empty)
 
 @app.route('/funcionario/results')
 def results_funcionario_nome():
 	nome = request.args.get('nome_funcionario')
-	if not nome:
-		results = sql.getall_pratos()
+	op = request.args.get('options')
+	if (op == 'garcom'):
+		if nome:
+			results = sql.search_garcom(nome=nome)
+		else:
+			return redirect(url_for('search_funcionario', empty=True))
 	else:
-		results = sql.search_funcionario(nome=nome)
-	return render_template('listar_resultados_funcionario.html', results=results)
+		if nome:
+			results = sql.search_cozinheiro(nome=nome)
+		else:
+			return redirect(url_for('search_funcionario', empty=True))
+		if (results == ()):
+			if nome:
+				results = sql.search_cozinheiro_semChefe(nome=nome)
+			else:
+				return redirect(url_for('search_funcionario', empty=True))
+
+	print(results)
+	return render_template('listar_resultados_funcionario.html', results=results, funcao=op)
 
 @app.route('/funcionario/results')
 def results_funcionario_algo():
 	pass
 
+@app.route('/funcionario/results/exibir')
+def exibir_funcionario():
+	id = request.args.get('cpf')
+	alt = request.args.get('alt')
+	funcao = request.args.get('funcao')
+	if (funcao == 'garcom'):
+		results = sql.search_garcom(cpf=id)
+	else:
+		results = sql.search_cozinheiro(cpf=id)
+		if results == () :
+			results = sql.search_cozinheiro_semChefe(cpf=id)
+	return render_template('exibir_funcionario.html', results=results, alt=alt, funcao=funcao)
+
 ########################
 ####### Alterar ########
 
-@app.route('/cliente/alterar/nome')
-def nome_funcionario():
+@app.route('/funcionario/alterar/nome/<funcao>')
+def nome_funcionario(funcao):
 	id = request.args.get('id')
-	return render_template('alterar.html', name="Nome", action=url_for('_submit', id=id), type="text", label="Novo Nome")
+	return render_template('alterar.html', name="Nome", action=url_for('nome_funcionario_submit', id=id, funcao=funcao), type="text", label="Novo Nome")
 
-@app.route('/cliente/alterar/nome/submit', methods=['POST'])
+@app.route('/funcionario/alterar/nome/submit', methods=['POST'])
 def nome_funcionario_submit():
-	id = request.args.get('id')
+	cpf = request.args.get('id')
+	funcao = request.args.get('funcao')
 	novo = request.form['alt']
-	alt = sql.alter_cliente_nome(idCli=id, nome=novo)
-	return redirect(url_for('exibir_clientes', id=id, alt=alt))
+	alt = sql.alter_nome_funcionario(cpf=cpf, nome=novo)
+	return redirect(url_for('exibir_funcionario', cpf=cpf, alt=alt, funcao=funcao))
 
+@app.route('/funcionario/alterar/salario/<funcao>')
+def sal_funcionario(funcao):
+	id = request.args.get('id')
+	return render_template('alterar.html', name="salario", action=url_for('sal_funcionario_submit', id=id, funcao=funcao), type="number", label="Novo Salario")
+
+@app.route('/funcionario/alterar/salario/submit', methods=['POST'])
+def sal_funcionario_submit():
+	cpf = request.args.get('id')
+	funcao = request.args.get('funcao')
+	novo = request.form['alt']
+	alt = sql.alter_sal_funcionario(cpf=cpf, salario=novo)
+	return redirect(url_for('exibir_funcionario', cpf=cpf, alt=alt, funcao=funcao))
+
+@app.route('/funcionario/alterar/chefe/')
+def chefe_funcionario():
+	id = request.args.get('id')
+	results = sql.search_cozinheiro_all()
+	return render_template('alterarChefe.html', id=id, results=results)
+
+@app.route('/funcionario/alterar/chefe/submit', methods=['POST'])
+def chefe_funcionario_submit():
+	cpf = request.args.get('id')
+	novo = request.form['alt']
+	alt = sql.alter_chefe_funcionario(cpf=cpf, chefe=novo)
+	return redirect(url_for('exibir_funcionario', cpf=cpf, alt=alt, funcao='cozinheiro'))
+
+########################
+######## Remover #######
+
+@app.route('/funcionario/remove', methods=["POST"])
+def rm_funcionario():
+	id = request.args.get('id')
+	funcao = request.args.get('funcao')
+	if (funcao == 'garcom'):
+		rm = sql.rm_garcom(cpf=id)
+	else:
+		rm = sql.rm_cozinheiro(cpf=id)
+	return redirect(url_for('funcionario', rm=rm))
 
 # crud pratos	
 
@@ -427,30 +499,6 @@ def rm_mesa(nroMesa):
 	rm = sql.rm_mesa(numero_da_mesa=nroMesa)
 	return redirect(url_for('mesa', rm=rm))
 
-#crud pedidos
-
-# @app.route('/pedido/cadastro')
-# def cadastro_pedido():
-# 	return render_template('cadastro/cadastro_pedido.html')
-
-# @app.route('/cadastro/pedido/submit', methods=['POST'])
-# def pedido_submit():
-# 	nroMesa = None
-# 	nroMesa = request.form['nroMesa']
-# 	sql.cadastro_pedido(nroMesa)
-# 	return redirect(url_for('pedido'))
-
-# @app.route('/pedido/search')
-# def search_pedido():
-# 	return render_template('selecionar_pedido.html')
-
-# @app.route('/pedido/results')
-# def results_pedido_nome():
-# 	return render_template('listar_resultados.html')
-
-# @app.route('/pedido/results')
-# def results_pedido_algo():
-# 	pass
 
 # crud Reservas
 

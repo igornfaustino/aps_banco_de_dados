@@ -1,0 +1,43 @@
+{% extends "layout/layout1.html" %}
+
+{% block title %}
+	Exibir Funcionário
+{% endblock %}
+
+{% block conteudo %}
+	<!-- Conteudo site -->
+	{% for row in results %}
+	<div class="container text-center">
+		{% if alt == 'True' %}
+			<div class="alert alert-success" role="alert"><p>Alterações realizadas com sucesso!</p></div>
+			{% endif %}
+			{% if alt == 'False' %}
+				<div class="alert alert-danger" role="alert"><p>Falha ao alterar dado!</p></div>
+			{% endif %}
+		<div class="text-justify">
+			<h2 class="text-center">Funcionario</h2>
+			<ul class="my-list">
+				<li><p><div class="estilo">CPF:</div>{{ row[0] }}</p></li>
+				<hr>
+				<li><p><div class="estilo">Nome:</div>{{ row[3] }}  <a href="{{ url_for('nome_funcionario', id=row[0], funcao=funcao) }}" class="btn btn-default">alterar</a></p></li>
+				<hr>
+				<li><p><div class="estilo">Salario:</div>R$ {{ row[1] }}  <a href="{{ url_for('sal_funcionario', id=row[0], funcao=funcao) }}" class="btn btn-default">alterar</a></p></li>
+				<hr>
+				<li><p><div class="estilo">Situação:</div>{{ row[2] }}  <a href="#" class="btn btn-default">alterar</a></p></li>
+				<hr>
+				{% if funcao == 'cozinheiro' %}
+					<li><p><div class="estilo">Chefe:</div>{{ row[4] }}  <a href="{{ url_for('chefe_funcionario', id=row[0] )}}" class="btn btn-default">alterar</a></p></li>
+				{% endif %}
+			</ul>
+			<hr>
+			<div class="text-right">
+			<form method="post">
+				<button type="submit" formmethod="post" formaction="{{ url_for('rm_funcionario', funcao=funcao, id=row[0]) }}" class="btn btn-default btn-sm">Excluir Funcionario</button>
+			</form>
+			</div>
+		</div>
+	</div>
+	{% endfor %}
+
+	<!-- Fim conteudo -->
+{% endblock %}

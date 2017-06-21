@@ -7,6 +7,18 @@
 {% block conteudo %}
 	<!-- Conteudo site -->
 		<div class="container text-center conteudo">
+			{% if cadastro == 'True' %}
+				<div class="alert alert-success" role="alert"><p>Cadastro realizado com sucesso!</p></div>
+			{% endif %}
+			{% if cadastro == 'False' %}
+				<div class="alert alert-danger" role="alert"><p>Falha ao cadastrar funcionario!</p></div>
+			{% endif %}
+			{% if rm == 'True' %}
+				<div class="alert alert-success" role="alert"><p>Funcionario excluido com sucesso!</p></div>
+			{% endif %}
+			{% if rm == 'False' %}
+				<div class="alert alert-danger" role="alert"><p>Falha ao excluir funcionario!</p></div>
+			{% endif %}
 			<h2>Funcionarios</h2>
 			<div class="container separete-margim">
 				<a href="{{ url_for('search_funcionario') }}" class="btn btn-danger btn-block btn-lg my-btn">SELECIONAR FUNCIONARIO</a>
