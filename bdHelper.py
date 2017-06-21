@@ -345,7 +345,7 @@ class bdHelper():
 
 	
 
-
+ #crud funcionario
 	
 	def cadastro_garcom(self, nome, sal, cpf):
 		connection = self.connect()
@@ -364,7 +364,7 @@ class bdHelper():
 	def cadastro_cozinheiro(self, nome, sal, cpf, chefe):
 		connection = self.connect()
 		try:
-			query = "insert into funcionario(cpf, salario, situacao, nome) values (%s, %s, %s, %s)"
+			query = "insert into funcionarios(cpf, salario, situacao, nome) values (%s, %s, %s, %s)"
 			query1 = "insert into cozinheiros(cpf, cpfChefe) values (%s, %s)"
 			with connection.cursor as cursor:
 				cursor.execute(query, (cpf, sal, "Ativo", nome))
@@ -372,6 +372,71 @@ class bdHelper():
 				connection.commit()
 		except Exception as e:
 			print(e)
+		finally:
+			connection.close()
+
+	def search_funcionario(self, nome)
+		connection = self.connect()
+		try:
+			with connection.cursor() as cursor:
+					query = "select * from funcionarios where nome like %s;"
+					cursor.execute(query, ("%" + nome + "%"))
+				return cursor.fetchall()
+		except Exception as e:
+			print(e)
+		finally:
+			connection.close()
+
+	def getall_funcionario(self):
+		connection = self.connect()
+		try:
+			with connection.cursor() as cursor:
+				query = "select * from funcionarios"
+				cursor.execute(query)
+				return cursor.fetchall()
+		except Exception as e:
+			print(e)
+		finally:
+			connection.close()
+
+	def rm_funcionario(self, cpf=None):
+		connection = self.connect()
+		try:
+			query = "delete from funcionarios where cpf = %s;"
+			with connection.cursor() as cursor:
+				cursor.execute(query, cpf)
+				connection.commit()
+				return True
+		except Exception as e:
+			return False
+		finally:
+			connection.close()
+
+	def alter_nome_funcionario(self, cpf=None, nome = None):
+		connection = self.connect()
+		try:
+			query = "update funcionarios set nome = %s where cpf = %s;"
+			with connection.cursor() as cursor:
+				cursor.execute(query, (nome, cpf))
+				connection.commit()
+				return True
+		except Exception as e:
+			print(e)
+			return False
+		finally:
+			connection.close()
+
+	def alter_sal_funcionario(self, cpf=None, salario = None):
+		connection = self.connect()
+		try:
+			query = "update funcionarios set salario = %s where cpf = %s;"
+			with connection.cursor() as cursor:
+				cursor.execute(query, (salario, cpf))
+				connection.commit()
+				return True
+		except Exception as e:
+			print(e)
+			return False
 		finally:
 			connection.close()
 

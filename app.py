@@ -283,18 +283,38 @@ def results_funcionario_algo():
 ########################
 ####### Alterar ########
 
-@app.route('/cliente/alterar/nome')
+@app.route('/funcionario/alterar/nome')
 def nome_funcionario():
 	id = request.args.get('id')
-	return render_template('alterar.html', name="Nome", action=url_for('_submit', id=id), type="text", label="Novo Nome")
+	return render_template('alterar.html', name="Nome", action=url_for('nome_funcionario_submit', id=id), type="text", label="Novo Nome")
 
-@app.route('/cliente/alterar/nome/submit', methods=['POST'])
+@app.route('/funcionario/alterar/nome/submit', methods=['POST'])
 def nome_funcionario_submit():
-	id = request.args.get('id')
+	cpf = request.args.get('cpf')
 	novo = request.form['alt']
-	alt = sql.alter_cliente_nome(idCli=id, nome=novo)
-	return redirect(url_for('exibir_clientes', id=id, alt=alt))
+	alt = sql.alter_nome_funcionario(cpf=cpf, nome=novo)
+	return redirect(url_for('exibir_funcionario', cpf=cpf, alt=alt))
 
+@app.route('/funcionario/alterar/nome')
+def sal_funcionario():
+	id = request.args.get('id')
+	return render_template('alterar.html', name="salario", action=url_for('salario_funcionario_submit', id=id), type="num", label="Novo Salario")
+
+@app.route('/funcionario/alterar/nome/submit', methods=['POST'])
+def sal_funcionario_submit():
+	cpf = request.args.get('cpf')
+	novo = request.form['alt']
+	alt = sql.alter_sal_funcionario(cpf=cpf, sal_funcionario=novo)
+	return redirect(url_for('exibir_funcionario', cpf=cpf, alt=alt))
+
+########################
+######## Remover #######
+
+@app.route('/funcionario/remove', methods=["POST"])
+def rm_funcionario():
+	id = request.args.get('id')
+	rm = sql.rm_funcionario(id=id)
+	return redirect(url_for('funcionario', rm=rm))
 
 # crud pratos	
 
