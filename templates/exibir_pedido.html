@@ -25,10 +25,11 @@
 			</ul>
 			<hr>
 			<a href="{{ url_for('finalizar_pedido', id=row[0]) }}" class="btn btn-lg btn-block btn-danger separete-margim">Finalizar Pedido</a>
+
 			<a href="{{ url_for('cancelar_pedido', id=row[0]) }}" class="btn btn-lg btn-block btn-danger separete-margim">Cancelar Pedido</a>
 			<div class="text-right">
 			<form method="post">
-				<button type="submit" formmethod="post" formaction="{{ url_for('rm_pedido', nome=row[1], id=row[0]) }}" class="btn btn-default btn-sm">excluir pedido</button>
+				<button type="submit" formmethod="post" formaction="{{ url_for('rm_reserva', id=row[0]) }}" class="btn btn-default btn-sm">excluir pedido</button>
 			</form>
 			</div>
 		</div>

@@ -19,7 +19,15 @@
 			<ul class="my-list">
 				<li><p><div class="estilo">ID:</div>{{ row[0] }}</p></li>
 				<hr>
-				<li><p><div class="estilo">Data:</div>{{ row[1] }}  <a href="{{ url_for('data_reserva', id=row[0]) }}" class="btn btn-default">alterar</a></p></li>
+				<li><p><div class="estilo">Nome Cliente:</div>{{ cliente }} </p></li>
+				<hr>
+				<li><p><div class="estilo">nroMesa</div>{{ row[2] }} <a href="{{ url_for('alt_mesa_reserva', id=row[0], date=row[3], nroPessoas = row[5]) }}" class="btn btn-default">alterar</a></p></li>
+				<hr>
+				<li><p><div class="estilo">datas</div>{{ row[3] }} <a href="{{ url_for('alt_datas_reservas', id=row[0], date=row[3], nroPessoas = row[5]) }}" class="btn btn-default">alterar</a></p></li>
+				<hr>
+				<li><p><div class="estilo">hora</div>{{ row[4] }}  <a href="{{ url_for('alt_hora_reservas', id=row[0]) }}" class="btn btn-default">alterar</a></p></li>
+				<hr>
+				<li><p><div class="estilo">nroPessoas</div>{{ row[5] }}  <a href="{{ url_for('alt_nroPessoas_reservas', id=row[0]) }}" class="btn btn-default">alterar</a></p></li>
 			</ul>
 			<hr>
 			<div class="text-right">

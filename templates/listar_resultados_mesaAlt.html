@@ -6,14 +6,14 @@
 
 {% block table_head %}
 	<th class="text-center">Id</th>
-	<th class="text-center">data</th>
+	<th class="text-center">nroPessoas</th>
 {% endblock %}
 
 {% block table_body %}
 	{% for row in results %}
 		<tr>
-			<td><a href="{{ url_for('exibir_reserva', nome=row[1], id=row[0]) }}">{{ row[0] }}</a></td>
-			<td><a href="{{ url_for('exibir_reserva', nome=row[1], id=row[0]) }}">{{ row[3] }}</a></td>
+			<td><a href="{{ url_for('alt_mesa_reserva_submit', nroMesa=row[0], id=id) }}">{{ row[0] }}</a></td>
+			<td><a href="{{ url_for('alt_mesa_reserva_submit', nroMesa=row[0], id=id) }}">{{ row[1] }}</a></td>
 		</tr>
 	{% endfor %}
 {% endblock %}
