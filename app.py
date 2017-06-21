@@ -40,7 +40,11 @@ def mesa():
 @app.route('/pedido')
 def pedido():
 	empty = request.args.get('empty')
-	return render_template('pedidos.html', empty=empty)
+	cadastro = request.args.get('cadastro')
+	fim = request.args.get('fim')
+	can = request.args.get('can')
+	rm = request.args.get('rm')
+	return render_template('pedidos.html', empty=empty, cadastro=cadastro, fim=fim, can=can, rm=rm)
 
 # fim Menus
 
@@ -140,6 +144,8 @@ def rm_cliente():
 
 #crud pedidos
 
+######## CADASTRAR
+
 @app.route('/pedido/cadastro')
 def cadastro_pedido():
 	return render_template('cadastro/cadastro_pedido.html')
@@ -157,6 +163,8 @@ def pedido_submit():
 def search_pedido():
 	return render_template('selecionar_pedido.html')
 
+######## EXIBIR
+
 @app.route('/pedido/results')
 def results_pedido_mesa():
 	check = None
@@ -166,7 +174,7 @@ def results_pedido_mesa():
 	id = sql.cliente_mesa(nroMesa)
 	if id:
 		results = sql.search_pedido(idCli=id, check=check)
-		return render_template('listar_resultados.html', results=results)
+		return render_template('listar_resultados_pedido.html', results=results)
 	else:
 		return redirect(url_for('pedido', empty=True))
 
@@ -174,7 +182,34 @@ def results_pedido_mesa():
 def results_pedido_algo():
 	pass
 
+@app.route('/pedido/exibir')
+def exibir_pedido():
+	id = request.args.get('id')
+	alt = request.args.get('alt')
+	results = sql.search_pedido(idPed=id)
+	return render_template('exibir_pedido.html', results=results, alt=alt)
 
+############# ALTERAR ###################
+
+@app.route('/pedido/finalizado')
+def finalizar_pedido():
+	id = request.args.get('id')
+	fim = sql.fim_pedido(id)
+	return redirect(url_for('pedido', fim=fim))
+
+@app.route('/pedido/finalizado')
+def cancelar_pedido():
+	id = request.args.get('id')
+	can = sql.canc_pedido(id)
+	return redirect(url_for('pedido', can=can))
+
+############# REMOVER ###################
+
+@app.route('/pedido/remove', methods=["POST"])
+def rm_pedido():
+	id = request.args.get('id')
+	rm = sql.rm_pedido(id=id)
+	return redirect(url_for('pedido', rm=rm))
 
 #crud funcionarios
 

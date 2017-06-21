@@ -125,19 +125,65 @@ class bdHelper():
 		finally:
 			connection.close()
 
-	def search_pedido(self, idCli=None, check=False):
+	def search_pedido(self, idCli=None, check=False, idPed=None):
 		connection = self.connect()
 		try:
 			with connection.cursor() as cursor:
 				query1 = "select * from pedidos where idCli = %s;"
-				query2 = "select * from pedidos where idCli = %s and situacao <> 'Finalizado';"
+				query2 = "select * from pedidos where idCli = %s and situacao <> 'Finalizado' and situacao <> 'Cancelado';"
+				query3 = "select * from pedidos where idPed = %s;"
 				if check:
 					cursor.execute(query1, idCli)
 				else:
-					cursor.execute(query2, idCli)
+					if(idPed):
+						cursor.execute(query3, idPed)
+					else:
+						cursor.execute(query2, idCli)
 				return cursor.fetchall()
 		except Exception as e:
 			print(e)
+		finally:
+			connection.close()
+
+	def fim_pedido(self, idPed=None):
+		connection = self.connect()
+		try:
+			query = "update pedidos set situacao = 'Finalizado' where idPed = %s;"
+			with connection.cursor() as cursor:
+				cursor.execute(query, (idPed))
+				connection.commit()
+				return True
+		except Exception as e:
+			print(e)
+			return False
+		finally:
+			connection.close()
+
+	def canc_pedido(self, idPed=None):
+		connection = self.connect()
+		try:
+			query = "update pedidos set situacao = 'Cancelado' where idPed = %s;"
+			with connection.cursor() as cursor:
+				cursor.execute(query, (idPed))
+				connection.commit()
+				return True
+		except Exception as e:
+			print(e)
+			return False
+		finally:
+			connection.close()
+
+	def rm_pedido(self, id=None):
+		connection = self.connect()
+		try:
+			query = "delete from pedidos where idPed = %s;"
+			with connection.cursor() as cursor:
+				cursor.execute(query, id)
+				connection.commit()
+				return True
+		except Exception as e:
+			print(e)
+			return False
 		finally:
 			connection.close()
 
