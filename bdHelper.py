@@ -112,6 +112,13 @@ class bdHelper():
 	# crud pedido
 
 	def cadastro_pedido(self, idCli, cpfGar):
+<<<<<<< HEAD
+		connection = self.connect()
+		try:
+			query = "insert into pedidos(situacao, idCli, cpfGar, dataPed) values(%s, %s, %s, CURDATE());"
+			with connection.cursor() as cursor:
+				cursor.execute(query, ("Pedido Pendente", idCli, cpfGar))
+=======
 		connection = self.connect()
 		try:
 			query = "insert into pedidos(situacao, idCli, cpfGar, dataPed) values(%s, %s, %s, CURDATE());"
@@ -179,11 +186,77 @@ class bdHelper():
 			query = "delete from pedidos where idPed = %s;"
 			with connection.cursor() as cursor:
 				cursor.execute(query, id)
+>>>>>>> 6b013ffaa6585b814f4f924b743eeb7acd53f49d
 				connection.commit()
 				return True
 		except Exception as e:
 			print(e)
 			return False
+<<<<<<< HEAD
+		finally:
+			connection.close()
+
+	def search_pedido(self, idCli=None, check=False, idPed=None):
+		connection = self.connect()
+		try:
+			with connection.cursor() as cursor:
+				query1 = "select * from pedidos where idCli = %s;"
+				query2 = "select * from pedidos where idCli = %s and situacao <> 'Finalizado' and situacao <> 'Cancelado';"
+				query3 = "select * from pedidos where idPed = %s;"
+				if check:
+					cursor.execute(query1, idCli)
+				else:
+					if(idPed):
+						cursor.execute(query3, idPed)
+					else:
+						cursor.execute(query2, idCli)
+				return cursor.fetchall()
+		except Exception as e:
+			print(e)
+		finally:
+			connection.close()
+
+	def fim_pedido(self, idPed=None):
+		connection = self.connect()
+		try:
+			query = "update pedidos set situacao = 'Finalizado' where idPed = %s;"
+			with connection.cursor() as cursor:
+				cursor.execute(query, (idPed))
+				connection.commit()
+				return True
+		except Exception as e:
+			print(e)
+			return False
+		finally:
+			connection.close()
+
+	def canc_pedido(self, idPed=None):
+		connection = self.connect()
+		try:
+			query = "update pedidos set situacao = 'Cancelado' where idPed = %s;"
+			with connection.cursor() as cursor:
+				cursor.execute(query, (idPed))
+				connection.commit()
+				return True
+		except Exception as e:
+			print(e)
+			return False
+		finally:
+			connection.close()
+
+	def rm_pedido(self, id=None):
+		connection = self.connect()
+		try:
+			query = "delete from pedidos where idPed = %s;"
+			with connection.cursor() as cursor:
+				cursor.execute(query, id)
+				connection.commit()
+				return True
+		except Exception as e:
+			print(e)
+			return False
+=======
+>>>>>>> 6b013ffaa6585b814f4f924b743eeb7acd53f49d
 		finally:
 			connection.close()
 
@@ -378,8 +451,11 @@ class bdHelper():
 			connection.close()
 
 	# crud reserva
+<<<<<<< HEAD
 
 	# crud reserva
+=======
+>>>>>>> 6b013ffaa6585b814f4f924b743eeb7acd53f49d
 
 	def cadastro_reserva(self, idCli=None, nroMesa=None, datas=None
 		, hora=None, nroPessoas=None):

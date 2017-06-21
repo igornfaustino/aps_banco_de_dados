@@ -188,6 +188,7 @@ def exibir_pedido():
 	alt = request.args.get('alt')
 	results = sql.search_pedido(idPed=id)
 	return render_template('exibir_pedido.html', results=results, alt=alt)
+<<<<<<< HEAD
 
 ############# ALTERAR ###################
 
@@ -203,6 +204,23 @@ def cancelar_pedido():
 	can = sql.canc_pedido(id)
 	return redirect(url_for('pedido', can=can))
 
+=======
+
+############# ALTERAR ###################
+
+@app.route('/pedido/finalizado')
+def finalizar_pedido():
+	id = request.args.get('id')
+	fim = sql.fim_pedido(id)
+	return redirect(url_for('pedido', fim=fim))
+
+@app.route('/pedido/finalizado')
+def cancelar_pedido():
+	id = request.args.get('id')
+	can = sql.canc_pedido(id)
+	return redirect(url_for('pedido', can=can))
+
+>>>>>>> 6b013ffaa6585b814f4f924b743eeb7acd53f49d
 ############# REMOVER ###################
 
 @app.route('/pedido/remove', methods=["POST"])
