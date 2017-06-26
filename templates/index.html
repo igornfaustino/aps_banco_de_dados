@@ -13,25 +13,23 @@
 			<hr>
 			<!-- <h2>Pedidos Pendentes</h2> -->
 			<div>
-				<table class="table table-bordered table-responsive">
+				<table class="table table-responsive">
 					<caption class="text-center"><h2>Pedidos Pendentes</h2></caption>
 					<thead>
 						<tr>
 							<th class="text-center">Nº<wbr></wbr>Pedido</th>
 							<th class="text-center">Mesas</th>
-							<th class="text-center">Itens/<wbr></wbr>Quantidades</th>
 							<th class="text-center">status</th>
 						</tr>
 					</thead>
 					<tbody>
-					<!-- Loop -->
+					{% for row in results %}
 						<tr>
-							<td><a href="#">1</a></td>
-							<td><a href="#">Mesa 1</a></td>
-							<td><a href="#">Frango<wbr>1und</a></td>
-							<td><a href="#">Pendente</a></td>
+							<td><a href="{{ url_for('exibir_pedido', id=row[0]) }}">{{ row[0] }}</a></td>
+							<td><a href="{{ url_for('exibir_pedido', id=row[0]) }}">Mesa {{ row[1] }}</a></td>
+							<td><a href="{{ url_for('exibir_pedido', id=row[0]) }}">{{ row[2] }}</a></td>
 						</tr>
-					<!-- Fim Loop -->
+					{% endfor %}
 					</tbody>
 				</table>
 			</div>

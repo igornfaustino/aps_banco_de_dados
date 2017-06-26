@@ -6,7 +6,7 @@
 		<form action="{{ url_for('chefe_funcionario_submit', id=id) }}" method="post" accept-charset="utf-8" >
 				<div class="form-group ">
 					<label for="alt">Chefe:</label>
-  					<select class="selectpicker" id="alt" name="alt">
+  					<select class="form-control" id="alt" name="alt">
 						<option value="">--</option>
 						{% for row in results %}
 					  		<option value="{{ row[0] }}">{{ row[3] }}</option>

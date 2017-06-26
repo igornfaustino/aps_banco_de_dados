@@ -111,12 +111,12 @@ class bdHelper():
 
 	# crud pedido
 
-	def cadastro_pedido(self, idCli, cpfGar):
+	def cadastro_pedido(self, idCli, cpfGar, nroMesa):
 		connection = self.connect()
 		try:
-			query = "insert into pedidos(situacao, idCli, cpfGar, dataPed) values(%s, %s, %s, CURDATE());"
+			query = "insert into pedidos(situacao, idCli, cpfGar, dataPed, mesa) values(%s, %s, %s, CURDATE(), %s);"
 			with connection.cursor() as cursor:
-				cursor.execute(query, ("Pedido Pendente", idCli, cpfGar))
+				cursor.execute(query, ("Pedido Pendente", idCli, cpfGar, nroMesa))
 				connection.commit()
 				return True
 		except Exception as e:
@@ -139,6 +139,23 @@ class bdHelper():
 						cursor.execute(query3, idPed)
 					else:
 						cursor.execute(query2, idCli)
+				return cursor.fetchall()
+		except Exception as e:
+			print(e)
+		finally:
+			connection.close()
+
+	def get_pedido(self):
+		connection = self.connect()
+		try:
+			with connection.cursor() as cursor:
+				query1 = """select P.idPed, R.nroMesa, P.situacao
+							from pedidos P, reservas R
+							where P.idCli = R.idCli and
+							P.situacao = 'Pedido Pendente' and
+							P.dataPed = R.datas and
+							P.mesa = R.nroMesa;"""
+				cursor.execute(query1)
 				return cursor.fetchall()
 		except Exception as e:
 			print(e)
@@ -186,7 +203,6 @@ class bdHelper():
 			return False
 		finally:
 			connection.close()
-
 
 
 	# crud mesa
@@ -551,8 +567,67 @@ class bdHelper():
 		finally:
 			connection.close()
 
-	# crud reserva
+	# add itens ao pedido
 
+	def add_item(self, pedido, prato, qtd):
+		connection = self.connect()
+		try:
+			query = "insert into pedidos_pratos(idPratos, idPed, qtd) values(%s, %s, %s);"
+			
+			with connection.cursor() as cursor:
+				cursor.execute(query, (prato, pedido, qtd))
+				connection.commit()
+				return True
+		except Exception as e:
+			print(e)
+			return False
+		finally:
+			connection.close()
+
+	# rm itens do pedido
+	def rm_item(self, pedido, prato):
+		connection = self.connect()
+		try:
+			query = "delete from pedidos_pratos where idPed = %s and idPratos = %s;"
+			
+			with connection.cursor() as cursor:
+				cursor.execute(query, (pedido, prato))
+				connection.commit()
+				return True
+		except Exception as e:
+			print(e)
+			return False
+		finally:
+			connection.close()
+
+	# atualiza qtd
+	def update_qtd(self, pedido, prato, qtd):
+		connection = self.connect()
+		try:
+			query = "update pedidos_pratos set qtd = %s where idPed = %s and idPratos = %s;"
+			with connection.cursor() as cursor:
+				cursor.execute(query, (qtd, pedido, prato))
+				connection.commit()
+				return True
+		except Exception as e:
+			print(e)
+			return False
+		finally:
+			connection.close()
+
+	def get_itens(self, pedido):
+		connection = self.connect()
+		try:
+			with connection.cursor() as cursor:
+				query = "select P.nome, I.qtd, P.id from pedidos_pratos I, pratos P where I.idPed = %s and I.idPratos = P.id;"
+				cursor.execute(query, pedido)
+				return cursor.fetchall()
+		except Exception as e:
+			print(e)
+		finally:
+			connection.close()
+
+	# crud reserva
 
 	def cadastro_reserva(self, idCli=None, nroMesa=None, datas=None
 		, hora=None, nroPessoas=None):
@@ -703,6 +778,57 @@ class bdHelper():
 			print(e)
 		finally:
 			connection.close()
+
+	# Pesquisar prato mais pedido do mes
+	# PS. Se isso não for complexo não sei mais o que é..
+	def prato_do_mes(self, mes = None):
+		connection = self.connect()
+		if mes:
+			try:
+				with connection.cursor() as cursor:
+					query = """	
+								select 	P.*
+								from 	pratos P
+								where	P.id in (	select	Q.idPratos
+													from	(	select P1.idPratos, sum(P1.qtd) as qtd
+																from 	pedidos_pratos P1, pedidos PE1
+								                                where	PE1.idPed = P1.idPed and month(PE1.dataPed) = %s and year(PE1.dataPed) = year(curdate())
+																group by P1.idPratos	) Q
+													where	Q.qtd = (	select 	max(Q1.qtd)
+																		from	(	select P2.idPratos, sum(P2.qtd) as qtd
+																					from pedidos_pratos P2, pedidos PE2
+																					where	PE2.idPed = P2.idPed and month(PE2.dataPed) = %s and year(PE2.dataPed) = year(curdate())
+																					group by P2.idPratos	) Q1 
+																	)
+												);
+							"""
+					cursor.execute(query, (int(mes), int(mes)))
+					return cursor.fetchall()
+			except Exception as e:
+				print(e)
+			finally:
+				connection.close()
+
+	# Clientes que não tem reserva em determidado mes
+	def clientes_sem_reserva(self, mes = None):
+		connection = self.connect()
+		if mes:
+			try:
+				with connection.cursor() as cursor:
+					query = """	
+								select C.*
+								from clientes C
+								where C.idCli not in	(	select	R.idCli
+															from 	reservas R
+															where	month(R.datas) = 6 and year(R.datas) = year(curdate())
+														);
+							"""
+					cursor.execute(query, (int(mes), int(mes)))
+					return cursor.fetchall()
+			except Exception as e:
+				print(e)
+			finally:
+				connection.close()
 
 
 if __name__ == '__main__':

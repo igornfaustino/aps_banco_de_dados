@@ -7,7 +7,9 @@ sql = bdHelper()
 
 @app.route('/')
 def index():
-	return render_template('index.html')
+	results = sql.get_pedido()
+	print(results)
+	return render_template('index.html', results=results)
 
 # Menus
 
@@ -93,7 +95,12 @@ def results_cliente_nome():
 
 @app.route('/cliente/results')
 def results_cliente_algo():
-	pass
+	mes = request.args.get('mes')
+	if mes:
+		results = sql.clientes_sem_reserva(mes=mes)
+	else:
+		results = ()
+	return render_template('listar_resultados_cliente.html', results=results)
 
 @app.route('/cliente/')
 def exibir_clientes():
@@ -164,12 +171,44 @@ def pedido_submit():
 	nroMesa = request.form['nroMesa']
 	cpfGar = request.form['cpf_garcom']
 	idCli = sql.cliente_mesa(nroMesa)
-	cadastro = sql.cadastro_pedido(idCli=idCli, cpfGar=cpfGar)
+	cadastro = sql.cadastro_pedido(idCli=idCli, cpfGar=cpfGar, nroMesa=nroMesa)
 	return redirect(url_for('pedido', cadastro=cadastro))
 
 @app.route('/pedido/search')
 def search_pedido():
 	return render_template('selecionar_pedido.html')
+
+####### itens Pedido ##########
+
+@app.route('/pedido/itens')
+def add_item():
+	id = request.args.get('id')
+	results = sql.getall_pratos()
+	return render_template('cadastro/add_item.html', results=results, id=id)
+
+@app.route('/pedido/itens/submit', methods=['POST'])
+def item_submit():
+	id = request.args.get('id')
+	cardapio = request.form['cardapio']
+	qtd = request.form['qtd']
+	item = sql.add_item(pedido=id, prato=cardapio, qtd=qtd)
+	return redirect(url_for('exibir_pedido', item=item, id=id))
+
+@app.route('/pedido/itens/remove', methods=["POST"])
+def rm_item():
+	pedido = request.args.get('pedido')
+	prato = request.args.get('prato')
+	rm = sql.rm_item(pedido=pedido, prato=prato)
+	return redirect(url_for('exibir_pedido', rm=rm, id=pedido))
+
+
+@app.route('/pedido/itens/update', methods=["POST"])
+def update_qtd():
+	pedido = request.args.get('pedido')
+	prato = request.args.get('prato')
+	qtd = request.form['qtd']
+	alt = sql.update_qtd(pedido=pedido, prato=prato, qtd=qtd)
+	return redirect(url_for('exibir_pedido', alt=alt, id=pedido))
 
 ######## EXIBIR
 
@@ -194,8 +233,13 @@ def results_pedido_algo():
 def exibir_pedido():
 	id = request.args.get('id')
 	alt = request.args.get('alt')
+	cadastro = request.args.get('cadastro')
+	item = request.args.get('item')
+	rm = request.args.get('rm')
 	results = sql.search_pedido(idPed=id)
-	return render_template('exibir_pedido.html', results=results, alt=alt)
+	itens = sql.get_itens(pedido=id)
+	print(itens)
+	return render_template('exibir_pedido.html', item=item, results=results, alt=alt, cadastro=cadastro, itens_results=itens, rm=rm)
 
 ############# ALTERAR ###################
 
@@ -256,10 +300,12 @@ def funcionario_submit(funcao):
 ########################
 ####### Exibir #########	
 
+
 @app.route('/funcionario/search')
 def search_funcionario():
 	empty = request.args.get('empty')
 	return render_template('selecionar_funcionario.html', empty=empty)
+
 
 @app.route('/funcionario/results')
 def results_funcionario_nome():
@@ -297,7 +343,7 @@ def exibir_funcionario():
 		results = sql.search_garcom(cpf=id)
 	else:
 		results = sql.search_cozinheiro(cpf=id)
-		if results == () :
+		if results == ():
 			results = sql.search_cozinheiro_semChefe(cpf=id)
 	return render_template('exibir_funcionario.html', results=results, alt=alt, funcao=funcao)
 
@@ -386,6 +432,16 @@ def results_prato_nome():
 	else:
 		results = sql.search_prato(nome=nome)
 	return render_template('listar_resultados_prato.html', results=results)
+
+@app.route('/prato/results/maisvendido')
+def results_prato_mes():
+	mes = request.args.get('mes')
+	if mes:
+		results = sql.prato_do_mes(mes=mes)
+	else:
+		results = ()
+	return render_template('listar_resultados_prato.html', results=results)
+
 
 @app.route('/prato/results')
 def results_prato_algo():

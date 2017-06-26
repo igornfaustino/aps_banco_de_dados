@@ -57,6 +57,7 @@ create table pedidos(
     idCli integer not null,
     cpfGar integer not null,
     dataPed date,
+    mesa integer,
     constraint pk_ped primary key (idPed),
     constraint fk_pedGar foreign key (cpfGar) references garcons(cpf),
     constraint fk_cli foreign key (idCli) references clientes(idCli)

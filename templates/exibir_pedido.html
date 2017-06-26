@@ -9,29 +9,75 @@
 	{% for row in results %}
 	<div class="container text-center">
 		{% if alt == 'True' %}
-			<div class="alert alert-success" role="alert"><p>Alterações realizadas com sucesso!</p></div>
-			{% endif %}
-			{% if alt == 'False' %}
-				<div class="alert alert-danger" role="alert"><p>Falha ao alterar dado!</p></div>
-			{% endif %}
+		<div class="alert alert-success" role="alert"><p>Alterações realizadas com sucesso!</p></div>
+		{% endif %}
+		{% if alt == 'False' %}
+			<div class="alert alert-danger" role="alert"><p>Falha ao alterar dado!</p></div>
+		{% endif %}
+		{% if item == 'True' %}
+			<div class="alert alert-success" role="alert"><p>Item adicionado com sucesso!</p></div>
+		{% endif %}
+		{% if item == 'False' %}
+			<div class="alert alert-danger" role="alert"><p>Falha ao adicionar item!</p></div>
+		{% endif %}
+		{% if cadastro == 'True' %}
+			<div class="alert alert-success" role="alert"><p>Cadastro realizado com sucesso!</p></div>
+		{% endif %}
+		{% if rm == 'True' %}
+			<div class="alert alert-success" role="alert"><p>Item removido com sucesso!</p></div>
+		{% endif %}
+		{% if rm == 'False' %}
+			<div class="alert alert-danger" role="alert"><p>Falha ao remover item!</p></div>
+		{% endif %}
 		<div class="text-justify">
 			<h2 class="text-center">Pedidos</h2>
 			<ul class="my-list">
-				<li><p><div class="estilo">ID:</div>{{ row[0] }}</p></li>
+				<li><p><div class="estilo">Mesa:</div>{{ row[5] }}</p></li>
 				<hr>
 				<li><p><div class="estilo">situação:</div>{{ row[1] }}</p></li>
 				<hr>
 				<li><p><div class="estilo">Data:</div>{{ row[4] }}</p></li>
 			</ul>
 			<hr>
-			<a href="{{ url_for('finalizar_pedido', id=row[0]) }}" class="btn btn-lg btn-block btn-danger separete-margim">Finalizar Pedido</a>
+		</div>
+		<div>
+			<table class="table table-responsive">
+				<caption class="text-center"><h2>Itens</h2></caption>
+				<thead class="text-center">
+					<tr>
+						<th class="text-center">Item</th>
+						<th class="text-center">Qtd</th>
+						<th class="text-center"> </th>
+					</tr>
+				</thead>
+				<tbody>
+					{% for itens in itens_results %}
+						<tr>
+							<td>{{ itens[0] }}</td>
+							<td>
+								<form action="{{ url_for('update_qtd', pedido=row[0], prato=itens[2]) }}" method="post" class="form-inline">
+									<input type="number"  value="{{ itens[1] }}" name="qtd">
+									<button class="btn btn-default" type="submit">Atualizar</button>
+								</form>
+							</td>
+							<td><form method="post">
+								<button type="submit" formmethod="post" formaction="{{ url_for('rm_item', prato=itens[2], pedido=row[0]) }}" class="btn btn-default btn-sm">Remover</button>
+							</form></td>
+						</tr>
+					{% endfor %}
+				</tbody>
+			</table>
+			<hr>
+		</div>
+		<a href="{{ url_for('add_item', id=row[0]) }}" class="btn btn-lg btn-block btn-danger separete-margim">Adicionar Item</a>
 
-			<a href="{{ url_for('cancelar_pedido', id=row[0]) }}" class="btn btn-lg btn-block btn-danger separete-margim">Cancelar Pedido</a>
-			<div class="text-right">
-			<form method="post">
-				<button type="submit" formmethod="post" formaction="{{ url_for('rm_reserva', id=row[0]) }}" class="btn btn-default btn-sm">excluir pedido</button>
-			</form>
-			</div>
+		<a href="{{ url_for('finalizar_pedido', id=row[0]) }}" class="btn btn-lg btn-block btn-danger separete-margim">Finalizar Pedido</a>
+
+		<a href="{{ url_for('cancelar_pedido', id=row[0]) }}" class="btn btn-lg btn-block btn-danger separete-margim">Cancelar Pedido</a>
+		<div class="text-right">
+		<form method="post">
+			<button type="submit" formmethod="post" formaction="{{ url_for('rm_reserva', id=row[0]) }}" class="btn btn-default btn-sm">excluir pedido</button>
+		</form>
 		</div>
 	</div>
 	{% endfor %}
