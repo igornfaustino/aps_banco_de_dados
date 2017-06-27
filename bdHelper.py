@@ -899,7 +899,28 @@ class bdHelper():
 		except Exception as e:
 			print(e)
 		finally:
-				connection.close()		
+				connection.close()
+
+	# Ingredientes que não são fornecidos por nenhum fornecedor
+	def ingredientes_que_nao_fornecedor(self):
+
+		connection = self.connect()
+		try:
+			with connection.cursor() as cursor:
+				query = """	
+							select I.id, I.nome
+							from ingredientes I
+							where I.id NOT IN
+											(select I_f.idIng
+				 							 from ingredientes_fornecedores I_f);
+						"""
+				cursor.execute(query)
+				return cursor.fetchall()
+		except Exception as e:
+			print(e)
+		finally:
+				connection.close()
+
 
 
 if __name__ == '__main__':

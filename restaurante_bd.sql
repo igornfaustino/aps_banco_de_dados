@@ -117,9 +117,9 @@ insert into funcionarios(cpf, salario, situacao, nome) values (1, 3000, 'Ativo',
 insert into garcons(cpf) values (1), (2);
 insert into cozinheiros (cpf, cpfChefe) values (3, NULL), (4, 3);
 insert into pedidos (situacao, idCli, cpfGar, dataPed) values ('pendente', 2, 1, CURDATE()), ('pago', 2, 2, CURDATE());
-insert into pratos (nome) values ('Macarrao instantaneo'), ('Pizza congelada'), ('Milk Shake');
-insert into pedidos_pratos (idPratos, idPed, qtd) values (1, 1, 3), (2, 2, 1), (2, 1, 7);
-insert into ingredientes (nome) values ('Cebola'), ('Chocolate');
-insert into pratos_ingrediente (idIng, idPratos, qtd) values (2, 3, 2);
+insert into pratos (nome) values ('Macarrao instantaneo'), ('Pizza congelada'), ('Milk Shake'),('Rizoto de Camarão');
+insert into pedidos_pratos (idPratos, idPed, qtd) values (1, 1, 3), (2, 2, 1), (2, 1, 7),(4, 1, 2);
+insert into ingredientes (nome) values ('Cebola'), ('Chocolate'),('Arroz'),('Camarão'),('Requeijão');
+insert into pratos_ingrediente (idIng, idPratos, qtd) values (2, 3, 2),(3, 4, 3),(4, 4, 3),(5, 4, 2);
 insert into fornecedores (nome, telefone) values ('Bob da Silva', '99999-9999'), ('Carlos da Silva', '99999-9900'), ('Bob Smith', '99999-0000');
-insert into ingredientes_fornecedores (idForn, idIng) values (1, 2), (2, 2), (3, 2), (1, 1);
+insert into ingredientes_fornecedores (idForn, idIng) values (1, 2), (2, 2), (3, 2),(1, 1);
