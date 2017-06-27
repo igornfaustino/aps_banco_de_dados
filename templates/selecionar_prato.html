@@ -26,6 +26,23 @@
 			</form>
 			<hr>
 			<!-- pesquisa Complexa -->
+			<form action="{{ url_for('results_prato_cliente') }}" accept-charset="utf-8">
+				<div class="form-group">
+					<label for="cliente">Prato mais pedido de algum cliente</label>
+					<div class="input-group">
+						<select class="form-control" id="cliente" name="cliente">
+							<option value="">Selecionar cliente</option>
+							{% for cliente in clientes %}
+								<option value="{{ cliente[0] }}">{{ cliente[1] }}</option>
+							{% endfor %}
+						</select>
+					    <span class="input-group-btn">
+					    	<button type="submit" class="btn btn-danger">Buscar!</button>
+						</span>
+					</div>
+				</div>
+			</form>
+			<hr>
 			<form action="{{ url_for('results_prato_mes') }}" accept-charset="utf-8">
 				<div class="form-group">
 					<label for="mes">Prato mais vendido</label>

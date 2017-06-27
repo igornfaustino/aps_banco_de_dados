@@ -66,6 +66,7 @@ create table pedidos(
 create table pratos (
 	id integer auto_increment,
     nome varchar(50),
+    preco float,
     constraint pk_pratos primary key (id)
 );
 
@@ -117,7 +118,7 @@ insert into funcionarios(cpf, salario, situacao, nome) values (1, 3000, 'Ativo',
 insert into garcons(cpf) values (1), (2);
 insert into cozinheiros (cpf, cpfChefe) values (3, NULL), (4, 3);
 insert into pedidos (situacao, idCli, cpfGar, dataPed) values ('pendente', 2, 1, CURDATE()), ('pago', 2, 2, CURDATE());
-insert into pratos (nome) values ('Macarrao instantaneo'), ('Pizza congelada'), ('Milk Shake');
+insert into pratos (nome, preco) values ('Macarrao instantaneo', 15.00), ('Pizza congelada', 15.00), ('Milk Shake', 5.00);
 insert into pedidos_pratos (idPratos, idPed, qtd) values (1, 1, 3), (2, 2, 1), (2, 1, 7);
 insert into ingredientes (nome) values ('Cebola'), ('Chocolate');
 insert into pratos_ingrediente (idIng, idPratos, qtd) values (2, 3, 2);

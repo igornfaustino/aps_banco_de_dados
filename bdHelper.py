@@ -495,13 +495,13 @@ class bdHelper():
 
 	# crud pratos
 
-	def cadastro_prato(self, nome=None):
+	def cadastro_prato(self, nome=None, preco=0):
 		connection = self.connect()
 		try:
-			query = "insert into pratos(nome) values(%s);"
+			query = "insert into pratos(nome, preco) values(%s, %s);"
 			
 			with connection.cursor() as cursor:
-				cursor.execute(query, nome)
+				cursor.execute(query, (nome, float(preco)))
 				connection.commit()
 				return True
 		except Exception as e:
@@ -559,6 +559,20 @@ class bdHelper():
 			query = "update pratos set nome = %s where id = %s;"
 			with connection.cursor() as cursor:
 				cursor.execute(query, (nome, id))
+				connection.commit()
+				return True
+		except Exception as e:
+			print(e)
+			return False
+		finally:
+			connection.close()
+
+	def alter_prato_preco(self, id=None, preco = None):
+		connection = self.connect()
+		try:
+			query = "update pratos set preco = %s where id = %s;"
+			with connection.cursor() as cursor:
+				cursor.execute(query, (preco, id))
 				connection.commit()
 				return True
 		except Exception as e:
@@ -900,6 +914,58 @@ class bdHelper():
 			print(e)
 		finally:
 				connection.close()		
+
+	# Pesquisar prato mais pedido por determinado cliente
+	def prato_mais_pedido_cliente(self, id=0):
+
+		connection = self.connect()
+		try:
+			with connection.cursor() as cursor:
+				query = """	
+							select 	P.*
+							from 	pratos P
+							where	P.id in (	select	Q.idPratos
+												from	(	select P1.idPratos, sum(P1.qtd) as qtd
+															from 	pedidos_pratos P1, pedidos PE1
+							                                where	PE1.idPed = P1.idPed and PE1.idCli = %s
+															group by P1.idPratos	) Q
+												where	Q.qtd = (	select 	max(Q1.qtd)
+																	from	(	select P2.idPratos, sum(P2.qtd) as qtd
+																				from pedidos_pratos P2, pedidos PE2
+																				where	PE2.idPed = P2.idPed and PE2.idCli = %s
+																				group by P2.idPratos	) Q1 
+																)
+											);
+						"""
+				cursor.execute(query, (id, id))
+				return cursor.fetchall()
+		except Exception as e:
+			print(e)
+		finally:
+				connection.close()
+
+	# Pesquisar media gasta para cada cliente
+	def media_cliente(self, id=0):
+
+		connection = self.connect()
+		try:
+			with connection.cursor() as cursor:
+				query = """	
+							select 		C.nome, avg(totalPedido.soma_total)
+							from	 	clientes C,
+										(	select		PP.idPed, (sum(PP.qtd)*sum(P.preco)) as soma_total
+											from		pedidos_pratos PP, pratos P
+											where		PP.idPratos = P.id
+											group by	PP.idPed ) totalPedido, pedidos P
+							where		P.idPed = totalPedido.idPed and C.idCli = P.idCli
+							group by	C.idCli;
+						"""
+				cursor.execute(query, (id, id))
+				return cursor.fetchall()
+		except Exception as e:
+			print(e)
+		finally:
+				connection.close()
 
 
 if __name__ == '__main__':

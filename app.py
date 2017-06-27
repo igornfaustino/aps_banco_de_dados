@@ -431,7 +431,8 @@ def cadastro_prato():
 def prato_submit():
 	nome = None
 	nome = request.form['nome_prato']
-	cadastro = sql.cadastro_prato(nome)
+	preco = request.form['c1']
+	cadastro = sql.cadastro_prato(nome=nome, preco=preco)
 	return redirect(url_for('cardapio', cadastro=cadastro))
 
 ########################
@@ -439,7 +440,8 @@ def prato_submit():
 
 @app.route('/restaurante/prato/search')
 def search_prato():
-	return render_template('selecionar_prato.html')
+	clientes = sql.getall_clientes()
+	return render_template('selecionar_prato.html', clientes=clientes)
 
 @app.route('/prato/results')
 def results_prato_nome():
@@ -460,9 +462,11 @@ def results_prato_mes():
 	return render_template('listar_resultados_prato.html', results=results)
 
 
-@app.route('/prato/results')
-def results_prato_algo():
-	pass
+@app.route('/prato/results/cliente')
+def results_prato_cliente():
+	cliente = request.args.get('cliente')
+	results = sql.prato_mais_pedido_cliente(id = cliente)
+	return render_template('listar_resultados_prato.html', results=results)
 
 @app.route('/prato')
 def exibir_prato():
@@ -474,7 +478,7 @@ def exibir_prato():
 ########################
 ####### Alterar ########
 
-@app.route('/prato/alterar/')
+@app.route('/prato/alterar/nome')
 def prato_nome():
 	id = request.args.get('id')
 	return render_template('alterar.html', name="Nome", action=url_for('prato_nome_submit', id=id), type="text", label="Novo Nome")
@@ -484,6 +488,18 @@ def prato_nome_submit():
 	id = request.args.get('id')
 	novo = request.form['alt']
 	alt = sql.alter_prato_nome(id=id, nome=novo)
+	return redirect(url_for('exibir_prato', alt=alt, id=id))
+
+@app.route('/prato/alterar/preco')
+def prato_preco():
+	id = request.args.get('id')
+	return render_template('alterar.html', name="Nome", action=url_for('prato_preco_submit', id=id), type="number", label="Novo Preco")
+
+@app.route('/prato/alterar/preco/submit', methods=['POST'])
+def prato_preco_submit():
+	id = request.args.get('id')
+	novo = request.form['alt']
+	alt = sql.alter_prato_preco(id=id, preco=novo)
 	return redirect(url_for('exibir_prato', alt=alt, id=id))
 
 ########################
