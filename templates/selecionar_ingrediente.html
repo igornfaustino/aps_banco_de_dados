@@ -5,14 +5,6 @@
 {% endblock %}
 
 {% block conteudo %}
-			<!-- Conteudo topo -->
-			
-			<p><img src="./img/lorenzo.png" height="150" width="150"></p><h1>My Restaurant</h1>
-
-			<!-- Fim conteudo -->
-			</div>
-		</div>
-	</header>
 	<!-- Conteudo site -->
 
 	<div class="container conteudo">
@@ -20,7 +12,7 @@
 			<h2>Selecionar Ingredientes</h2>
 		</div>	
 		<div class="container">
-			<!-- Pesquisa simples -->
+<!-- 			
 			<form action="#" method="post" accept-charset="utf-8">
 				<div class="form-group">
 					<label for="nome_ingrediente">Nome Ingrediente</label>
@@ -32,16 +24,19 @@
 					</div>
 				</div>
 			</form>
-			<hr>
+			<hr> -->
 			<!-- pesquisa Complexa -->
-			<form action="#" method="post" accept-charset="utf-8">
+			<form action="{{ url_for('results_ingrediente_algo') }}" accept-charset="utf-8">
 				<div class="form-group">
-					<label for="nome_ingrediente">Algo complexo</label>
+					<label for="condicao">Buscar Por Condições Especiais</label>
 					<div class="input-group">
-						<input type="text" name="nome_ingrediente" id="nome_ingrediente" class="form-control" placeholder="Busca ingrediente por algo">
-						    <span class="input-group-btn">
-						    	<button type="submit" class="btn btn-danger">Buscar!</button>
-							</span>
+						<select class="form-control" id="condicao" name="condicao">
+							<option value="">Selecionar condição para busca!</option>
+							<option value="sem_fornecedor">Ingrediente sem fornecedor</option>
+						</select>
+					    <span class="input-group-btn">
+					    	<button type="submit" class="btn btn-danger">Buscar!</button>
+						</span>
 					</div>
 				</div>
 			</form>

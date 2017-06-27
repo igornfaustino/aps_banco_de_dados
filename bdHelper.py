@@ -913,7 +913,29 @@ class bdHelper():
 		except Exception as e:
 			print(e)
 		finally:
-				connection.close()		
+				connection.close()
+
+	# Ingredientes que não são fornecidos por nenhum fornecedor
+	def ingredientes_que_nao_fornecedor(self):
+
+		connection = self.connect()
+		try:
+			with connection.cursor() as cursor:
+				query = """	
+							select I.id, I.nome
+							from ingredientes I
+							where I.id NOT IN
+											(select I_f.idIng
+				 							 from ingredientes_fornecedores I_f);
+						"""
+				cursor.execute(query)
+				return cursor.fetchall()
+		except Exception as e:
+			print(e)
+		finally:
+				connection.close()
+
+
 
 	# Pesquisar prato mais pedido por determinado cliente
 	def prato_mais_pedido_cliente(self, id=0):
@@ -944,14 +966,16 @@ class bdHelper():
 		finally:
 				connection.close()
 
+	#Falta add no site
+	 
 	# Pesquisar media gasta para cada cliente
-	def media_cliente(self, id=0):
+	def media_cliente(self):
 
 		connection = self.connect()
 		try:
 			with connection.cursor() as cursor:
 				query = """	
-							select 		C.nome, avg(totalPedido.soma_total)
+							select 		C.idCli, C.nome, avg(totalPedido.soma_total)
 							from	 	clientes C,
 										(	select		PP.idPed, (sum(PP.qtd)*sum(P.preco)) as soma_total
 											from		pedidos_pratos PP, pratos P
@@ -960,13 +984,61 @@ class bdHelper():
 							where		P.idPed = totalPedido.idPed and C.idCli = P.idCli
 							group by	C.idCli;
 						"""
-				cursor.execute(query, (id, id))
+				cursor.execute(query)
 				return cursor.fetchall()
 		except Exception as e:
 			print(e)
 		finally:
 				connection.close()
 
+
+	# Pesquisar garcons que atenderam todos os clientes
+	def garcons_todos_cliente(self):
+
+		connection = self.connect()
+		try:
+			with connection.cursor() as cursor:
+				query = """	
+							select	F.*
+							from 	garcons G, funcionarios F
+							where	F.cpf = G.cpf and not exists	(	select	C.*
+																		from 	clientes C
+																		where	C.idCli not in	(	select	P.idCli
+																									from	pedidos P
+																									where	P.cpfGar = G.cpf
+																								)
+																	);
+						"""
+				cursor.execute(query)
+				return cursor.fetchall()
+		except Exception as e:
+			print(e)
+		finally:
+				connection.close()
+
+	# Pesquisar garcons que atenderam todas as mesas
+	def garcons_todas_mesas(self):
+
+		connection = self.connect()
+		try:
+			with connection.cursor() as cursor:
+				query = """	
+							select	F.*
+							from 	garcons G, funcionarios F
+							where	F.cpf = G.cpf and not exists	(	select	M.*
+																		from 	mesas M
+																		where	M.nroMesa not in	(	select	P.mesa
+																										from	pedidos P
+																										where	P.cpfGar = G.cpf
+																									)
+																	);
+						"""
+				cursor.execute(query)
+				return cursor.fetchall()
+		except Exception as e:
+			print(e)
+		finally:
+				connection.close()
 
 if __name__ == '__main__':
 	teste = bdHelper()

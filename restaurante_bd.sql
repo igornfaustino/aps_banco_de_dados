@@ -57,10 +57,11 @@ create table pedidos(
     idCli integer not null,
     cpfGar integer not null,
     dataPed date,
-    mesa integer,
+    mesa integer not null,
     constraint pk_ped primary key (idPed),
     constraint fk_pedGar foreign key (cpfGar) references garcons(cpf),
-    constraint fk_cli foreign key (idCli) references clientes(idCli)
+    constraint fk_cli foreign key (idCli) references clientes(idCli),
+    constraint fk_mesa foreign key (mesa) references mesas(nroMesa)
 );
 
 create table pratos (
@@ -117,10 +118,10 @@ insert into reservas(idCli, datas, hora, nroPessoas, nroMesa) values (1, '2017-1
 insert into funcionarios(cpf, salario, situacao, nome) values (1, 3000, 'Ativo', 'Master chefe'), (2, NULL, 'Aposentado', 'Mario Verde'), (3, 1000, 'Ativo', 'Mario Mario'), (4, NULL, 'Estagiario', 'Luigi Mario');
 insert into garcons(cpf) values (1), (2);
 insert into cozinheiros (cpf, cpfChefe) values (3, NULL), (4, 3);
-insert into pedidos (situacao, idCli, cpfGar, dataPed) values ('pendente', 2, 1, CURDATE()), ('pago', 2, 2, CURDATE());
+insert into pedidos (situacao, idCli, cpfGar, dataPed, mesa) values ('pendente', 2, 1, CURDATE(), 2), ('pago', 1, 1, CURDATE(), 3), ('pago', 3, 1, CURDATE(), 3), ('pago', 4, 1, CURDATE(), 3);
 insert into pratos (nome, preco) values ('Macarrao instantaneo', 15.00), ('Pizza congelada', 15.00), ('Milk Shake', 5.00);
 insert into pedidos_pratos (idPratos, idPed, qtd) values (1, 1, 3), (2, 2, 1), (2, 1, 7);
-insert into ingredientes (nome) values ('Cebola'), ('Chocolate');
-insert into pratos_ingrediente (idIng, idPratos, qtd) values (2, 3, 2);
+insert into ingredientes (nome) values ('Cebola'), ('Chocolate'),('Arroz'),('Camarão'),('Requeijão');
+insert into pratos_ingrediente (idIng, idPratos, qtd) values (2, 3, 2),(3, 3, 3),(4, 3, 3),(5, 3, 2);
 insert into fornecedores (nome, telefone) values ('Bob da Silva', '99999-9999'), ('Carlos da Silva', '99999-9900'), ('Bob Smith', '99999-0000');
-insert into ingredientes_fornecedores (idForn, idIng) values (1, 2), (2, 2), (3, 2), (1, 1);
+insert into ingredientes_fornecedores (idForn, idIng) values (1, 2), (2, 2), (3, 2),(1, 1);

@@ -35,14 +35,18 @@ Selecionar Funcionario
 			</form>
 			<hr>
 			<!-- pesquisa Complexa -->
-			<form action="#" method="post" accept-charset="utf-8">
+			<form action="{{ url_for('results_funcionario_algo') }}" accept-charset="utf-8">
 				<div class="form-group">
-					<label for="nome_funcionario">Algo complexo</label>
+					<label for="condicao">Buscar Por Condições Especiais</label>
 					<div class="input-group">
-						<input type="text" name="nome_funcionario" id="nome_funcionario" class="form-control" placeholder="Busca funcionário por algo">
-						    <span class="input-group-btn">
-						    	<button type="submit" class="btn btn-danger">Buscar!</button>
-							</span>
+						<select class="form-control" id="condicao" name="condicao">
+							<option value="">Selecionar condição para busca!</option>
+							<option value="todos_clientes">Funcionario que ja atendeu todos os clientes</option>
+							<option value="todas_mesas">Funcionario que ja atendeu todas as mesas</option>
+						</select>
+					    <span class="input-group-btn">
+					    	<button type="submit" class="btn btn-danger">Buscar!</button>
+						</span>
 					</div>
 				</div>
 			</form>

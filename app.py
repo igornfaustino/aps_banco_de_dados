@@ -111,6 +111,9 @@ def results_cliente_algo():
 		results = sql.clientes_todas_mesas()
 	elif condicao == 'mais_reservas':
 		results = sql.clientes_mais_reservas()
+	elif condicao == 'media':
+		results = sql.media_cliente()
+		return render_template('listar_resultados_cliente_media.html', results=results)
 	return render_template('listar_resultados_cliente.html', results=results)
 
 @app.route('/cliente/results/minimo')
@@ -323,6 +326,16 @@ def search_funcionario():
 	empty = request.args.get('empty')
 	return render_template('selecionar_funcionario.html', empty=empty)
 
+@app.route('/funcionario/search/algo')
+def results_funcionario_algo():
+	condicao = request.args.get('condicao')
+	if not condicao:
+		return redirect(url_for('search_funcionario'))
+	if condicao == 'todos_clientes':
+		results = sql.garcons_todos_cliente()
+	elif condicao == 'todas_mesas':
+		results = sql.garcons_todas_mesas()
+	return render_template('listar_resultados_funcionario.html', results=results, funcao='garcom')
 
 @app.route('/funcionario/results')
 def results_funcionario_nome():
@@ -346,10 +359,6 @@ def results_funcionario_nome():
 
 	print(results)
 	return render_template('listar_resultados_funcionario.html', results=results, funcao=op)
-
-@app.route('/funcionario/results')
-def results_funcionario_algo():
-	pass
 
 @app.route('/funcionario/results/exibir')
 def exibir_funcionario():
@@ -706,11 +715,25 @@ def alt_hora_reservas_submit():
  ########################
  ######## Remover #######
 
-@app.route('/reserva/remover', methods=["POST"])
-def rm_reserva():
-	id = request.args.get('id')
-	rm = sql.rm_reserva(id=id)
-	return redirect(url_for('reserva', rm=rm))
+
+ #######################
+ ####### Ingredientes ##
+
+@app.route('/restaurante/ingredientes/search')
+def search_ingrediente():
+	return render_template('selecionar_ingrediente.html')
+
+@app.route('/restaurante/ingredientes/results/algo')
+def results_ingrediente_algo():
+	condicao = request.args.get('condicao')
+	if not condicao:
+		return redirect(url_for('search_ingrediente'))
+	if condicao == 'sem_fornecedor':
+		results = sql.ingredientes_que_nao_fornecedor()
+		print(results)
+	else:
+		results = ()
+	return render_template('listar_resultados_ingredientes.html', results=results)
 
 if __name__ == '__main__':
 	app.run(debug=True)
