@@ -25,6 +25,18 @@
 				</div>
 			</form>
 			<hr>
+			<form action="{{ url_for('results_cliente_minimo_reserva') }}" accept-charset="utf-8">
+				<div class="form-group">
+					<label for="numero_minimo">Clientes com mais reservas que</label>
+					<div class="input-group">
+						<input type="number" name="numero_minimo" id="numero_minimo" class="form-control" placeholder="Numero de reservas minimas">
+						    <span class="input-group-btn">
+						    	<button type="submit" class="btn btn-danger">Buscar!</button>
+							</span>
+					</div>
+				</div>
+			</form>
+			<hr>
 			<!-- pesquisa Complexa -->
 			<form action="{{ url_for('results_cliente_algo') }}" accept-charset="utf-8">
 				<div class="form-group">
@@ -51,8 +63,23 @@
 					</div>
 				</div>
 			</form>
-
+			<hr>
 			<!-- pesquisa Complexa2 -->
+			<form action="{{ url_for('results_cliente_algo') }}" accept-charset="utf-8">
+				<div class="form-group">
+					<label for="condicao">Buscar Por Condições Especiais</label>
+					<div class="input-group">
+						<select class="form-control" id="condicao" name="condicao">
+							<option value="">Selecionar condição para busca!</option>
+							<option value="todas_mesas">Cliente que já reservou todas as mesas</option>
+							<option value="mais_reservas">Cliente com maior numero de reservas</option>
+						</select>
+					    <span class="input-group-btn">
+					    	<button type="submit" class="btn btn-danger">Buscar!</button>
+						</span>
+					</div>
+				</div>
+			</form>
 			<!-- etc -->
 		</div>
 	</div>

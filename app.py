@@ -93,13 +93,30 @@ def results_cliente_nome():
 		results = sql.search_cliente(nome=nome)
 	return render_template('listar_resultados_cliente.html', results=results)
 
-@app.route('/cliente/results')
-def results_cliente_algo():
+@app.route('/cliente/results/sem_reservas')
+def results_cliente_mes():
 	mes = request.args.get('mes')
 	if mes:
 		results = sql.clientes_sem_reserva(mes=mes)
 	else:
 		results = ()
+	return render_template('listar_resultados_cliente.html', results=results)
+
+@app.route('/cliente/results/algo')
+def results_cliente_algo():
+	condicao = request.args.get('condicao')
+	if not condicao:
+		return redirect(url_for('search_cliente'))
+	if condicao == 'todas_mesas':
+		results = sql.clientes_todas_mesas()
+	elif condicao == 'mais_reservas':
+		results = sql.clientes_mais_reservas()
+	return render_template('listar_resultados_cliente.html', results=results)
+
+@app.route('/cliente/results/minimo')
+def results_cliente_minimo_reserva():
+	minimo = request.args.get('numero_minimo')
+	results = sql.clientes_mais_reservas_que(num=minimo)
 	return render_template('listar_resultados_cliente.html', results=results)
 
 @app.route('/cliente/')

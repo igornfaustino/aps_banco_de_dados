@@ -830,6 +830,77 @@ class bdHelper():
 			finally:
 				connection.close()
 
+	# Clientes que fizeram reservas para todas as mesas
+	def clientes_todas_mesas(self):
+		connection = self.connect()
+		try:
+			with connection.cursor() as cursor:
+				query = """	
+							select 	C.*
+							from 	clientes C
+							where 	not exists 	(	select 	M.*
+													from 	mesas M
+													where 	M.nroMesa not in	(	select 	R.nroMesa
+																					from 	reservas R
+																					where	R.idCli = C.idCli
+																				)
+												);
+						"""
+				cursor.execute(query)
+				return cursor.fetchall()
+		except Exception as e:
+			print(e)
+		finally:
+				connection.close()
+
+	# Clientes com maior numero de reservas
+	def clientes_mais_reservas(self):
+		connection = self.connect()
+		try:
+			with connection.cursor() as cursor:
+				query = """	
+							select	C.*
+							from 	clientes C
+							where 	C.idCli in (	select	T1.idCli
+													from	(	select		R.idCli, count(R.idCli) as qtd
+																from		reservas R
+																group by	(R.idCli)	
+															) T1
+													where	T1.qtd = (	select	max(T2.qtd)
+																		from	(	select		R.idCli, count(R.idCli) as qtd
+																					from		reservas R
+																					group by	(R.idCli)	
+																				) T2	
+																	)		
+												);
+						"""
+				cursor.execute(query)
+				return cursor.fetchall()
+		except Exception as e:
+			print(e)
+		finally:
+				connection.close()
+
+	# Clientes com numero de reservas maior do que num
+	def clientes_mais_reservas_que(self, num=0):
+
+		connection = self.connect()
+		try:
+			with connection.cursor() as cursor:
+				query = """	
+							select 		C.nome, count(C.idCli) as numeroReserva
+							from		reservas R, clientes C
+							where		R.idCli = C.idCli
+							group by	R.idCli
+							having		numeroReserva >= %s; 
+						"""
+				cursor.execute(query, (int(num)))
+				return cursor.fetchall()
+		except Exception as e:
+			print(e)
+		finally:
+				connection.close()		
+
 
 if __name__ == '__main__':
 	teste = bdHelper()
