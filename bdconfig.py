@@ -1,2 +1,2 @@
-user="root"
-passwrd="root"
+user="UserName"
+passwrd="Password"

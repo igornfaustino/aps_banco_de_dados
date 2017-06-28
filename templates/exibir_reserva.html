@@ -32,7 +32,7 @@
 			<hr>
 			<div class="text-right">
 			<form method="post">
-				<button type="submit" formmethod="post" formaction="{{ url_for('rm_reserva', nome=row[1], id=row[0]) }}" class="btn btn-default btn-sm">excluir Reserva</button>
+				<button type="submit" formmethod="post" formaction="{{ url_for('rm_reserva', id=row[0]) }}" class="btn btn-default btn-sm">excluir Reserva</button>
 			</form>
 			</div>
 		</div>

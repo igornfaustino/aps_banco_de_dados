@@ -8,7 +8,6 @@ sql = bdHelper()
 @app.route('/')
 def index():
 	results = sql.get_pedido()
-	print(results)
 	return render_template('index.html', results=results)
 
 # Menus
@@ -258,7 +257,6 @@ def exibir_pedido():
 	rm = request.args.get('rm')
 	results = sql.search_pedido(idPed=id)
 	itens = sql.get_itens(pedido=id)
-	print(itens)
 	return render_template('exibir_pedido.html', item=item, results=results, alt=alt, cadastro=cadastro, itens_results=itens, rm=rm)
 
 ############# ALTERAR ###################
@@ -311,7 +309,6 @@ def funcionario_submit(funcao):
 	if funcao == 'cozinheiro':
 		cpf_chefe = None
 		cpf_chefe = request.form['cpfChefe']
-		print(cpf_chefe, "\n\n")
 		cadastro = sql.cadastro_cozinheiro(nome=nome_funcionario, salario=sal_funcionario, cpf=cpf_funcionario, chefe=cpf_chefe)
 	else:
 		cadastro = sql.cadastro_garcom(nome=nome_funcionario, salario=sal_funcionario, cpf=cpf_funcionario)
@@ -357,7 +354,6 @@ def results_funcionario_nome():
 			else:
 				return redirect(url_for('search_funcionario', empty=True))
 
-	print(results)
 	return render_template('listar_resultados_funcionario.html', results=results, funcao=op)
 
 @app.route('/funcionario/results/exibir')
@@ -715,6 +711,11 @@ def alt_hora_reservas_submit():
  ########################
  ######## Remover #######
 
+@app.route('/reserva/remove', methods=["POST"])
+def rm_reserva():
+	id = request.args.get('id')
+	rm = sql.rm_reserva(id=id)
+	return redirect(url_for('mesa', rm=rm))
 
  #######################
  ####### Ingredientes ##
@@ -730,7 +731,6 @@ def results_ingrediente_algo():
 		return redirect(url_for('search_ingrediente'))
 	if condicao == 'sem_fornecedor':
 		results = sql.ingredientes_que_nao_fornecedor()
-		print(results)
 	else:
 		results = ()
 	return render_template('listar_resultados_ingredientes.html', results=results)
